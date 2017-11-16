@@ -30,6 +30,11 @@ DATABASE_VERSION = 1
 DB_INIT = '''
 PRAGMA user_version = {user_version};
 ----------------------------------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS config(
+    key TEXT,
+    value TEXT
+);
+----------------------------------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS submissions(
     idint INT,
     idstr TEXT,
@@ -71,6 +76,9 @@ CREATE INDEX IF NOT EXISTS comment_index ON comments(idstr);
 ERROR_DATABASE_OUTOFDATE = '''
 Database is out of date. {current} should be {new}.
 '''.strip()
+
+DEFAULT_CONFIG = {
+}
 
 SQL_SUBMISSION_COLUMNS = [
     'idint',
@@ -143,6 +151,19 @@ class TSDB:
         for statement in statements:
             self.cur.execute(statement)
         self.sql.commit()
+
+        self.config = {}
+        for (key, default_value) in DEFAULT_CONFIG.items():
+            self.cur.execute('SELECT value FROM config WHERE key == ?', [key])
+            existing_value = self.cur.fetchone()
+            if existing_value is None:
+                self.cur.execute('INSERT INTO config VALUES(?, ?)', [key, default_value])
+                self.config[key] = default_value
+            else:
+                existing_value = existing_value[0]
+                if isinstance(default_value, int):
+                    existing_value = int(existing_value)
+                self.config[key] = existing_value
 
     def __repr__(self):
         return 'TSDB(%s)' % self.filepath
