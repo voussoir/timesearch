@@ -26,7 +26,10 @@ DB_FORMATS_USER = [
     '.\\users\\@{name}\\@{name}.db',
 ]
 
+DATABASE_VERSION = 1
 DB_INIT = '''
+PRAGMA user_version = {user_version};
+----------------------------------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS submissions(
     idint INT,
     idstr TEXT,
@@ -63,6 +66,10 @@ CREATE TABLE IF NOT EXISTS comments(
     textlen INT
 );
 CREATE INDEX IF NOT EXISTS comment_index ON comments(idstr);
+'''.format(user_version=DATABASE_VERSION)
+
+ERROR_DATABASE_OUTOFDATE = '''
+Database is out of date. {current} should be {new}.
 '''.strip()
 
 SQL_SUBMISSION_COLUMNS = [
@@ -120,8 +127,18 @@ class TSDB:
         self.styles_dir = self.filepath.parent.with_child('styles')
         self.wiki_dir = self.filepath.parent.with_child('wiki')
 
+        existing_database = self.filepath.exists
         self.sql = sqlite3.connect(self.filepath.absolute_path)
         self.cur = self.sql.cursor()
+
+        if existing_database:
+            self.cur.execute('PRAGMA user_version')
+            existing_version = self.cur.fetchone()[0]
+            if existing_version > 0 and existing_version != DATABASE_VERSION:
+                message = ERROR_DATABASE_OUTOFDATE
+                message = message.format(current=existing_version, new=DATABASE_VERSION)
+                raise ValueError(message)
+
         statements = DB_INIT.split(';')
         for statement in statements:
             self.cur.execute(statement)
