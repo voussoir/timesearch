@@ -1,4 +1,5 @@
 import datetime
+import logging
 import os
 import time
 import traceback
@@ -19,6 +20,13 @@ if bot is None or bot.praw != praw:
     import bot4
     bot = bot4
 
+
+log = logging.getLogger(__name__)
+log.setLevel(logging.NOTSET)
+handler = logging.StreamHandler()
+handler.setLevel(logging.NOTSET)
+handler.setFormatter(logging.Formatter('%(levelname)s:timesearch.%(module)s: %(message)s'))
+log.addHandler(handler)
 
 r = bot.anonymous()
 
