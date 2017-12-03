@@ -67,7 +67,12 @@ def timesearch(
         maxupper = common.get_now() + 86400
 
     form = '{upper} - {lower} +{gain}'
-    submissions = subreddit.submissions(start=lower, end=maxupper)
+    if username:
+        query = 'author:"%s"' % username
+    else:
+        query = None
+
+    submissions = subreddit.submissions(start=lower, end=maxupper, extra_query=query)
     submissions = common.generator_chunker(submissions, 100)
     for chunk in submissions:
         chunk.sort(key=lambda x: x.created_utc, reverse=True)
