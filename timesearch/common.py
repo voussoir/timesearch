@@ -21,12 +21,8 @@ if bot is None or bot.praw != praw:
     bot = bot4
 
 
+logging.basicConfig()
 log = logging.getLogger(__name__)
-log.setLevel(logging.NOTSET)
-handler = logging.StreamHandler()
-handler.setLevel(logging.NOTSET)
-handler.setFormatter(logging.Formatter('%(levelname)s:timesearch.%(module)s: %(message)s'))
-log.addHandler(handler)
 
 r = bot.anonymous()
 
