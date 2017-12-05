@@ -25,43 +25,68 @@ HTML_HEADER = '''
     border: 4px #00f solid;
     padding-left: 20px;
 }
+.hidden
+{
+    display: none;
+}
 </style>
 </head>
 <body>
 '''.strip()
-HTML_FOOTER = '</body>\n</html>'
+HTML_FOOTER = '''
+</body>
+
+<script>
+function toggle_collapse(comment_div)
+{
+    var button = comment_div.getElementsByClassName("toggle_hide_button")[0];
+    var collapsible = comment_div.getElementsByClassName("collapsible")[0];
+    if (collapsible.classList.contains("hidden"))
+    {
+        collapsible.classList.remove("hidden");
+        button.innerText = "[-]";
+    }
+    else
+    {
+        collapsible.classList.add("hidden");
+        button.innerText = "[+]";
+    }
+}
+</script>
+</html>
+'''
 
 HTML_COMMENT = '''
-<div class="comment"
-    id="{id}"
+<div class="comment" id="{id}">
     <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
         {usernamelink}
         <span class="score"> | {score} points</span>
         <span class="timestamp"> | {human}</span>
     </p>
-
-    <p>{body}</p>
-
-    <p class="toolbar">
-        {permalink}
-    </p>
-{{children}}
+    <div class="collapsible">
+        {body}
+        <p class="toolbar">
+            {permalink}
+        </p>
+        {{children}}
+    </div>
 </div>
 '''.strip()
 
 HTML_SUBMISSION = '''
-<div class="submission"
-    id="{id}"
-
+<div class="submission" id="{id}">
     <p class="userinfo">
         {usernamelink}
         <span class="score"> | {score} points</span>
         <span class="timestamp"> | {human}</span>
     </p>
-
     <strong>{title}</strong>
     <p>{url_or_text}</p>
-
     <p class="toolbar">
         {permalink}
     </p>
