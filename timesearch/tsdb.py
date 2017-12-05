@@ -203,9 +203,9 @@ class TSDB:
         return cls(filepath=filepath, do_create=do_create)
 
     def insert(self, objects, commit=True):
-        common.log.debug('Trying to insert %d objects.', len(objects))
         if not isinstance(objects, (list, tuple, types.GeneratorType)):
             objects = [objects]
+        common.log.debug('Trying to insert %d objects.', len(objects))
 
         new_values = {
             'new_submissions': 0,
