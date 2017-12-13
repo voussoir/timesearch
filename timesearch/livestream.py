@@ -6,6 +6,19 @@ from . import common
 from . import tsdb
 
 
+def generator_printer(generator):
+    for step in generator:
+        newtext = '%ds, %dc' % (step['new_submissions'], step['new_comments'])
+        totalnew = step['new_submissions'] + step['new_comments']
+        status = '{now} +{new}'.format(now=common.human(common.get_now()), new=newtext)
+        print(status, end='')
+        if totalnew == 0 and common.log.level != common.logging.DEBUG:
+            # Since there were no news, allow the next line to overwrite status
+            print('\r', end='', flush=True)
+        else:
+            print()
+        yield None
+
 def livestream(
         subreddit=None,
         username=None,
@@ -36,19 +49,11 @@ def livestream(
     if as_a_generator:
         return generator
 
+    generator = generator_printer(generator)
+
     while True:
         try:
             step = next(generator)
-            newtext = '%ds, %dc' % (step['new_submissions'], step['new_comments'])
-            totalnew = step['new_submissions'] + step['new_comments']
-            status = '{now} +{new}'.format(now=common.human(common.get_now()), new=newtext)
-            print(status, end='')
-            if totalnew == 0 and common.log.level != common.logging.DEBUG:
-                # Since there were no news, allow the next line to overwrite status
-                print('\r', end='', flush=True)
-            else:
-                print()
-
             if only_once:
                 break
             time.sleep(sleepy)
@@ -152,10 +157,6 @@ def livestream_argparse(args):
         limit = 100
     else:
         limit = int(args.limit)
-
-    if args.submissions is False and args.comments is False:
-        args.submissions = True
-        args.comments = True
 
     return livestream(
         subreddit=args.subreddit,
