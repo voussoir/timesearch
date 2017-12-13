@@ -176,11 +176,11 @@ class TSDB:
         for, and return that path. If none of them exist, then use the most
         preferred filepath.
         '''
-        paths = [pathclass.Path(format.format(name=name)) for format in formats]
-        for path in paths:
-            if path.is_file:
-                return path
-        return paths[-1]
+        for form in formats:
+            path = form.format(name=name)
+            if os.path.isfile(path):
+                break
+        return pathclass.Path(path)
 
     @classmethod
     def for_subreddit(cls, name, do_create=True):
