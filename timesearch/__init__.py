@@ -423,10 +423,9 @@ def main(argv):
     args = parser.parse_args(argv)
     try:
         args.func(args)
-    except exceptions.DBNotFound as e:
-        message = '"%s" is not an existing database.'
+    except exceptions.DatabaseNotFound as e:
+        message = str(e)
         message += '\nHave you used any of the other utilities to collect data?'
-        message = message % e.path.absolute_path
         print(message)
         return 1
 
