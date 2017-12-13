@@ -27,3 +27,9 @@ class DatabaseOutOfDate(TimesearchException):
 
 class DatabaseNotFound(TimesearchException, FileNotFoundError):
     error_message = 'Database file not found: "{}"'
+
+class NotExclusive(TimesearchException):
+    '''
+    For when two or more mutually exclusive actions have been requested.
+    '''
+    error_message = 'One and only one of {} must be passed.'

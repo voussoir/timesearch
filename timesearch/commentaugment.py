@@ -1,6 +1,7 @@
 import traceback
 
 from . import common
+from . import exceptions
 from . import tsdb
 
 
@@ -17,15 +18,15 @@ def commentaugment(
     Take the IDs of collected submissions, and gather comments from those threads.
     Please see the global DOCSTRING_COMMENTAUGMENT variable.
     '''
+    if not common.is_xor(subreddit, username):
+        raise exceptions.NotExclusive(['subreddit', 'username'])
+
     common.bot.login(common.r)
     if specific_submission is not None:
         if not specific_submission.startswith('t3_'):
             specific_submission = 't3_' + specific_submission
         specific_submission_obj = common.r.submission(specific_submission[3:])
         subreddit = specific_submission_obj.subreddit.display_name
-
-    if (subreddit is None) == (username is None):
-        raise Exception('Enter subreddit or username but not both')
 
     if subreddit:
         if specific_submission is None:

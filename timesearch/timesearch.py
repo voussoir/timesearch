@@ -2,6 +2,7 @@ import time
 import traceback
 
 from . import common
+from . import exceptions
 from . import tsdb
 
 
@@ -21,8 +22,8 @@ def timesearch(
     Collect submissions across time.
     Please see the global DOCSTRING variable.
     '''
-    if (subreddit is None) == (username is None):
-        raise Exception('Enter subreddit or username but not both')
+    if not common.is_xor(subreddit, username):
+        raise exceptions.NotExclusive(['subreddit', 'username'])
 
     common.bot.login(common.r)
 

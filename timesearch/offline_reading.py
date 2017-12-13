@@ -2,6 +2,7 @@ import os
 import markdown
 
 from . import common
+from . import exceptions
 from . import tsdb
 
 
@@ -221,8 +222,8 @@ def html_from_database(subreddit=None, username=None, specific_submission=None):
     if markdown is None:
         raise ImportError('Page cannot be rendered without the markdown module')
 
-    if (subreddit is None) == (username is None):
-        raise Exception('Enter subreddit or username but not both')
+    if not common.is_xor(subreddit, username):
+        raise exceptions.NotExclusive(['subreddit', 'username'])
 
     if subreddit:
         database = tsdb.TSDB.for_subreddit(subreddit, do_create=False)

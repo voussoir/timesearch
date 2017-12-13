@@ -87,6 +87,12 @@ def int_none(x):
         return None
     return int(x)
 
+def is_xor(*args):
+    '''
+    Return True if and only if one arg is truthy.
+    '''
+    return [bool(a) for a in args].count(True) == 1
+
 def nofailrequest(function):
     '''
     Creates a function that will retry until it succeeds.

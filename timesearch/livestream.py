@@ -3,6 +3,7 @@ import time
 import traceback
 
 from . import common
+from . import exceptions
 from . import tsdb
 
 
@@ -62,11 +63,6 @@ def livestream(
             print()
             return
 
-        except Exception:
-            traceback.print_exc()
-            print('Retrying in 5...')
-            time.sleep(5)
-
 hangman = lambda: livestream(
     username='gallowboob',
     do_submissions=True,
@@ -83,10 +79,11 @@ def _livestream_as_a_generator(
         params,
     ):
 
-    if bool(subreddit) == bool(username):
-        raise Exception('Require either username / subreddit parameter, but not both')
-    if bool(do_submissions) is bool(do_comments) is False:
-        raise Exception('Require do_submissions and/or do_comments parameter')
+    if not common.is_xor(subreddit, username):
+        raise exceptions.NotExclusive(['subreddit', 'username'])
+
+    if not any([do_submissions, do_comments]):
+        raise TypeError('Required do_submissions and/or do_comments parameter')
     common.bot.login(common.r)
 
     if subreddit:
@@ -129,8 +126,8 @@ def _livestream_helper(
 
     args and kwargs go into the collecting functions.
     '''
-    if bool(submission_function) is bool(comment_function) is False:
-        raise Exception('Require submissions and/or comments parameter')
+    if not any([submission_function, comment_function]):
+        raise TypeError('Required submissions and/or comments parameter')
     results = []
 
     if submission_function:
