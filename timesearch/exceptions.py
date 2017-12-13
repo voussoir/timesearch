@@ -15,5 +15,15 @@ class TimesearchException(Exception):
     def __str__(self):
         return self.error_message
 
+OUTOFDATE = '''
+Database is out of date. {current} should be {new}.
+Please use utilities\\database_upgrader.py
+'''.strip()
+class DatabaseOutOfDate(TimesearchException):
+    '''
+    Raised by TSDB __init__ if the user's database is behind.
+    '''
+    error_message = OUTOFDATE
+
 class DatabaseNotFound(TimesearchException, FileNotFoundError):
     error_message = 'Database file not found: "{}"'

@@ -73,10 +73,6 @@ CREATE TABLE IF NOT EXISTS comments(
 CREATE INDEX IF NOT EXISTS comment_index ON comments(idstr);
 '''.format(user_version=DATABASE_VERSION)
 
-ERROR_DATABASE_OUTOFDATE = '''
-Database is out of date. {current} should be {new}.
-'''.strip()
-
 DEFAULT_CONFIG = {
 }
 
@@ -143,9 +139,7 @@ class TSDB:
             self.cur.execute('PRAGMA user_version')
             existing_version = self.cur.fetchone()[0]
             if existing_version > 0 and existing_version != DATABASE_VERSION:
-                message = ERROR_DATABASE_OUTOFDATE
-                message = message.format(current=existing_version, new=DATABASE_VERSION)
-                raise ValueError(message)
+                raise exceptions.DatabaseOutOfDate(current=existing_version, new=DATABASE_VERSION)
 
         statements = DB_INIT.split(';')
         for statement in statements:
