@@ -177,24 +177,44 @@ class TSDB:
         return pathclass.Path(path)
 
     @classmethod
-    def for_subreddit(cls, name, do_create=True):
+    def _for_object_helper(cls, name, path_formats, do_create=True, fix_name=False):
+        if name != os.path.basename(name):
+            filepath = pathclass.Path(name)
+
+        else:
+            filepath = cls._pick_filepath(formats=path_formats, name=name)
+
+        database = cls(filepath=filepath, do_create=do_create)
+        if fix_name:
+            return (database, name_from_path(name))
+        return database
+
+    @classmethod
+    def for_subreddit(cls, name, do_create=True, fix_name=False):
         if isinstance(name, common.praw.models.Subreddit):
             name = name.display_name
         elif not isinstance(name, str):
             raise TypeError(name, 'should be str or Subreddit.')
-
-        filepath = cls._pick_filepath(formats=DB_FORMATS_SUBREDDIT, name=name)
-        return cls(filepath=filepath, do_create=do_create)
+        return cls._for_object_helper(
+            name,
+            do_create=do_create,
+            fix_name=fix_name,
+            path_formats=DB_FORMATS_SUBREDDIT,
+        )
 
     @classmethod
-    def for_user(cls, name, do_create=True):
+    def for_user(cls, name, do_create=True, fix_name=False):
         if isinstance(name, common.praw.models.Redditor):
             name = name.name
         elif not isinstance(name, str):
             raise TypeError(name, 'should be str or Redditor.')
 
-        filepath = cls._pick_filepath(formats=DB_FORMATS_USER, name=name)
-        return cls(filepath=filepath, do_create=do_create)
+        return cls._for_object_helper(
+            name,
+            do_create=do_create,
+            fix_name=fix_name,
+            path_formats=DB_FORMATS_USER,
+        )
 
     def insert(self, objects, commit=True):
         if not isinstance(objects, (list, tuple, types.GeneratorType)):
@@ -368,3 +388,18 @@ def binding_filler(column_names, values, require_all=True):
     qmarks = ', '.join(qmarks)
     bindings = [values[column] for column in column_names]
     return (qmarks, bindings)
+
+def name_from_path(filepath):
+    '''
+    In order to support usage like
+    > timesearch livestream -r D:\\some\\other\\filepath\\learnpython.db
+    this function extracts the subreddit name / username based on the given
+    path, so that we can pass it into `r.subreddit` / `r.redditor` properly.
+    '''
+    if isinstance(filepath, pathclass.Path):
+        filepath = filepath.basename
+    else:
+        filepath = os.path.basename(filepath)
+    name = os.path.splitext(filepath)[0]
+    name = name.strip('@')
+    return name

@@ -28,11 +28,11 @@ def timesearch(
     common.bot.login(common.r)
 
     if subreddit:
-        database = tsdb.TSDB.for_subreddit(subreddit)
+        (database, subreddit) = tsdb.TSDB.for_subreddit(subreddit, fix_name=True)
     else:
         # When searching, we'll take the user's submissions from anywhere.
         subreddit = 'all'
-        database = tsdb.TSDB.for_user(username)
+        (database, username) = tsdb.TSDB.for_user(username, fix_name=True)
     cur = database.sql.cursor()
 
     if lower == 'update':

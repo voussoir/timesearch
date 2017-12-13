@@ -29,12 +29,10 @@ def commentaugment(
         subreddit = specific_submission_obj.subreddit.display_name
 
     if subreddit:
-        if specific_submission is None:
-            database = tsdb.TSDB.for_subreddit(subreddit, do_create=False)
-        else:
-            database = tsdb.TSDB.for_subreddit(subreddit, do_create=True)
+        do_create = specific_submission is not None
+        (database, subreddit) = tsdb.TSDB.for_subreddit(subreddit, do_create=do_create, fix_name=True)
     else:
-        database = tsdb.TSDB.for_user(username, do_create=False)
+        (database, username) = tsdb.TSDB.for_user(username, do_create=False, fix_name=True)
     cur = database.sql.cursor()
 
     if limit == 0:

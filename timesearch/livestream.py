@@ -88,13 +88,13 @@ def _livestream_as_a_generator(
 
     if subreddit:
         common.log.debug('Getting subreddit %s', subreddit)
-        database = tsdb.TSDB.for_subreddit(subreddit)
+        (database, subreddit) = tsdb.TSDB.for_subreddit(subreddit, fix_name=True)
         subreddit = common.r.subreddit(subreddit)
         submission_function = subreddit.new if do_submissions else None
         comment_function = subreddit.comments if do_comments else None
     else:
         common.log.debug('Getting redditor %s', username)
-        database = tsdb.TSDB.for_user(username)
+        (database, username) = tsdb.TSDB.for_user(username, fix_name=True)
         user = common.r.redditor(username)
         submission_function = user.submissions.new if do_submissions else None
         comment_function = user.comments.new if do_comments else None
@@ -162,5 +162,5 @@ def livestream_argparse(args):
         do_submissions=args.submissions,
         limit=limit,
         only_once=args.once,
-        sleepy=common.int_none(args.sleepy),
+        sleepy=int(args.sleepy),
     )
