@@ -1,6 +1,12 @@
 timesearch
 ==========
 
+# CRITICAL (2018 01 29): 
+
+[Reddit is in the process of removing the timestamp search feature which makes timesearch possible](https://www.reddit.com/r/changelog/comments/7tus5f/update_to_search_api/dtfcdn0/). Please message them and let them know that this feature is important to you. Thank you.
+
+---
+
 I don't have a test suite. You're my test suite! Messages go to [/u/GoldenSights](https://reddit.com/u/GoldenSights).
 
 Timesearch is a collection of utilities for archiving subreddits.
