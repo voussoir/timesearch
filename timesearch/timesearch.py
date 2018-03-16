@@ -25,7 +25,7 @@ def timesearch(
     if not common.is_xor(subreddit, username):
         raise exceptions.NotExclusive(['subreddit', 'username'])
 
-    common.bot.login(common.r)
+    common.r = common.bot.login(common.r)
 
     if subreddit:
         (database, subreddit) = tsdb.TSDB.for_subreddit(subreddit, fix_name=True)

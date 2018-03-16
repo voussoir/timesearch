@@ -84,7 +84,7 @@ def _livestream_as_a_generator(
 
     if not any([do_submissions, do_comments]):
         raise TypeError('Required do_submissions and/or do_comments parameter')
-    common.bot.login(common.r)
+    common.r = common.bot.login(common.r)
 
     if subreddit:
         common.log.debug('Getting subreddit %s', subreddit)

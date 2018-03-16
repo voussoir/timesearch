@@ -21,7 +21,7 @@ def commentaugment(
     if not common.is_xor(subreddit, username):
         raise exceptions.NotExclusive(['subreddit', 'username'])
 
-    common.bot.login(common.r)
+    common.r = common.bot.login(common.r)
     if specific_submission is not None:
         if not specific_submission.startswith('t3_'):
             specific_submission = 't3_' + specific_submission
