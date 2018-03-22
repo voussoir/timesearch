@@ -18,8 +18,9 @@ def commentaugment(
     Take the IDs of collected submissions, and gather comments from those threads.
     Please see the global DOCSTRING_COMMENTAUGMENT variable.
     '''
-    if not common.is_xor(subreddit, username):
-        raise exceptions.NotExclusive(['subreddit', 'username'])
+    if specific_submission is None:
+        if not common.is_xor(subreddit, username):
+            raise exceptions.NotExclusive(['subreddit', 'username'])
 
     common.r = common.bot.login(common.r)
     if specific_submission is not None:
