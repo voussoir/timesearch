@@ -13,10 +13,10 @@ WHERE mytable.idint IS NULL;
 '''
 
 def _migrate_helper(db, tablename):
-    oldcount = db.cur.execute('SELECT count(*) FROM %s' % tablename).fetchone()[0]
-
     query = MIGRATE_QUERY.format(tablename=tablename)
     print(query)
+
+    oldcount = db.cur.execute('SELECT count(*) FROM %s' % tablename).fetchone()[0]
     db.cur.execute(query)
     db.sql.commit()
 
