@@ -112,3 +112,10 @@ def nofailrequest(function):
                 print('Retrying in 2...')
                 time.sleep(2)
     return a
+
+def split_any(text, delimiters):
+    delimiters = list(delimiters)
+    (splitter, replacers) = (delimiters[0], delimiters[1:])
+    for replacer in replacers:
+        text = text.replace(replacer, splitter)
+    return text.split(splitter)

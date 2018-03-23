@@ -9,9 +9,9 @@ from . import tsdb
 
 def generator_printer(generator):
     for step in generator:
-        newtext = '%ds, %dc' % (step['new_submissions'], step['new_comments'])
+        newtext = '%s: +%ds, %dc' % (step['tsdb'].filepath.basename, step['new_submissions'], step['new_comments'])
         totalnew = step['new_submissions'] + step['new_comments']
-        status = '{now} +{new}'.format(now=common.human(common.get_now()), new=newtext)
+        status = '{now} {new}'.format(now=common.human(common.get_now()), new=newtext)
         print(status, end='')
         if totalnew == 0 and common.log.level != common.logging.DEBUG:
             # Since there were no news, allow the next line to overwrite status
@@ -39,22 +39,39 @@ def livestream(
         calling `next` on each of them, instead of getting stuck in here.
     '''
 
-    generator = _livestream_as_a_generator(
-        subreddit=subreddit,
-        username=username,
-        do_submissions=do_submissions,
-        do_comments=do_comments,
-        limit=limit,
-        params={'show': 'all'},
-    )
-    if as_a_generator:
-        return generator
+    def _listify(x):
+        if x is None:
+            return []
+        if isinstance(x, str):
+            return common.split_any(x, ['+', ' ', ','])
+        return x
 
-    generator = generator_printer(generator)
+    subreddits = _listify(subreddit)
+    usernames = _listify(username)
+    kwargs = {
+        'do_submissions': do_submissions,
+        'do_comments': do_comments,
+        'limit': limit,
+        'params': {'show': 'all'},
+    }
+    subreddit_generators = [
+        _livestream_as_a_generator(subreddit=subreddit, username=None, **kwargs) for subreddit in subreddits
+    ]
+    user_generators = [
+        _livestream_as_a_generator(subreddit=None, username=username, **kwargs) for username in usernames
+    ]
+    generators = subreddit_generators + user_generators
+    if as_a_generator:
+        if len(generators) == 1:
+            return generators[0]
+        return generators
+
+    generators = [generator_printer(generator) for generator in generators]
 
     while True:
         try:
-            step = next(generator)
+            for generator in generators:
+                step = next(generator)
             if only_once:
                 break
             time.sleep(sleepy)
