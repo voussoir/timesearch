@@ -1,5 +1,6 @@
 import os
 import sqlite3
+import time
 import types
 
 from . import common
@@ -71,9 +72,24 @@ CREATE TABLE IF NOT EXISTS comments(
     textlen INT
 );
 CREATE INDEX IF NOT EXISTS comment_index ON comments(idstr);
+----------------------------------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS submission_edits(
+    idstr TEXT,
+    previous_selftext TEXT,
+    replaced_at INT
+);
+CREATE INDEX IF NOT EXISTS submission_edits_index ON submission_edits(idstr);
+----------------------------------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS comment_edits(
+    idstr TEXT,
+    previous_body TEXT,
+    replaced_at INT
+);
+CREATE INDEX IF NOT EXISTS comment_edits_index ON comment_edits(idstr);
 '''.format(user_version=DATABASE_VERSION)
 
 DEFAULT_CONFIG = {
+    'store_edits': True,
 }
 
 SQL_SUBMISSION_COLUMNS = [
@@ -109,6 +125,12 @@ SQL_COMMENT_COLUMNS = [
     'subreddit',
     'distinguish',
     'textlen',
+]
+
+SQL_EDITS_COLUMNS = [
+    'idstr',
+    'text',
+    'replaced_at',
 ]
 
 SQL_SUBMISSION = {key:index for (index, key) in enumerate(SQL_SUBMISSION_COLUMNS)}
@@ -216,12 +238,36 @@ class TSDB:
             path_formats=DB_FORMATS_USER,
         )
 
+    def check_for_edits(self, obj, existing_entry):
+        '''
+        If the item's current text doesn't match the stored text, decide what
+        to do.
+
+        Firstly, make sure to ignore deleted comments.
+        Then, if the database is configured to store edited text, do so.
+        Finally, return the body that we want to store in the main table.
+        '''
+        if isinstance(obj, common.praw.models.Submission):
+            existing_body = existing_entry[SQL_SUBMISSION['selftext']]
+            body = obj.selftext
+        else:
+            existing_body = existing_entry[SQL_COMMENT['body']]
+            body = obj.body
+
+        if body != existing_body:
+            if should_keep_existing_text(obj):
+                body = existing_body
+            elif self.config['store_edits']:
+                self.insert_edited(obj, old_text=existing_body)
+        return body
+
     def insert(self, objects, commit=True):
         if not isinstance(objects, (list, tuple, types.GeneratorType)):
             objects = [objects]
         common.log.debug('Trying to insert %d objects.', len(objects))
 
         new_values = {
+            'tsdb': self,
             'new_submissions': 0,
             'new_comments': 0,
         }
@@ -242,6 +288,32 @@ class TSDB:
 
         common.log.debug('Done inserting.')
         return new_values
+
+    def insert_edited(self, obj, old_text):
+        '''
+        Having already detected that the item has been edited, add a record to
+        the appropriate *_edits table containing the text that is being
+        replaced.
+        '''
+        if isinstance(obj, common.praw.models.Submission):
+            table = 'submission_edits'
+        else:
+            table = 'comment_edits'
+
+        if obj.edited is False:
+            replaced_at = int(time.time())
+        else:
+            replaced_at = int(obj.edited)
+
+        postdata = {
+            'idstr': obj.fullname,
+            'text': old_text,
+            'replaced_at': replaced_at,
+        }
+        cur = self.sql.cursor()
+        (qmarks, bindings) = binding_filler(SQL_EDITS_COLUMNS, postdata, require_all=True)
+        query = 'INSERT INTO %s VALUES(%s)' % (table, qmarks)
+        cur.execute(query, bindings)
 
     def insert_submission(self, submission):
         cur = self.sql.cursor()
@@ -285,12 +357,7 @@ class TSDB:
             cur.execute(query, bindings)
 
         else:
-            if submission.author is None:
-                # This post is deleted, therefore its text probably says [deleted] or [removed].
-                # Discard that, and keep the data we already had here.
-                selftext = existing_entry[SQL_SUBMISSION['selftext']]
-            else:
-                selftext = submission.selftext
+            selftext = self.check_for_edits(submission, existing_entry=existing_entry)
 
             query = '''
                 UPDATE submissions SET
@@ -346,11 +413,7 @@ class TSDB:
             cur.execute(query, bindings)
 
         else:
-            greasy = ['has been overwritten', 'pastebin.com/64GuVi2F']
-            if comment.author is None or any(grease in comment.body for grease in greasy):
-                body = existing_entry[SQL_COMMENT['body']]
-            else:
-                body = comment.body
+            body = self.check_for_edits(comment, existing_entry=existing_entry)
 
             query = '''
                 UPDATE comments SET
@@ -403,3 +466,23 @@ def name_from_path(filepath):
     name = os.path.splitext(filepath)[0]
     name = name.strip('@')
     return name
+
+def should_keep_existing_text(obj):
+    '''
+    Under certain conditions we do not want to update the entry in the db
+    with the most recent copy of the text. For example, if the post has
+    been deleted and the text now shows '[deleted]' we would prefer to
+    keep whatever we already have.
+
+    This function puts away the work I would otherwise have to duplicate
+    for both submissions and comments.
+    '''
+    body = obj.selftext if isinstance(obj, common.praw.models.Submission) else obj.body
+    if obj.author is None and body in ['[removed]', '[deleted]']:
+        return True
+
+    greasy = ['has been overwritten', 'pastebin.com/64GuVi2F']
+    if any(grease in body for grease in greasy):
+        return True
+
+    return False
