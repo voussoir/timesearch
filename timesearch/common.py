@@ -119,3 +119,8 @@ def split_any(text, delimiters):
     for replacer in replacers:
         text = text.replace(replacer, splitter)
     return text.split(splitter)
+
+def t3_prefix(submission_id):
+    if not submission_id.startswith('t3_'):
+        submission_id = 't3_' + submission_id
+    return submission_id

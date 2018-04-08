@@ -24,9 +24,8 @@ def commentaugment(
 
     common.r = common.bot.login(common.r)
     if specific_submission is not None:
-        if not specific_submission.startswith('t3_'):
-            specific_submission = 't3_' + specific_submission
-        specific_submission_obj = common.r.submission(specific_submission[3:])
+        specific_submission = common.t3_prefix(specific_submission)[3:]
+        specific_submission_obj = common.r.submission(specific_submission)
         subreddit = specific_submission_obj.subreddit.display_name
 
     if subreddit:
