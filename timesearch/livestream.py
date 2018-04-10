@@ -8,17 +8,28 @@ from . import tsdb
 
 
 def generator_printer(generator):
+    prev_message_length = 0
     for step in generator:
         newtext = '%s: +%ds, %dc' % (step['tsdb'].filepath.basename, step['new_submissions'], step['new_comments'])
         totalnew = step['new_submissions'] + step['new_comments']
         status = '{now} {new}'.format(now=common.human(common.get_now()), new=newtext)
-        print(status, end='')
+        clear_prev = (' ' * prev_message_length) + '\r'
+        print(clear_prev + status, end='')
+        prev_message_length = len(status)
         if totalnew == 0 and common.log.level != common.logging.DEBUG:
             # Since there were no news, allow the next line to overwrite status
             print('\r', end='', flush=True)
         else:
             print()
         yield None
+
+def cycle_generators(generators, only_once, sleepy):
+    while True:
+        for (index, generator) in enumerate(generators):
+            yield next(generator)
+        if only_once:
+            break
+        time.sleep(sleepy)
 
 def livestream(
         subreddit=None,
@@ -66,19 +77,15 @@ def livestream(
             return generators[0]
         return generators
 
-    generators = [generator_printer(generator) for generator in generators]
+    generator = cycle_generators(generators, only_once, sleepy)
+    generator = generator_printer(generator)
 
-    while True:
-        try:
-            for generator in generators:
-                step = next(generator)
-            if only_once:
-                break
-            time.sleep(sleepy)
-
-        except KeyboardInterrupt:
-            print()
-            return
+    try:
+        while True:
+            step = next(generator)
+    except KeyboardInterrupt:
+        print()
+        return
 
 hangman = lambda: livestream(
     username='gallowboob',
@@ -101,7 +108,7 @@ def _livestream_as_a_generator(
 
     if not any([do_submissions, do_comments]):
         raise TypeError('Required do_submissions and/or do_comments parameter')
-    common.r = common.bot.login(common.r)
+    common.login()
 
     if subreddit:
         common.log.debug('Getting subreddit %s', subreddit)

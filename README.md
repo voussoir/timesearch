@@ -1,9 +1,13 @@
 timesearch
 ==========
 
-# CRITICAL (2018 01 29): 
+# NEWS (2018 04 09):
 
-[Reddit is in the process of removing the timestamp search feature which makes timesearch possible](https://www.reddit.com/r/changelog/comments/7tus5f/update_to_search_api/dtfcdn0/). Please message them and let them know that this feature is important to you. Thank you.
+[Reddit has removed the timestamp search feature which timesearch was built off of](https://www.reddit.com/r/changelog/comments/7tus5f/update_to_search_api/dtfcdn0/). Please message the admins by [sending a PM to /r/reddit.com](https://www.reddit.com/message/compose?to=%2Fr%2Freddit.com&subject=Timestamp+search). Let them know that this feature is important to you, and you would like them to restore it on the new search stack.
+
+Thankfully, Jason Baumgartner aka [/u/Stuck_in_the_Matrix](https://reddit.com/u/Stuck_in_the_Matrix/overview), owner of [Pushshift.io](https://github.com/pushshift/api), has made it easy to interact with his dataset. Timesearch now queries his API to get post data, and then uses reddit's /api/info to get up-to-date information about those posts (scores, edited text bodies, ...). While we're at it, this also gives us the ability to speed up commentaugment. In addition, we can get all of a user's comments which was not possible through reddit alone.
+
+NOTE: Because Pushshift is an independent dataset run by a regular person, it does not contain posts from private subreddits. Without the timestamp search parameter, scanning private subreddits is now impossible. I urge once again that you contact ~~your senator~~ the admins to have this feature restored.
 
 ---
 
@@ -24,8 +28,7 @@ Timesearch is a collection of utilities for archiving subreddits.
     `> timesearch.py timesearch -r subredditname <flags>`  
     `> timesearch.py timesearch -u username <flags>`
 
-- **commentaugment**: Although we can search for submissions, we cannot search for comments. After performing a timesearch, you can use commentaugment to download the comment tree for each submission.  
-    Note: commentaugment only gets the comments attached to the submissions that you found in your timesearch scan. If you're trying to commentaugment on a user, you're going to get comments that were made on their submissions, **not** comments they made on other people's submissions. Therefore, comprehensively collecting a user's activity is not possible. You will have to use someone else's dataset like that of [/u/Stuck_in_the_Matrix](https://reddit.com/u/Stuck_in_the_Matrix) at [pushshift.io](https://pushshift.io).  
+- **commentaugment**: Although we can search for submissions, we cannot search for comments. After performing a timesearch, you can use commentaugment to download the comments on a subreddit, or the comments made by a user.  
     `> timesearch.py commentaugment -r subredditname <flags>`  
     `> timesearch.py commentaugment -u username <flags>`
 
@@ -62,6 +65,9 @@ You will need both the `timesearch` package (folder) and the external `timesearc
 I recommend [sqlitebrowser](https://github.com/sqlitebrowser/sqlitebrowser/releases) if you want to inspect the database yourself.
 
 ### Changelog
+- 2018 04 09
+    - Integrated with Pushshift to restore timesearch functionality, speed up commentaugment, and get user comments.
+
 - 2017 11 13
     - Gave timesearch its own Github repository so that (1) it will be easier for people to download it and (2) it has a cleaner, more independent URL. [voussoir/timesearch](https://github.com/voussoir/timesearch)
 

@@ -5,6 +5,7 @@ import types
 
 from . import common
 from . import exceptions
+from . import pushshift
 
 from voussoirkit import pathclass
 
@@ -136,6 +137,8 @@ SQL_EDITS_COLUMNS = [
 SQL_SUBMISSION = {key:index for (index, key) in enumerate(SQL_SUBMISSION_COLUMNS)}
 SQL_COMMENT = {key:index for (index, key) in enumerate(SQL_COMMENT_COLUMNS)}
 
+SUBMISSION_TYPES = (common.praw.models.Submission, pushshift.DummySubmission)
+COMMENT_TYPES = (common.praw.models.Comment, pushshift.DummyComment)
 
 class TSDB:
     def __init__(self, filepath, do_create=True):
@@ -247,7 +250,7 @@ class TSDB:
         Then, if the database is configured to store edited text, do so.
         Finally, return the body that we want to store in the main table.
         '''
-        if isinstance(obj, common.praw.models.Submission):
+        if isinstance(obj, SUBMISSION_TYPES):
             existing_body = existing_entry[SQL_SUBMISSION['selftext']]
             body = obj.selftext
         else:
@@ -275,6 +278,9 @@ class TSDB:
             common.praw.models.Submission: (self.insert_submission, 'new_submissions'),
             common.praw.models.Comment: (self.insert_comment, 'new_comments'),
         }
+        methods[pushshift.DummySubmission] = methods[common.praw.models.Submission]
+        methods[pushshift.DummyComment] = methods[common.praw.models.Comment]
+
         for obj in objects:
             (method, key) = methods.get(type(obj), (None, None))
             if method is None:
@@ -295,7 +301,7 @@ class TSDB:
         the appropriate *_edits table containing the text that is being
         replaced.
         '''
-        if isinstance(obj, common.praw.models.Submission):
+        if isinstance(obj, SUBMISSION_TYPES):
             table = 'submission_edits'
         else:
             table = 'comment_edits'
@@ -477,7 +483,7 @@ def should_keep_existing_text(obj):
     This function puts away the work I would otherwise have to duplicate
     for both submissions and comments.
     '''
-    body = obj.selftext if isinstance(obj, common.praw.models.Submission) else obj.body
+    body = obj.selftext if isinstance(obj, SUBMISSION_TYPES) else obj.body
     if obj.author is None and body in ['[removed]', '[deleted]']:
         return True
 

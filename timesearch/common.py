@@ -4,6 +4,8 @@ import os
 import time
 import traceback
 
+VERSION = '2018.04.09.0'
+
 try:
     import praw
 except ImportError:
@@ -92,6 +94,11 @@ def is_xor(*args):
     Return True if and only if one arg is truthy.
     '''
     return [bool(a) for a in args].count(True) == 1
+
+def login():
+    global r
+    log.debug('Logging in to reddit.')
+    r = bot.login(r)
 
 def nofailrequest(function):
     '''

@@ -65,37 +65,21 @@ breakdown:
 
     'commentaugment': '''
 commentaugment:
-    Collect comments for the submissions in the database.
-    NOTE - if you did a timesearch scan on a username, this function is
-    mostly useless. It collects comments that were made on OP's submissions
-    but it does not find OP's comments on other people's submissions which
-    is what you probably wanted. Unfortunately that's not possible.
+    Collect comments on a subreddit or comments made by a user.
 
     > timesearch.py commentaugment -r subredditname <flags>
     > timesearch.py commentaugment -u username <flags>
 
     flags:
-    -l 18 | --limit 18:
-        The number of MoreComments objects to replace.
-        Default: No limit
-
-    -t 5 | --threshold 5:
-        The number of comments a MoreComments object must claim to have
-        for us to open it.
-        Actual number received may be lower.
-        Default: >= 0
-
-    -n 4 | --num_thresh 4:
-        The number of comments a submission must claim to have for us to
-        scan it at all.
-        Actual number received may be lower.
-        Default: >= 1
-
     -s "t3_xxxxxx" | --specific "t3_xxxxxx":
         Given a submission ID, t3_xxxxxx, scan only that submission.
 
+    --dont_supplement:
+        If provided, trust the pushshift data and do not fetch live copies
+        from reddit.
+
     -v | --verbose:
-        If provided, print more stuff while working.
+        If provided, print extra information to the screen.
 ''',
 
     'getstyles': '''
@@ -256,11 +240,12 @@ timesearch:
         If not provided - stop at current time.
         Default: current time
 
-    -i 86400 | --interval 86400:
-        The initial interval for the scanning window, in seconds.
-        This is only a starting value. The window will shrink and stretch
-        as necessary based on received submission counts.
-        Default: 86400
+    --dont_supplement:
+        If provided, trust the pushshift data and do not fetch live copies
+        from reddit.
+
+    -v | --verbose:
+        If provided, print extra information to the screen.
 ''',
 }
 
@@ -339,13 +324,11 @@ p_breakdown.add_argument('-u', '--user', dest='username', default=None)
 p_breakdown.set_defaults(func=breakdown_gateway)
 
 p_commentaugment = subparsers.add_parser('commentaugment')
-p_commentaugment.add_argument('-l', '--limit', dest='limit', default=None)
-p_commentaugment.add_argument('-n', '--num_thresh', dest='num_thresh', default=1)
 p_commentaugment.add_argument('-r', '--subreddit', dest='subreddit', default=None)
 p_commentaugment.add_argument('-s', '--specific', dest='specific_submission', default=None)
-p_commentaugment.add_argument('-t', '--threshold', dest='threshold', default=0)
 p_commentaugment.add_argument('-u', '--user', dest='username', default=None)
 p_commentaugment.add_argument('-v', '--verbose', dest='verbose', action='store_true')
+p_commentaugment.add_argument('--dont_supplement', dest='do_supplement', action='store_false')
 p_commentaugment.set_defaults(func=commentaugment_gateway)
 
 p_getstyles = subparsers.add_parser('getstyles')
@@ -393,11 +376,12 @@ p_redmash.add_argument('-u', '--user', dest='username', default=None)
 p_redmash.set_defaults(func=redmash_gateway)
 
 p_timesearch = subparsers.add_parser('timesearch')
-p_timesearch.add_argument('-i', '--interval', dest='interval', default=86400)
 p_timesearch.add_argument('-l', '--lower', dest='lower', default='update')
 p_timesearch.add_argument('-r', '--subreddit', dest='subreddit', default=None)
 p_timesearch.add_argument('-u', '--user', dest='username', default=None)
 p_timesearch.add_argument('-up', '--upper', dest='upper', default=None)
+p_timesearch.add_argument('-v', '--verbose', dest='verbose', action='store_true')
+p_timesearch.add_argument('--dont_supplement', dest='do_supplement', action='store_false')
 p_timesearch.set_defaults(func=timesearch_gateway)
 
 def main(argv):
