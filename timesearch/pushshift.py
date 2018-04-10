@@ -96,7 +96,7 @@ def _normalize_user(user):
     if isinstance(user, str):
         return user
     else:
-        return user.display_name
+        return user.name
 
 def _pagination_core(url, params, dummy_type, lower=None, upper=None):
     if upper is not None:
