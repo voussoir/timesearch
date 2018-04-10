@@ -8,6 +8,7 @@ from . import exceptions
 from . import pushshift
 
 from voussoirkit import pathclass
+from voussoirkit import sqlhelpers
 
 
 # For backwards compatibility reasons, this list of format strings will help
@@ -317,7 +318,7 @@ class TSDB:
             'replaced_at': replaced_at,
         }
         cur = self.sql.cursor()
-        (qmarks, bindings) = binding_filler(SQL_EDITS_COLUMNS, postdata, require_all=True)
+        (qmarks, bindings) = sqlhelpers.insert_filler(SQL_EDITS_COLUMNS, postdata)
         query = 'INSERT INTO %s VALUES(%s)' % (table, qmarks)
         cur.execute(query, bindings)
 
@@ -358,7 +359,7 @@ class TSDB:
                 'augmented_at': None,
                 'augmented_count': None,
             }
-            (qmarks, bindings) = binding_filler(SQL_SUBMISSION_COLUMNS, postdata, require_all=True)
+            (qmarks, bindings) = sqlhelpers.insert_filler(SQL_SUBMISSION_COLUMNS, postdata)
             query = 'INSERT INTO submissions VALUES(%s)' % qmarks
             cur.execute(query, bindings)
 
@@ -414,7 +415,7 @@ class TSDB:
                 'distinguish': comment.distinguished,
                 'textlen': len(comment.body),
             }
-            (qmarks, bindings) = binding_filler(SQL_COMMENT_COLUMNS, postdata, require_all=True)
+            (qmarks, bindings) = sqlhelpers.insert_filler(SQL_COMMENT_COLUMNS, postdata)
             query = 'INSERT INTO comments VALUES(%s)' % qmarks
             cur.execute(query, bindings)
 
@@ -438,25 +439,6 @@ class TSDB:
 
         return existing_entry is None
 
-
-def binding_filler(column_names, values, require_all=True):
-    '''
-    Manually aligning question marks and bindings is annoying.
-    Given the table's column names and a dictionary of {column: value},
-    return the question marks and the list of bindings in the right order.
-    '''
-    values = values.copy()
-    for column in column_names:
-        if column in values:
-            continue
-        if require_all:
-            raise ValueError('Missing column "%s"' % column)
-        else:
-            values.setdefault(column, None)
-    qmarks = '?' * len(column_names)
-    qmarks = ', '.join(qmarks)
-    bindings = [values[column] for column in column_names]
-    return (qmarks, bindings)
 
 def name_from_path(filepath):
     '''
