@@ -11,6 +11,8 @@ def commentaugment(
         username=None,
         specific_submission=None,
         do_supplement=True,
+        lower=None,
+        upper=None,
     ):
     if not specific_submission and not common.is_xor(subreddit, username):
         raise exceptions.NotExclusive(['subreddit', 'username'])
@@ -33,40 +35,44 @@ def commentaugment(
     if specific_submission is not None:
         database.insert(specific_submission_obj)
 
-    lower = 0
-    query_latest = 'SELECT created FROM comments ORDER BY created DESC LIMIT 1'
-    if subreddit:
-        # Instead of blindly taking the highest timestamp currently in the db,
-        # we must consider the case that the user has previously done a
-        # specific_submission scan and now wants to do a general scan, which
-        # would trick the latest timestamp into missing anything before that
-        # specific submission.
-        query = '''
-        SELECT created FROM comments WHERE NOT EXISTS (
-            SELECT 1 FROM submissions
-            WHERE submissions.idstr == comments.submission
-            AND submissions.augmented_at IS NOT NULL
-        )
-        ORDER BY created DESC LIMIT 1
-        '''
-        unaugmented = cur.execute(query).fetchone()
-        if unaugmented:
-            lower = unaugmented[0] - 1
-        else:
+    if lower is None:
+        lower = 0
+    if lower == 'update':
+        query_latest = 'SELECT created FROM comments ORDER BY created DESC LIMIT 1'
+        if subreddit:
+            # Instead of blindly taking the highest timestamp currently in the db,
+            # we must consider the case that the user has previously done a
+            # specific_submission scan and now wants to do a general scan, which
+            # would trick the latest timestamp into missing anything before that
+            # specific submission.
+            query = '''
+            SELECT created FROM comments WHERE NOT EXISTS (
+                SELECT 1 FROM submissions
+                WHERE submissions.idstr == comments.submission
+                AND submissions.augmented_at IS NOT NULL
+            )
+            ORDER BY created DESC LIMIT 1
+            '''
+            unaugmented = cur.execute(query).fetchone()
+            if unaugmented:
+                lower = unaugmented[0] - 1
+            else:
+                latest = cur.execute(query_latest).fetchone()
+                if latest:
+                    lower = latest[0] - 1
+        if username:
             latest = cur.execute(query_latest).fetchone()
             if latest:
                 lower = latest[0] - 1
-    if username:
-        latest = cur.execute(query_latest).fetchone()
-        if latest:
-            lower = latest[0] - 1
+    if lower == 'update':
+        lower = 0
 
     if specific_submission:
         comments = pushshift.get_comments_from_submission(specific_submission_obj)
     elif subreddit:
-        comments = pushshift.get_comments_from_subreddit(subreddit, lower=lower)
+        comments = pushshift.get_comments_from_subreddit(subreddit, lower=lower, upper=upper)
     elif username:
-        comments = pushshift.get_comments_from_user(username, lower=lower)
+        comments = pushshift.get_comments_from_user(username, lower=lower, upper=upper)
 
     form = '{lower} - {upper} +{gain}'
 
@@ -104,4 +110,6 @@ def commentaugment_argparse(args):
         #verbose=args.verbose,
         specific_submission=args.specific_submission,
         do_supplement=args.do_supplement,
+        lower=args.lower,
+        upper=args.upper,
     )

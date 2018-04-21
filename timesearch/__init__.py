@@ -74,6 +74,16 @@ commentaugment:
     -s "t3_xxxxxx" | --specific "t3_xxxxxx":
         Given a submission ID, t3_xxxxxx, scan only that submission.
 
+    -l "update" | --lower "update":
+        If a number - the unix timestamp to start at.
+        If "update" - continue from latest comment in db.
+        Default: update
+
+    -up 1467460221 | --upper 1467460221:
+        If a number - the unix timestamp to stop at.
+        If not provided - stop at current time.
+        Default: current time
+
     --dont_supplement:
         If provided, trust the pushshift data and do not fetch live copies
         from reddit.
@@ -329,6 +339,8 @@ p_commentaugment.add_argument('-s', '--specific', dest='specific_submission', de
 p_commentaugment.add_argument('-u', '--user', dest='username', default=None)
 p_commentaugment.add_argument('-v', '--verbose', dest='verbose', action='store_true')
 p_commentaugment.add_argument('--dont_supplement', dest='do_supplement', action='store_false')
+p_commentaugment.add_argument('-l', '--lower', dest='lower', default='update')
+p_commentaugment.add_argument('-up', '--upper', dest='upper', default=None)
 p_commentaugment.set_defaults(func=commentaugment_gateway)
 
 p_getstyles = subparsers.add_parser('getstyles')
