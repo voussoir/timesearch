@@ -81,8 +81,8 @@ def livestream(
     generator = generator_printer(generator)
 
     try:
-        while True:
-            step = next(generator)
+        for step in generator:
+            pass
     except KeyboardInterrupt:
         print()
         return
