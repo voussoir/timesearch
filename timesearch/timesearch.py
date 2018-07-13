@@ -61,11 +61,6 @@ def timesearch(
     if lower is None:
         lower = 0
 
-    if upper is None:
-        upper = common.get_now() + 86400
-
-    form = '{lower} - {upper} +{gain}'
-
     if username:
         submissions = pushshift.get_submissions_from_user(username, lower=lower, upper=upper)
     else:
@@ -74,6 +69,8 @@ def timesearch(
     if do_supplement:
         submissions = pushshift.supplement_reddit_data(submissions, chunk_size=100)
     submissions = common.generator_chunker(submissions, 200)
+
+    form = '{lower} - {upper} +{gain}'
     for chunk in submissions:
         chunk.sort(key=lambda x: x.created_utc)
         new_count = database.insert(chunk)['new_submissions']
