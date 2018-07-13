@@ -72,7 +72,9 @@ class DummyObject:
         for (key, val) in FALLBACK_ATTRIBUTES.items():
             if not hasattr(self, key):
                 setattr(self, key, val)
-# This seems to occur in rare cases such as promo posts.
+
+# In rare cases, things sometimes don't have a subreddit.
+# Promo posts seem to be one example.
 FALLBACK_ATTRIBUTES['subreddit'] = DummyObject(display_name=None)
 
 class DummySubmission(DummyObject):
