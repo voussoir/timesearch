@@ -49,8 +49,8 @@ breakdown:
     Automatically dumps into a <database>_breakdown.json file
     in the same directory as the database.
 
-    > timesearch.py breakdown -r subredditname
-    > timesearch.py breakdown -u username
+    > timesearch.py breakdown -r subredditname <flags>
+    > timesearch.py breakdown -u username <flags>
 
     flags:
     -r "test" | --subreddit "test":
