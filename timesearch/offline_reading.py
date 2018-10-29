@@ -227,11 +227,12 @@ def html_from_database(subreddit=None, username=None, specific_submission=None):
     if username and specific_submission:
         raise exceptions.NotExclusive(['username', 'specific_submission'])
 
-    if specific_submission is not None:
-        subreddit = common.subreddit_for_submission(specific_submission).display_name
+    if specific_submission:
+        database = tsdb.TSDB.for_submission(specific_submission, do_create=False)
 
-    if subreddit:
+    elif subreddit:
         database = tsdb.TSDB.for_subreddit(subreddit, do_create=False)
+
     else:
         database = tsdb.TSDB.for_user(username, do_create=False)
 

@@ -21,18 +21,19 @@ def commentaugment(
 
     common.login()
 
-    if specific_submission is not None:
-        subreddit = common.subreddit_for_submission(specific_submission).display_name
+    if specific_submission:
+        (database, subreddit) = tsdb.TSDB.for_submission(specific_submission, do_create=True, fix_name=True)
+        specific_submission = common.t3_prefix(specific_submission)[3:]
+        specific_submission = common.r.submission(specific_submission)
+        database.insert(specific_submission)
 
-    if subreddit:
-        do_create = specific_submission is not None
-        (database, subreddit) = tsdb.TSDB.for_subreddit(subreddit, do_create=do_create, fix_name=True)
+    elif subreddit:
+        (database, subreddit) = tsdb.TSDB.for_subreddit(subreddit, do_create=False, fix_name=True)
+
     else:
         (database, username) = tsdb.TSDB.for_user(username, do_create=False, fix_name=True)
-    cur = database.sql.cursor()
 
-    if specific_submission is not None:
-        database.insert(specific_submission_obj)
+    cur = database.sql.cursor()
 
     if lower is None:
         lower = 0
@@ -67,7 +68,7 @@ def commentaugment(
         lower = 0
 
     if specific_submission:
-        comments = pushshift.get_comments_from_submission(specific_submission_obj)
+        comments = pushshift.get_comments_from_submission(specific_submission)
     elif subreddit:
         comments = pushshift.get_comments_from_subreddit(subreddit, lower=lower, upper=upper)
     elif username:
@@ -92,7 +93,7 @@ def commentaugment(
             set augmented_at = ?
             WHERE idstr == ?
         '''
-        bindings = [common.get_now(), specific_submission_obj.fullname]
+        bindings = [common.get_now(), specific_submission.fullname]
         cur.execute(query, bindings)
         database.sql.commit()
 

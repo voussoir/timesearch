@@ -216,6 +216,14 @@ class TSDB:
         return database
 
     @classmethod
+    def for_submission(cls, submission_id, fix_name=False, *args, **kwargs):
+        subreddit = common.subreddit_for_submission(submission_id)
+        database = cls.for_subreddit(subreddit, *args, **kwargs)
+        if fix_name:
+            return (database, subreddit.display_name)
+        return database
+
+    @classmethod
     def for_subreddit(cls, name, do_create=True, fix_name=False):
         if isinstance(name, common.praw.models.Subreddit):
             name = name.display_name
