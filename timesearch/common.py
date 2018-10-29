@@ -64,6 +64,10 @@ def fetchgenerator(cursor):
         yield item
 
 def generator_chunker(generator, chunk_size):
+    '''
+    Given an item generator, yield lists of length chunk_size, except maybe
+    the last one.
+    '''
     chunk = []
     for item in generator:
         chunk.append(item)

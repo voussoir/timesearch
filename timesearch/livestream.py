@@ -7,7 +7,22 @@ from . import exceptions
 from . import tsdb
 
 
+def _listify(x):
+    '''
+    The user may have given us a string containing multiple subreddits / users.
+    Try to split that up into a list of names.
+    '''
+    if not x:
+        return []
+    if isinstance(x, str):
+        return common.split_any(x, ['+', ' ', ','])
+    return x
+
 def generator_printer(generator):
+    '''
+    Given a generator that produces livestream update steps, print them out.
+    This yields None because print returns None.
+    '''
     prev_message_length = 0
     for step in generator:
         newtext = '%s: +%ds, %dc' % (step['tsdb'].filepath.basename, step['new_submissions'], step['new_comments'])
@@ -24,8 +39,16 @@ def generator_printer(generator):
         yield None
 
 def cycle_generators(generators, only_once, sleepy):
+    '''
+    Given multiple generators, yield an item from each one, cycling through
+    them in a round-robin fashion.
+
+    This is useful if you want to convert multiple livestream generators into a
+    single generator that take turns updating each of them and yields all of
+    their items.
+    '''
     while True:
-        for (index, generator) in enumerate(generators):
+        for generator in generators:
             yield next(generator)
         if only_once:
             break
@@ -45,18 +68,12 @@ def livestream(
     Continuously get posts from this source and insert them into the database.
 
     as_a_generator:
-        return a generator where every iteration does a single livestream loop.
-        This is good if you want to manage multiple livestreams yourself by
-        calling `next` on each of them, instead of getting stuck in here.
+        Return a generator where every iteration does a single livestream loop
+        and yields the return value of TSDB.insert (A summary of new
+        submission & comment count).
+        This is useful if you want to manage the generator yourself.
+        Otherwise, this function will run the generator forever.
     '''
-
-    def _listify(x):
-        if x is None:
-            return []
-        if isinstance(x, str):
-            return common.split_any(x, ['+', ' ', ','])
-        return x
-
     subreddits = _listify(subreddit)
     usernames = _listify(username)
     kwargs = {
@@ -65,6 +82,7 @@ def livestream(
         'limit': limit,
         'params': {'show': 'all'},
     }
+
     subreddit_generators = [
         _livestream_as_a_generator(subreddit=subreddit, username=None, **kwargs) for subreddit in subreddits
     ]
@@ -72,12 +90,13 @@ def livestream(
         _livestream_as_a_generator(subreddit=None, username=username, **kwargs) for username in usernames
     ]
     generators = subreddit_generators + user_generators
+
     if as_a_generator:
         if len(generators) == 1:
             return generators[0]
         return generators
 
-    generator = cycle_generators(generators, only_once, sleepy)
+    generator = cycle_generators(generators, only_once=only_once, sleepy=sleepy)
     generator = generator_printer(generator)
 
     try:

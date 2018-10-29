@@ -274,6 +274,9 @@ def html_from_tree(tree, sort=None):
     return page
 
 def html_helper_permalink(item):
+    '''
+    Given a submission or a comment, return an <a> tag for its permalink.
+    '''
     link = 'https://www.reddit.com/r/%s/comments/' % item.subreddit
     if item.object_type == 'submission':
         link += item.idstr[3:]
@@ -283,6 +286,10 @@ def html_helper_permalink(item):
     return link
 
 def html_helper_urlortext(submission):
+    '''
+    Given a submission, return either an <a> tag for its url, or its
+    markdown-rendered selftext.
+    '''
     if submission.url:
         text = '<a href="{url}">{url}</a>'.format(url=submission.url)
     elif submission.selftext:
@@ -293,6 +300,9 @@ def html_helper_urlortext(submission):
     return text
 
 def html_helper_userlink(item):
+    '''
+    Given a submission or comment, return an <a> tag for its author, or [deleted].
+    '''
     name = item.author
     if name.lower() == '[deleted]':
         return '[deleted]'
