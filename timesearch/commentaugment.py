@@ -20,10 +20,9 @@ def commentaugment(
         raise exceptions.NotExclusive(['username', 'specific_submission'])
 
     common.login()
+
     if specific_submission is not None:
-        specific_submission = common.t3_prefix(specific_submission)[3:]
-        specific_submission_obj = common.r.submission(specific_submission)
-        subreddit = specific_submission_obj.subreddit.display_name
+        subreddit = common.subreddit_for_submission(specific_submission).display_name
 
     if subreddit:
         do_create = specific_submission is not None

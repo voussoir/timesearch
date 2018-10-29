@@ -127,6 +127,11 @@ def split_any(text, delimiters):
         text = text.replace(replacer, splitter)
     return text.split(splitter)
 
+def subreddit_for_submission(submission_id):
+    submission_id = t3_prefix(submission_id)[3:]
+    submission = r.submission(submission_id)
+    return submission.subreddit
+
 def t3_prefix(submission_id):
     if not submission_id.startswith('t3_'):
         submission_id = 't3_' + submission_id
