@@ -312,7 +312,11 @@ def html_helper_userlink(item):
     return link
 
 def render_markdown(text):
-    text = markdown.markdown(text, output_format='html5')
+    # I was going to use html.escape, but then it turns html entities like
+    # &nbsp; into &amp;nbsp; which doesn't work.
+    # So I only want to escape the brackets.
+    escaped = text.replace('<', '&lt;').replace('>', '&rt;')
+    text = markdown.markdown(escaped, output_format='html5')
     return text
 
 def sanitize_braces(text):
