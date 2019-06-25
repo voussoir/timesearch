@@ -154,8 +154,9 @@ def _livestream_as_a_generator(
             yield newitems
         except Exception:
             traceback.print_exc()
-            print('Retrying in 5...')
-            time.sleep(5)
+            print('Retrying...')
+            step = {'tsdb': database, 'new_comments': 0, 'new_submissions': 0}
+            yield step
 
 def _livestream_helper(
         submission_function=None,
