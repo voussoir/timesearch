@@ -10,6 +10,7 @@ as scanning all of a user's comments.
 import html
 import requests
 import time
+import traceback
 
 from . import common
 
@@ -109,7 +110,14 @@ def _pagination_core(url, params, dummy_type, lower=None, upper=None):
     setify = lambda items: set(item['id'] for item in items)
     prev_batch_ids = set()
     while True:
-        batch = get(url, params)
+        for retry in range(5):
+            try:
+                batch = get(url, params)
+            except requests.exceptions.HTTPError as exc:
+                traceback.print_exc()
+                print('Retrying in 5...')
+                time.sleep(5)
+
         batch_ids = setify(batch)
         if len(batch_ids) == 0 or batch_ids.issubset(prev_batch_ids):
             break
