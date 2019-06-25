@@ -74,7 +74,7 @@ def commentaugment(
     elif username:
         comments = pushshift.get_comments_from_user(username, lower=lower, upper=upper)
 
-    form = '{lower} - {upper} +{gain}'
+    form = '{lower} ({lower_unix}) - {upper} ({upper_unix}) +{gain}'
 
     if do_supplement:
         comments = pushshift.supplement_reddit_data(comments, chunk_size=100)
@@ -84,6 +84,8 @@ def commentaugment(
         message = form.format(
             lower=common.human(chunk[0].created_utc),
             upper=common.human(chunk[-1].created_utc),
+            lower_unix=int(chunk[0].created_utc),
+            upper_unix=int(chunk[-1].created_utc),
             gain=step['new_comments'],
         )
         print(message)
