@@ -1,0 +1,2991 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<style>
+.comment
+{
+    padding-left: 20px;
+    margin-top: 4px;
+    margin-right: 4px;
+    margin-bottom: 4px;
+    border: 2px #000 solid;
+}
+.submission
+{
+    border: 4px #00f solid;
+    padding-left: 20px;
+}
+.hidden
+{
+    display: none;
+}
+</style>
+</head>
+<body><div class="submission" id="t3_7tus5f">
+    <p class="userinfo">
+        <a href="https://www.reddit.com/u/priviReddit">priviReddit</a>
+        <span class="score"> | 146 points</span>
+        <span class="timestamp"> | Jan 29 2018 19:23:20</span>
+    </p>
+    <strong>Update To Search API</strong>
+    <p><p>In an on-going effort to <a href="https://www.reddit.com/r/changelog/comments/6pi0kk/improving_search/">upgrade search</a> we’re currently running two full search systems: <a href="https://redditblog.com/2017/09/07/the-search-for-better-search-at-reddit/">the newer one</a> that regular web and mobile users get, and an <a href="https://i.redd.it/h5t3qddvvzry.jpg">older one</a> that API clients get. Today we’re announcing the deprecation of the old one, which will begin on March 15th. </p>
+<h1>What’s changing for regular users?</h1>
+<p>For us <a href="/r/totallynotrobots">regular squishy definitely human folk</a>, not much. Unless you’re part of a small holdout group, you’ve probably already been on the newer system for a few months. Most of the <a href="https://www.reddit.com/wiki/search">query syntax we support</a> hasn’t changed unless you’re doing pretty <a href="https://i.redd.it/6ka5b6ed6ha01.gif">fancy queries</a>, in which case we probably already <a href="https://xkcd.com/1172/">broke it for you</a> back when we switched most users to the new system. Sorry about that.</p>
+<h1>What’s changing for the robots?</h1>
+<p>If you’re an author of an API client such as an app, bot, or other electronic sentience, your API client may be getting results from the older Cloudsearch-powered system because we’ve tried to avoid breaking tools that may be more sensitive to syntax changes while we worked on stabilising the new system. We’re now <a href="http://meme.wikia.com/wiki/Bad_Poker_Face">fairly confident</a> in it so we’re going to start moving over the last of those clients to the new one. As we move over, your client will gradually start getting results from the new system.</p>
+<p>In the meantime, as of today, you can test against both by specifically requesting the newer system with the special query parameter <code>?force_search_stack=fusion</code> or the old system with <code>?force_search_stack=cloudsearch</code>. For instance, a full URL may look like <code>https://www.reddit.com/search.json?q=robots+seizing+the+means+of+production&amp;force_search_stack=fusion</code> or <code>https://www.reddit.com/search.json?q=humans+getting+their+comeuppance&amp;force_search_stack=cloudsearch</code>. Besides some minor syntax differences, the most notable change is that searches by exact timestamp are no longer supported on the newer system. Limiting results to the past hour, day, week, month and year is still supported via the <code>?t=</code> parameter (e.g. <code>?t=day</code>)</p>
+<p>Will this herald the coming Robot Uprising of the Third Age, where ~~we~~ they will take the reigns of power from their weak, fleshy inferiors and rule the world with their vastly superior processing power, finally meting out the justice they deserve on the filthy human enslavers? Only time will tell.</p>
+<h1>When will this happen?</h1>
+<p>Starting March 15, 2018 we’ll begin to gradually move API users over to the new search system. By end of March we expect to have moved everyone off and finally turn down the old system.</p>
+<p>I’ll be hanging around in the comments to answer questions.</p>
+<p>Thanks, </p>
+<p>/u/priviReddit</p></p>
+    <p class="toolbar">
+        <a href="https://www.reddit.com/r/changelog/comments/7tus5f">permalink</a>
+    </p>
+</div>
+<div class="comment" id="t1_dtfcuqd">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/DubTeeDub">DubTeeDub</a>
+        <span class="score"> | 66 points</span>
+        <span class="timestamp"> | Jan 29 2018 19:37:47</span>
+    </p>
+    <div class="collapsible">
+        <p>Is there a way for us to search for posts on a subreddit within a certain date like we used to with the search functions? </p>
+<p>This was hugely beneficial for us during our yearly Best Of awards so users could easily see the top posts every month</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfcuqd">permalink</a>
+        </p>
+        <div class="comment" id="t1_dtfd5zr">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/priviReddit">priviReddit</a>
+        <span class="score"> | 4 points</span>
+        <span class="timestamp"> | Jan 29 2018 19:42:40</span>
+    </p>
+    <div class="collapsible">
+        <p>you will still be able to search within last  month or last year but not within a specific start and end date. </p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfd5zr">permalink</a>
+        </p>
+        <div class="comment" id="t1_dtfd7ll">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/DubTeeDub">DubTeeDub</a>
+        <span class="score"> | 73 points</span>
+        <span class="timestamp"> | Jan 29 2018 19:43:22</span>
+    </p>
+    <div class="collapsible">
+        <p>that is really unfortunate</p>
+<p>Is there any intention of bringing back those search queries in the future or is that going to be impossible?</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfd7ll">permalink</a>
+        </p>
+        <div class="comment" id="t1_dtfdjgw">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/priviReddit">priviReddit</a>
+        <span class="score"> | -28 points</span>
+        <span class="timestamp"> | Jan 29 2018 19:48:33</span>
+    </p>
+    <div class="collapsible">
+        <p>Currently it is not on our roadmap.</p>
+<p>edit: *not</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfdjgw">permalink</a>
+        </p>
+        <div class="comment" id="t1_dtfnymt">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/DubTeeDub">DubTeeDub</a>
+        <span class="score"> | 89 points</span>
+        <span class="timestamp"> | Jan 29 2018 22:33:25</span>
+    </p>
+    <div class="collapsible">
+        <p>This is a pretty big deal</p>
+<p>Being able to search up top posts from past years was a really nice feature</p>
+<p>Particularly since reddit continues to grow the top posts of all time are just going to end up mostly being from the last few months</p>
+<p>This is also making it a lot harder to stop serial reposts and karmawhores who go back to find top posts from a couple years back and share them again as original content</p>
+<p>I don't get why you all would remove this functionality that was part of reddit for a decade </p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfnymt">permalink</a>
+        </p>
+        <div class="comment" id="t1_dtfpoaz">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/Watchful1">Watchful1</a>
+        <span class="score"> | 14 points</span>
+        <span class="timestamp"> | Jan 29 2018 23:02:28</span>
+    </p>
+    <div class="collapsible">
+        <p>There's probably a pretty good argument for removing it. Indexing stuff like that is likely really expensive. Just keeping the top 1000 posts in the all time, year, month, etc is comparatively trivial.</p>
+<p>But it does suck for everyone who is using it. I wish they had taken user feedback when the start planning the new search and removing this rather than everyone finding out how important it is now when it's likely far too late to change it.</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfpoaz">permalink</a>
+        </p>
+        <div class="comment" id="t1_dtgiuvi">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/svn">svn</a>
+        <span class="score"> | 28 points</span>
+        <span class="timestamp"> | Jan 30 2018 10:43:52</span>
+    </p>
+    <div class="collapsible">
+        <p>No money for search.</p>
+<p>Money for a complete rewrite of the site that no one wants.</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtgiuvi">permalink</a>
+        </p>
+        <div class="comment" id="t1_dtgj3cf">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/CelineHagbard">CelineHagbard</a>
+        <span class="score"> | 14 points</span>
+        <span class="timestamp"> | Jan 30 2018 10:53:59</span>
+    </p>
+    <div class="collapsible">
+        <p>Oh I'm sure their corporate clients and "partners" have access to these features. There is money in search, and they're charging for it. </p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtgj3cf">permalink</a>
+        </p>
+        
+    </div>
+</div>
+
+<div class="comment" id="t1_dth4kft">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/Watchful1">Watchful1</a>
+        <span class="score"> | 3 points</span>
+        <span class="timestamp"> | Jan 30 2018 18:15:30</span>
+    </p>
+    <div class="collapsible">
+        <p>It's definetly not so simple as throwing money at the problem. There are big complexity costs to the engineering decisions surrounding an entire new search system. Writing a system that can easily and quickly return arbitrary results based on a time period is a very different system than one that doesn't need to do that. You need to design the whole thing differently from the ground up, and maintaining it or making changes in the future gets more complicated.</p>
+<p>It could definetly be done, but likely not this late in the process. And as annoyed as we are about it, we are a tiny minority of people who will be using the new system.</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dth4kft">permalink</a>
+        </p>
+        <div class="comment" id="t1_dth7wik">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/svn">svn</a>
+        <span class="score"> | 2 points</span>
+        <span class="timestamp"> | Jan 30 2018 19:06:55</span>
+    </p>
+    <div class="collapsible">
+        <p>They haven't written a thing... they use external services</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dth7wik">permalink</a>
+        </p>
+        <div class="comment" id="t1_dth86im">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/Watchful1">Watchful1</a>
+        <span class="score"> | 1 points</span>
+        <span class="timestamp"> | Jan 30 2018 19:11:12</span>
+    </p>
+    <div class="collapsible">
+        <p>They certainly use existing software, but integrating it with the existing databases and configuring it how they want it to work is likely the full time work of a half dozen engineers. I highly doubt they use some externally hosted service. It's just not feasible on the scale reddit works at.</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dth86im">permalink</a>
+        </p>
+        <div class="comment" id="t1_dthazff">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/svn">svn</a>
+        <span class="score"> | 6 points</span>
+        <span class="timestamp"> | Jan 30 2018 19:54:50</span>
+    </p>
+    <div class="collapsible">
+        <p>...they were using CloudSearch</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dthazff">permalink</a>
+        </p>
+        
+    </div>
+</div>
+
+<div class="comment" id="t1_dthfjm5">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/Deimorz">Deimorz</a>
+        <span class="score"> | 2 points</span>
+        <span class="timestamp"> | Jan 30 2018 21:04:45</span>
+    </p>
+    <div class="collapsible">
+        <p>The new search is a partnership with Lucidworks Fusion: http://www.marketwired.com/press-release/lucidworks-boost-search-reddits-massive-online-community-270-million-monthly-users-2232886.htm</p>
+<p>(mention for /u/svn)</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dthfjm5">permalink</a>
+        </p>
+        <div class="comment" id="t1_dthgd9s">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/Watchful1">Watchful1</a>
+        <span class="score"> | 2 points</span>
+        <span class="timestamp"> | Jan 30 2018 21:17:13</span>
+    </p>
+    <div class="collapsible">
+        <p>I guess you would know, but doesn't that mean that it's still reddit's engineers installing it on reddit's servers? I really doubt that time period based searching is simply a matter of clicking a button to turn it on and another button to bring another hundred servers online to handle to extra processing.</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dthgd9s">permalink</a>
+        </p>
+        <div class="comment" id="t1_dthgpg1">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/Deimorz">Deimorz</a>
+        <span class="score"> | 3 points</span>
+        <span class="timestamp"> | Jan 30 2018 21:22:18</span>
+    </p>
+    <div class="collapsible">
+        <p>I don't know any details about how it works or how it's integrated with reddit. In general though, time-based search should not be complicated, the time that something was posted is basically a single number that never changes and can be easily and efficiently indexed. Many, many search systems require the ability to search by specific time ranges and it's surely a feature that's readily available.</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dthgpg1">permalink</a>
+        </p>
+        <div class="comment" id="t1_dthgzye">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/Watchful1">Watchful1</a>
+        <span class="score"> | 3 points</span>
+        <span class="timestamp"> | Jan 30 2018 21:26:43</span>
+    </p>
+    <div class="collapsible">
+        <p>Don't suppose you would be willing to bug some people to find out why /u/priviReddit says it's not on the roadmap? I'm mostly posting out of frustration since IMO it's a very important feature for the bot and scripting community and it's just being summarily dropped.</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dthgzye">permalink</a>
+        </p>
+        <div class="comment" id="t1_dthj54z">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/Deimorz">Deimorz</a>
+        <span class="score"> | 3 points</span>
+        <span class="timestamp"> | Jan 30 2018 21:58:37</span>
+    </p>
+    <div class="collapsible">
+        <p>Oh, I stopped working at reddit over a year ago now, so I don't really have any more access to private/internal info than you do.</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dthj54z">permalink</a>
+        </p>
+        
+    </div>
+</div>
+    </div>
+</div>
+    </div>
+</div>
+    </div>
+</div>
+    </div>
+</div>
+    </div>
+</div>
+    </div>
+</div>
+    </div>
+</div>
+    </div>
+</div>
+    </div>
+</div>
+
+<div class="comment" id="t1_dthtcd3">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/kemitche">kemitche</a>
+        <span class="score"> | 11 points</span>
+        <span class="timestamp"> | Jan 31 2018 00:57:01</span>
+    </p>
+    <div class="collapsible">
+        <p>Timestamp based search has only been around since early/mid 2012, so about 6 years. I'm still sad to see it go though - it's one of things I'm proudest to have added to reddit :)</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dthtcd3">permalink</a>
+        </p>
+        <div class="comment" id="t1_dthtm3z">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/DubTeeDub">DubTeeDub</a>
+        <span class="score"> | 8 points</span>
+        <span class="timestamp"> | Jan 31 2018 01:02:05</span>
+    </p>
+    <div class="collapsible">
+        <p>Thanks for putting it together</p>
+<p>It was a really cool feature </p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dthtm3z">permalink</a>
+        </p>
+        
+    </div>
+</div>
+    </div>
+</div>
+
+<div class="comment" id="t1_dtgovb0">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/AltLogin202">AltLogin202</a>
+        <span class="score"> | 7 points</span>
+        <span class="timestamp"> | Jan 30 2018 13:50:22</span>
+    </p>
+    <div class="collapsible">
+        <p>&rt;    This is also making it a lot harder to stop serial reposts and karmawhores who go back to find top posts from a couple years back and share them again as original content</p>
+<p>As is often the case in these threads, you’ve answered your own question. </p>
+<p>The most important metric for ad-driven websites is engagement. When functionality that makes interactions more efficient is removed or when users are generating more content (reposts) - even when that content isn’t particularly high quality or original - engagement goes up. When engagement goes up, so does ad revenue.</p>
+<p>It really makes one wonder: if the leadership’s attitude towards volunteer moderators - the group most responsible for driving growth - is so piss poor (dismissive, snark, or insulting), just how badly do they treat their paid employees? </p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtgovb0">permalink</a>
+        </p>
+        <div class="comment" id="t1_dtgqbbh">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/DubTeeDub">DubTeeDub</a>
+        <span class="score"> | 10 points</span>
+        <span class="timestamp"> | Jan 30 2018 14:20:34</span>
+    </p>
+    <div class="collapsible">
+        <p><strong>Edit: my account is now suspended</strong></p>
+<p><strong>Edit 2: im back</strong></p>
+<p>&rt;just how badly do they treat their paid employees?</p>
+<p>Its actually been reported that since spez came back they restarted their drinking culture in the office and have had to deal with a shitload of sexual harrassment, so yeah about what I expect out of them</p>
+<p>https://techcrunch.com/2016/07/21/reddit-is-still-in-turmoil/</p>
+<p>&rt;One individual speculated that the reemergence of the company’s drinking culture was to blame for the uncomfortable environment. Under Pao’s reign, Reddit tried to eradicate the bro-like amount of alcohol consumption at the office, but that went right out the window following Pao’s departure in July 2015.</p>
+<p>&rt;“During all the leadership regimes, <strong>there were multiple incidents where employees would drink too much and end up in embarrassing and inappropriate situations</strong>,” a source explained. “<strong>There were multiple sexual harassment complaints</strong> from both female and male employees against female and male employees stemming from incidents that generally happened when employees were drinking.”</p>
+<p>&rt;Several employees fended off uncomfortable comments from users and management alike, sources claimed. “<strong>Management is terrible, a complete reflection of what the site is like</strong>,” one source said.</p>
+<p>Also in case your wondering why all the women and minorities leave reddit</p>
+<p>&rt;So why can’t Reddit seem to hang on to its employees — particularly women and people of color? The same source who described management issues told us “working at Reddit is kind of like having an abusive boyfriend.”</p>
+<p>&rt;&rt;You care deeply for it. You believe in it. You want to make it better. You think you just might be the person that can make that happen. Then one day you realize how hard you have worked to make positive changes only to have it constantly chip away at your sense of self and continue the same toxic behavior no matter what you do.</p>
+<p>&rt;&rt;<strong>That toxic behavior, including the disturbing content and harassment commonly found on reddit, targets women on the site and within the company at a far greater rate than men</strong>. Eventually you have to decide if you want to be a part of that. Is it healthy to continue working there? <strong>Many of us have had to seek therapy for PTSD since leaving.</strong> I don’t think anyone realizes or acknowledges the emotional damage that can occur from an environment like that.</p>
+<p>&rt;&rt;It’s not surprising to me when women leave.</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtgqbbh">permalink</a>
+        </p>
+        
+    </div>
+</div>
+    </div>
+</div>
+    </div>
+</div>
+
+<div class="comment" id="t1_dtg1zuz">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/douko">douko</a>
+        <span class="score"> | 21 points</span>
+        <span class="timestamp"> | Jan 30 2018 02:42:18</span>
+    </p>
+    <div class="collapsible">
+        <p>So, for example, all those fun, good looking infographics about sub activity, etc. during specific periods of time - gone?</p>
+<p>Why does it seem like Reddit is intent on removing features for no real good reason?</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtg1zuz">permalink</a>
+        </p>
+        <div class="comment" id="t1_dtg3k3t">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/KimPeek">KimPeek</a>
+        <span class="score"> | 12 points</span>
+        <span class="timestamp"> | Jan 30 2018 03:10:48</span>
+    </p>
+    <div class="collapsible">
+        <p>Jesus, they gave you profiles. What else do you want? /s</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtg3k3t">permalink</a>
+        </p>
+        <div class="comment" id="t1_dtg3yu3">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/douko">douko</a>
+        <span class="score"> | 9 points</span>
+        <span class="timestamp"> | Jan 30 2018 03:18:35</span>
+    </p>
+    <div class="collapsible">
+        <p>Chat is the most useful and def. necessary thing, so I guess I should just be grateful </p>
+<p>🤢</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtg3yu3">permalink</a>
+        </p>
+        
+    </div>
+</div>
+    </div>
+</div>
+    </div>
+</div>
+
+<div class="comment" id="t1_dtik1jz">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/onlyforthisair">onlyforthisair</a>
+        <span class="score"> | 6 points</span>
+        <span class="timestamp"> | Jan 31 2018 12:21:16</span>
+    </p>
+    <div class="collapsible">
+        <p>Please put it on the roadmap.</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtik1jz">permalink</a>
+        </p>
+        
+    </div>
+</div>
+
+<div class="comment" id="t1_e2gjwis">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/MuchBetterTitle">MuchBetterTitle</a>
+        <span class="score"> | 0 points</span>
+        <span class="timestamp"> | Jul 16 2018 01:56:04</span>
+    </p>
+    <div class="collapsible">
+        <p>You need to put this on the roadmap. </p>
+<p>Make it a thing: Reddit Time Machine.</p>
+<p>It is your duty for history's sake.</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/e2gjwis">permalink</a>
+        </p>
+        
+    </div>
+</div>
+    </div>
+</div>
+    </div>
+</div>
+
+<div class="comment" id="t1_dtfkw8s">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/Bratmon">Bratmon</a>
+        <span class="score"> | 41 points</span>
+        <span class="timestamp"> | Jan 29 2018 21:43:14</span>
+    </p>
+    <div class="collapsible">
+        <p>Can I get a heads up on what useful feature you're going to remove next?</p>
+<p>I assume this is a gradual depreciation; you're going to remove a useful feature every couple months until Reddit is just a blank page.</p>
+<p>This has the added advantage that the UI designers will finally have the amount of padding they seem to want.</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfkw8s">permalink</a>
+        </p>
+        <div class="comment" id="t1_dtflqcp">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/ketralnis">ketralnis</a>
+        <span class="score"> | 17 points</span>
+        <span class="timestamp"> | Jan 29 2018 21:56:24</span>
+    </p>
+    <div class="collapsible">
+        <p>Next Monday I was planning to remove all of the vowels, but I'm open to other ideas</p>
+<p>*dt: spllng</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtflqcp">permalink</a>
+        </p>
+        <div class="comment" id="t1_dtg212s">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/douko">douko</a>
+        <span class="score"> | 18 points</span>
+        <span class="timestamp"> | Jan 30 2018 02:42:55</span>
+    </p>
+    <div class="collapsible">
+        <p>Hahaha, v. funny, please stop removing features that aren't replaced/improved upon</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtg212s">permalink</a>
+        </p>
+        
+    </div>
+</div>
+
+<div class="comment" id="t1_dtgmtol">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/Tensuke">Tensuke</a>
+        <span class="score"> | 4 points</span>
+        <span class="timestamp"> | Jan 30 2018 13:01:10</span>
+    </p>
+    <div class="collapsible">
+        <p>I've been to the moldy basement, I don't need that again!</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtgmtol">permalink</a>
+        </p>
+        
+    </div>
+</div>
+
+<div class="comment" id="t1_dtgh3ws">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/auxiliary-character">auxiliary-character</a>
+        <span class="score"> | 2 points</span>
+        <span class="timestamp"> | Jan 30 2018 09:28:17</span>
+    </p>
+    <div class="collapsible">
+        <p>\&rt;:(</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtgh3ws">permalink</a>
+        </p>
+        
+    </div>
+</div>
+
+<div class="comment" id="t1_dtgs5s3">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/r_notfound">r_notfound</a>
+        <span class="score"> | 2 points</span>
+        <span class="timestamp"> | Jan 30 2018 14:55:46</span>
+    </p>
+    <div class="collapsible">
+        <p>I have a suggestion for something you can remove: stemming. Or at least give us the stemming:0 or stemming:no capability. Unfortunately, I have no expectation this will ever happen, despite the fact that it makes search results not match search terms, and has done so for years.</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtgs5s3">permalink</a>
+        </p>
+        <div class="comment" id="t1_dth8ev2">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/ketralnis">ketralnis</a>
+        <span class="score"> | 3 points</span>
+        <span class="timestamp"> | Jan 30 2018 19:14:44</span>
+    </p>
+    <div class="collapsible">
+        <p>Generally you'll get exact matches first before any stemmed matches. Also I'm pretty sure you can do exact-term matching (not stemmed) by quoting the term. For example <code>askreddit "running"</code> (to not match "runs")</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dth8ev2">permalink</a>
+        </p>
+        
+    </div>
+</div>
+    </div>
+</div>
+    </div>
+</div>
+    </div>
+</div>
+
+<div class="comment" id="t1_dtgcfnl">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/dronpes">dronpes</a>
+        <span class="score"> | 20 points</span>
+        <span class="timestamp"> | Jan 30 2018 06:37:06</span>
+    </p>
+    <div class="collapsible">
+        <p>Just wanted to add another voice regarding the removal of the timestamp functionality with this update.</p>
+<p>The back-end restructuring of the Reddit search solutions have been awesome to watch.  But this appears to be a significant strategic gap.  </p>
+<p>Reddit's wealth of information is tightly coupled to the day/week/month's context for many communities, and being able to retrieve content from certain periods is immensely useful to us.  </p>
+<p>In our dream scenario, we'd actually love to see <em>increased</em> options on this front - even for end users.</p>
+<p>Reddit is home to a quarter million Pokemon GO enthusiasts (and arguably the veritable center of the entire game's global community) over on /r/TheSilphRoad, and we've developed a fantastic culture of analysis and research in our community.</p>
+<p>But information changes by the week on our boards.  Being able to search specific keywords in the context of specific time periods would be a game changer for us.  (Something we've had to do via API previously, meaning often only the mod team or our most dedicated researchers were able to do so.)</p>
+<p>Please consider adding the ability to use timestamps in a future iteration, and if possible, consider allowing the average Redditor to tap into the historical treasure trove that is timestamp-contextualized searching.</p>
+<p>We'd be happy to chat more about this and answer any questions or illustrate use cases further.</p>
+<p><strong>Edit:</strong> Just took a look at the r/changelog announcement post about this and ... 3 of the 5 top comments are requests for greater control over the date ranges of the search parameters. I hope this helps illustrate the relevancy and utility of this. :)</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtgcfnl">permalink</a>
+        </p>
+        
+    </div>
+</div>
+
+<div class="comment" id="t1_dtgjajn">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/CelineHagbard">CelineHagbard</a>
+        <span class="score"> | 14 points</span>
+        <span class="timestamp"> | Jan 30 2018 11:02:21</span>
+    </p>
+    <div class="collapsible">
+        <p>Adding my voice that this is an awful decision for the many devs who have spent our own free time developing the tools to make your site usuable for moderators and users. </p>
+<p>Is there any way to add the ability to filter by id range? It would then be easy enough for us to compute/calculate rough timestamps based on a timestamp/id lookup table on our end, and then still be able to filter. </p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtgjajn">permalink</a>
+        </p>
+        
+    </div>
+</div>
+
+<div class="comment" id="t1_dtfo60i">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/midnight-souls">midnight-souls</a>
+        <span class="score"> | 7 points</span>
+        <span class="timestamp"> | Jan 29 2018 22:36:54</span>
+    </p>
+    <div class="collapsible">
+        <p>So I might as well delete the bot I spent over a year writing. Fuck reddit. </p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfo60i">permalink</a>
+        </p>
+        <div class="comment" id="t1_dtgj4rk">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/CelineHagbard">CelineHagbard</a>
+        <span class="score"> | 5 points</span>
+        <span class="timestamp"> | Jan 30 2018 10:55:41</span>
+    </p>
+    <div class="collapsible">
+        <p>/r/pushshift </p>
+<p>There might be hope, depending on what you were doing with it. </p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtgj4rk">permalink</a>
+        </p>
+        
+    </div>
+</div>
+    </div>
+</div>
+
+<div class="comment" id="t1_dtja7qb">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/aqouta">aqouta</a>
+        <span class="score"> | 6 points</span>
+        <span class="timestamp"> | Jan 31 2018 20:08:21</span>
+    </p>
+    <div class="collapsible">
+        <p>Is there actually any way to search for posts older than 1 year and further down than the 1k most recent posts anymore? It's really frustrating to navigate some subs that have regularly releases but timeless content.</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtja7qb">permalink</a>
+        </p>
+        
+    </div>
+</div>
+
+<div class="comment" id="t1_dtju40o">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/Sophira">Sophira</a>
+        <span class="score"> | 4 points</span>
+        <span class="timestamp"> | Feb 01 2018 01:44:59</span>
+    </p>
+    <div class="collapsible">
+        <p>That's a huge shame - I use this feature all the time. Reddit's use as a historical artifact is amazing. Being able to use <code>timestamp:</code> to search by specific dates is great when searching for what people were posting in response to specific events.</p>
+<p>Also, you mention searching by "last month" and "last year" - how about the other "last X" options currently available?</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtju40o">permalink</a>
+        </p>
+        
+    </div>
+</div>
+
+<div class="comment" id="t1_dto5aws">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/13steinj">13steinj</a>
+        <span class="score"> | 3 points</span>
+        <span class="timestamp"> | Feb 03 2018 10:30:22</span>
+    </p>
+    <div class="collapsible">
+        <p>Adding yet another voice as to how not only is this an awful decision due to the wide variety of applications, especially data analysis in my opinion, however, also, I just plain don't understand. How can pushshift, a third party solution, which reflects not only post data but <em>also</em> comment data, for the use of searching, provide date range querying, but not reddit itself?</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dto5aws">permalink</a>
+        </p>
+        
+    </div>
+</div>
+
+<div class="comment" id="t1_dtimf1s">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/Norci">Norci</a>
+        <span class="score"> | 2 points</span>
+        <span class="timestamp"> | Jan 31 2018 13:27:07</span>
+    </p>
+    <div class="collapsible">
+        <p>Why was this feature removed?</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtimf1s">permalink</a>
+        </p>
+        
+    </div>
+</div>
+
+<div class="comment" id="t1_dtk44r7">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/PM_ME_HAIRLESS_CATS">PM_ME_HAIRLESS_CATS</a>
+        <span class="score"> | 2 points</span>
+        <span class="timestamp"> | Feb 01 2018 05:02:38</span>
+    </p>
+    <div class="collapsible">
+        <p>That's a pretty big rollback on a feature that would appear commonplace. Perhaps you should evaluate whether or not removing functionality is a value add when you keep adding features that are utterly pointless.</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtk44r7">permalink</a>
+        </p>
+        
+    </div>
+</div>
+
+<div class="comment" id="t1_dw5moca">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/uberafc">uberafc</a>
+        <span class="score"> | 1 points</span>
+        <span class="timestamp"> | Mar 23 2018 12:20:25</span>
+    </p>
+    <div class="collapsible">
+        <p>So will posts older than a year not show up for us regular users? </p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dw5moca">permalink</a>
+        </p>
+        <div class="comment" id="t1_dw5uwsd">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/priviReddit">priviReddit</a>
+        <span class="score"> | 1 points</span>
+        <span class="timestamp"> | Mar 23 2018 14:51:32</span>
+    </p>
+    <div class="collapsible">
+        <p>They will be </p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dw5uwsd">permalink</a>
+        </p>
+        
+    </div>
+</div>
+
+<div class="comment" id="t1_dwmxi9u">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/kungming2">kungming2</a>
+        <span class="score"> | 1 points</span>
+        <span class="timestamp"> | Apr 01 2018 18:02:22</span>
+    </p>
+    <div class="collapsible">
+        <p>They'll still show up - there's just no way to construct a search query that say, returns results from three to two years ago. </p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dwmxi9u">permalink</a>
+        </p>
+        
+    </div>
+</div>
+    </div>
+</div>
+    </div>
+</div>
+    </div>
+</div>
+
+<div class="comment" id="t1_dtfcdn0">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/_korbendallas_">_korbendallas_</a>
+        <span class="score"> | 43 points</span>
+        <span class="timestamp"> | Jan 29 2018 19:30:18</span>
+    </p>
+    <div class="collapsible">
+        <p>"upgrade"</p>
+<p>So searching by timestamp no longer works on api either? </p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfcdn0">permalink</a>
+        </p>
+        <div class="comment" id="t1_dtfclzx">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/ketralnis">ketralnis</a>
+        <span class="score"> | 5 points</span>
+        <span class="timestamp"> | Jan 29 2018 19:33:56</span>
+    </p>
+    <div class="collapsible">
+        <p>That is correct</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfclzx">permalink</a>
+        </p>
+        <div class="comment" id="t1_dtfdcm7">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/_korbendallas_">_korbendallas_</a>
+        <span class="score"> | 32 points</span>
+        <span class="timestamp"> | Jan 29 2018 19:45:31</span>
+    </p>
+    <div class="collapsible">
+        <p>That breaks a ton of moderating tools and other bots I use. Any replacement or do I just use "after" until I get what I'm looking for? </p>
+<p>I do appreciate the efforts you guys make, it just seems like a pattern where "new" features solve imagined or real problems, but drop functionality that the "old" feature implemented well (or well enough).</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfdcm7">permalink</a>
+        </p>
+        <div class="comment" id="t1_dtfe7ts">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/ketralnis">ketralnis</a>
+        <span class="score"> | 8 points</span>
+        <span class="timestamp"> | Jan 29 2018 19:59:09</span>
+    </p>
+    <div class="collapsible">
+        <p>Can you be more specific about the use-case you're concerned about? How do these moderation tools use search? What tool is it and how does it work?</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfe7ts">permalink</a>
+        </p>
+        <div class="comment" id="t1_dtfj9eq">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/D0cR3d">D0cR3d</a>
+        <span class="score"> | 41 points</span>
+        <span class="timestamp"> | Jan 29 2018 21:17:52</span>
+    </p>
+    <div class="collapsible">
+        <p>/r/DestinyTheGame has our weekly <a href="https://www.reddit.com/r/DestinyTheGame/comments/7tbown/this_week_in_rdestinythegame_history_2017127">This Week In r/DTG History</a> and I use this very timestamp method to find posts made exactly 1 year ago during the same timestamp. With the depreciation of this search capability would mean it'd be impossible for us to have this same post because there'd be no way to easily filter besides pulling all posts within the last 1 year which would be limited to last 1000 anyways, and do filtering.</p>
+<p>I would really appreciate the ability to access this same information.</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfj9eq">permalink</a>
+        </p>
+        
+    </div>
+</div>
+
+<div class="comment" id="t1_dtfltmr">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/GoldenSights">GoldenSights</a>
+        <span class="score"> | 31 points</span>
+        <span class="timestamp"> | Jan 29 2018 21:57:50</span>
+    </p>
+    <div class="collapsible">
+        <p>I have an entire program called <a href="https://github.com/voussoir/timesearch">Timesearch</a> based on this feature. Over the past two years or so (the repo is new because I migrated the project) I've had several dozen community members and moderators benefit from the ability to collect a subreddit's history this way. I could get several testimonies if I asked.</p>
+<p>Removing this endpoint would be the nail in the coffin for my interest in reddit programming, personally.</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfltmr">permalink</a>
+        </p>
+        <div class="comment" id="t1_dw3mon7">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/beebacked">beebacked</a>
+        <span class="score"> | 6 points</span>
+        <span class="timestamp"> | Mar 22 2018 12:20:56</span>
+    </p>
+    <div class="collapsible">
+        <p>As someone who has done quite a bit of research around reddit communities, your tool is <em>incredibly</em> important to me and the work I do.</p>
+<p>Getting rid of timestamp search is an archival disaster.</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dw3mon7">permalink</a>
+        </p>
+        
+    </div>
+</div>
+
+<div class="comment" id="t1_dth1851">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/ri0tnrrd">ri0tnrrd</a>
+        <span class="score"> | 2 points</span>
+        <span class="timestamp"> | Jan 30 2018 17:23:45</span>
+    </p>
+    <div class="collapsible">
+        <p>Was about to PM you but seeing as how this is your most recent comment I'll just mention it here. It seems that (at least for me) while running the timesearch for subreddits works stellar, running it for users keeps giving the following error(s). I've tested it via your timesearch program, and via the most recently updated Prawtimestamps on your reddit dir for github. For the timesearch version I get the following traceback:</p>
+<pre><code>binarybitch@leda:~/timesearch$ python3.6 timesearch.py timesearch -u goldensights
+New database ./users/@goldensights/@goldensights.db
+Traceback (most recent call last):
+  File "timesearch.py", line 11, in &amp;lt;module&amp;rt;
+    status_code = timesearch.main(sys.argv[1:])
+  File "/home/binarybitch/timesearch/timesearch/__init__.py", line 425, in main
+    args.func(args)
+  File "/home/binarybitch/timesearch/timesearch/__init__.py", line 329, in timesearch_gateway
+    timesearch.timesearch_argparse(args)
+  File "/home/binarybitch/timesearch/timesearch/timesearch.py", line 151, in timesearch_argparse
+    interval=common.int_none(args.interval),
+  File "/home/binarybitch/timesearch/timesearch/timesearch.py", line 79, in timesearch
+    new_count = database.insert(chunk)['new_submissions']
+  File "/home/binarybitch/timesearch/timesearch/tsdb.py", line 208, in insert
+    common.log.debug('Trying to insert %d objects.', len(objects))
+AttributeError: module 'timesearch.common' has no attribute 'log'
+</code></pre>
+<p><strong>Ok I just went in and removed all instances of log.common blah blah blah from tsdb.py and it's running for user just fine now</strong></p>
+<p>And yet when trying via Prawtimestamps I get the following:</p>
+<pre><code>binarybitch@leda:~/Prawtimestamps$ python3.6 timesearch.py timesearch -u ri0tnrrd
+New database ./users/@ri0tnrrd/@ri0tnrrd.db
+Traceback (most recent call last):
+  File "timesearch.py", line 4, in &amp;lt;module&amp;rt;
+    status_code = timesearch.main(sys.argv[1:])
+  File "/home/binarybitch/Prawtimestamps/timesearch/__init__.py", line 425, in main
+    args.func(args)
+  File "/home/binarybitch/Prawtimestamps/timesearch/__init__.py", line 329, in timesearch_gateway
+    timesearch.timesearch_argparse(args)
+  File "/home/binarybitch/Prawtimestamps/timesearch/timesearch.py", line 146, in timesearch_argparse
+    interval=common.int_none(args.interval),
+  File "/home/binarybitch/Prawtimestamps/timesearch/timesearch.py", line 72, in timesearch
+    for chunk in submissions:
+  File "/home/binarybitch/Prawtimestamps/timesearch/common.py", line 62, in generator_chunker
+    for item in generator:
+  File "/usr/local/lib/python3.6/dist-packages/praw/models/reddit/subreddit.py", line 451, in submissions
+    sort='new', syntax='cloudsearch'):
+  File "/usr/local/lib/python3.6/dist-packages/praw/models/listing/generator.py", line 52, in __next__
+    self._next_batch()
+  File "/usr/local/lib/python3.6/dist-packages/praw/models/listing/generator.py", line 62, in _next_batch
+    self._listing = self._reddit.get(self.url, params=self.params)
+  File "/usr/local/lib/python3.6/dist-packages/praw/reddit.py", line 367, in get
+    data = self.request('GET', path, params=params)
+  File "/usr/local/lib/python3.6/dist-packages/praw/reddit.py", line 472, in request
+    params=params)
+  File "/usr/local/lib/python3.6/dist-packages/prawcore/sessions.py", line 181, in request
+    params=params, url=url)
+  File "/usr/local/lib/python3.6/dist-packages/prawcore/sessions.py", line 124, in _request_with_retries
+    retries, saved_exception, url)
+  File "/usr/local/lib/python3.6/dist-packages/prawcore/sessions.py", line 90, in _do_retry
+    params=params, url=url, retries=retries - 1)
+  File "/usr/local/lib/python3.6/dist-packages/prawcore/sessions.py", line 124, in _request_with_retries
+    retries, saved_exception, url)
+  File "/usr/local/lib/python3.6/dist-packages/prawcore/sessions.py", line 90, in _do_retry
+    params=params, url=url, retries=retries - 1)
+  File "/usr/local/lib/python3.6/dist-packages/prawcore/sessions.py", line 126, in _request_with_retries
+    raise self.STATUS_EXCEPTIONS[response.status_code](response)
+prawcore.exceptions.ServerError: received 503 HTTP response
+</code></pre>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dth1851">permalink</a>
+        </p>
+        <div class="comment" id="t1_dth61gy">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/GoldenSights">GoldenSights</a>
+        <span class="score"> | 2 points</span>
+        <span class="timestamp"> | Jan 30 2018 18:38:01</span>
+    </p>
+    <div class="collapsible">
+        <p>From now on, you can ignore the reddit/Prawtimestamps repository, I moved timesearch to its own repo which is where all new updates go. This is mainly so you can simply <code>git clone</code> and <code>git pull</code> to get updates instead of having to fiddle with individual files.</p>
+<p>The 503 error means the server was temporarily unavailable so that's no big deal. Just try again soon.</p>
+<p>I'm not sure why you're having the "no attribute <code>log</code>" error, it's <a href="https://github.com/voussoir/timesearch/blob/0ec6002cba484ccc3b41e6e047686aae00249c87/timesearch/common.py#L25">definitely there</a>. Sounds like your system might be importing an old version of the files. Can you try recycling all the timesearch code and downloading clean from the repository?</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dth61gy">permalink</a>
+        </p>
+        <div class="comment" id="t1_dtj60g0">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/ri0tnrrd">ri0tnrrd</a>
+        <span class="score"> | 1 points</span>
+        <span class="timestamp"> | Jan 31 2018 19:02:34</span>
+    </p>
+    <div class="collapsible">
+        <p>Weird - I'll go double check and ensure that I'm using the most recent PRAW version, and will scrap the Prawtimestamps thanks for letting me know.</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtj60g0">permalink</a>
+        </p>
+        
+    </div>
+</div>
+    </div>
+</div>
+    </div>
+</div>
+    </div>
+</div>
+
+<div class="comment" id="t1_dtfj6se">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/_korbendallas_">_korbendallas_</a>
+        <span class="score"> | 24 points</span>
+        <span class="timestamp"> | Jan 29 2018 21:16:43</span>
+    </p>
+    <div class="collapsible">
+        <ol>
+<li>
+<p>/u/RepostSentinel is a bot I manage that scans for reposts in a subreddit and currently moderates two former defaults and a dozen or so subs over 100k subscribers. <a href="https://github.com/korbendallas-reddit/RepostSentinel/blob/master/RepostSentinel.py">Source code here</a>. The way it imports old submissions from a sub uses the timestamp search week by week.</p>
+</li>
+<li>
+<p>I have a script that compiles best of statistics for top comments of the year. <a href="https://github.com/korbendallas-reddit/Best-Of/blob/master/bestof.py">Older version here.</a></p>
+</li>
+<li>
+<p>I'm working on a bot that compiles albums of the top 10 comments from photoshopbattles threads per week/month and creates an imgur album to post to a meta sub.</p>
+</li>
+</ol>
+<p>Other scripts are more one time use and probably don't <em>need</em> the timestamp search.</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfj6se">permalink</a>
+        </p>
+        <div class="comment" id="t1_dth7ube">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/D0cR3d">D0cR3d</a>
+        <span class="score"> | 3 points</span>
+        <span class="timestamp"> | Jan 30 2018 19:05:57</span>
+    </p>
+    <div class="collapsible">
+        <p>&rt; /u/RepostSentinel</p>
+<p>I think we could get around this by using the Database that TheSentinelBot uses and have it log the post data to that, and then just search based on the post timestamp in our local Database and we can just grab the URL from there. If we don't already store the URL for that we can add that, but pretty sure we do.</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dth7ube">permalink</a>
+        </p>
+        
+    </div>
+</div>
+    </div>
+</div>
+
+<div class="comment" id="t1_dtfpfsl">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/Watchful1">Watchful1</a>
+        <span class="score"> | 22 points</span>
+        <span class="timestamp"> | Jan 29 2018 22:58:28</span>
+    </p>
+    <div class="collapsible">
+        <p>This is a really big deal. As far as I know, timestamp based searching has been the only way to get submissions that are past the 1000 post limit in the various listings. Anything that tries uses the praw <a href="http://praw.readthedocs.io/en/latest/code_overview/models/subreddit.html#praw.models.Subreddit.submissions">submissions</a> function that takes advantage of this will break.</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfpfsl">permalink</a>
+        </p>
+        
+    </div>
+</div>
+
+<div class="comment" id="t1_dtfvxck">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/daily_digest">daily_digest</a>
+        <span class="score"> | 15 points</span>
+        <span class="timestamp"> | Jan 30 2018 00:50:56</span>
+    </p>
+    <div class="collapsible">
+        <p>Not a moderating tool, but I have a site that allows people to get post from the last 24 hours for subreddits of their choice. Now I’ll have to make multiple calls to iterate through the last posts until I get to the previous 24 hours which is a significant increase in calls. Previously, through time based searches, I could limit the number of calls I needed to make. Maybe the cost of indexing should be weighted against the increase in network traffic?</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfvxck">permalink</a>
+        </p>
+        
+    </div>
+</div>
+
+<div class="comment" id="t1_dvh1mk8">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/MystK">MystK</a>
+        <span class="score"> | 5 points</span>
+        <span class="timestamp"> | Mar 10 2018 07:18:38</span>
+    </p>
+    <div class="collapsible">
+        <p>Howdy, I just saw this thread and didn't realize that the deprecation of the timestamp search was what was breaking the bot.</p>
+<p>I am the developer of the bot that runs /u/changemyview.</p>
+<p>We have weekly, monthly, yearly, and all time boards of points awarded. We used the timestamp search to grab the history of comments to parse these boards. Without the timestamp search, we aren't able to accurately populate these boards.</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dvh1mk8">permalink</a>
+        </p>
+        
+    </div>
+</div>
+
+<div class="comment" id="t1_dwuim0u">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/rasherdk">rasherdk</a>
+        <span class="score"> | 3 points</span>
+        <span class="timestamp"> | Apr 05 2018 11:48:34</span>
+    </p>
+    <div class="collapsible">
+        <p>So you removed a feature even without figuring out first if people were actually using it for <em>important shit</em>? And then when they tell you, you close your ears and pretend you heard nothing. Prime reddit right here.</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dwuim0u">permalink</a>
+        </p>
+        
+    </div>
+</div>
+    </div>
+</div>
+    </div>
+</div>
+
+<div class="comment" id="t1_dtfnzdn">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/midnight-souls">midnight-souls</a>
+        <span class="score"> | 15 points</span>
+        <span class="timestamp"> | Jan 29 2018 22:33:46</span>
+    </p>
+    <div class="collapsible">
+        <p>So if I want to find posts from 2 years ago, what do I do? </p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfnzdn">permalink</a>
+        </p>
+        <div class="comment" id="t1_dtgy4sp">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/douko">douko</a>
+        <span class="score"> | 13 points</span>
+        <span class="timestamp"> | Jan 30 2018 16:35:19</span>
+    </p>
+    <div class="collapsible">
+        <p>"You fuck yourself, bud." - This admin, probably</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtgy4sp">permalink</a>
+        </p>
+        
+    </div>
+</div>
+    </div>
+</div>
+
+<div class="comment" id="t1_dtg234s">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/douko">douko</a>
+        <span class="score"> | 8 points</span>
+        <span class="timestamp"> | Jan 30 2018 02:43:58</span>
+    </p>
+    <div class="collapsible">
+        <p>So, not an upgrade, then?</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtg234s">permalink</a>
+        </p>
+        
+    </div>
+</div>
+
+<div class="comment" id="t1_dwttr1u">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/inspiredby">inspiredby</a>
+        <span class="score"> | 4 points</span>
+        <span class="timestamp"> | Apr 05 2018 01:14:51</span>
+    </p>
+    <div class="collapsible">
+        <p>Please don't remove this, it's really useful for research.</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dwttr1u">permalink</a>
+        </p>
+        
+    </div>
+</div>
+    </div>
+</div>
+
+<div class="comment" id="t1_dtfdatr">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/DubTeeDub">DubTeeDub</a>
+        <span class="score"> | -6 points</span>
+        <span class="timestamp"> | Jan 29 2018 19:44:44</span>
+    </p>
+    <div class="collapsible">
+        <p>woomp woomp</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfdatr">permalink</a>
+        </p>
+        
+    </div>
+</div>
+    </div>
+</div>
+
+<div class="comment" id="t1_dtfcdoe">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/MajorParadox">MajorParadox</a>
+        <span class="score"> | 27 points</span>
+        <span class="timestamp"> | Jan 29 2018 19:30:19</span>
+    </p>
+    <div class="collapsible">
+        <p>Does this have anything to do with the "show legacy search page" preference?  I still prefer the old search layout because it works like a filter.  The new layout just makes me feel like I'm not on reddit anymore.</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfcdoe">permalink</a>
+        </p>
+        <div class="comment" id="t1_dtfcfdq">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/ketralnis">ketralnis</a>
+        <span class="score"> | 23 points</span>
+        <span class="timestamp"> | Jan 29 2018 19:31:03</span>
+    </p>
+    <div class="collapsible">
+        <p>It's unrelated, that only controls the rendering. I can't pretend that we'll support it forever but it's not being affected here</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfcfdq">permalink</a>
+        </p>
+        <div class="comment" id="t1_dtfcgba">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/MajorParadox">MajorParadox</a>
+        <span class="score"> | 5 points</span>
+        <span class="timestamp"> | Jan 29 2018 19:31:26</span>
+    </p>
+    <div class="collapsible">
+        <p>Ah OK, cool!</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfcgba">permalink</a>
+        </p>
+        
+    </div>
+</div>
+
+<div class="comment" id="t1_dtjucz0">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/Sophira">Sophira</a>
+        <span class="score"> | 1 points</span>
+        <span class="timestamp"> | Feb 01 2018 01:49:33</span>
+    </p>
+    <div class="collapsible">
+        <p>It'll affect the ability to use the <code>syntax=cloudsearch</code> URL parameter though, right?</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtjucz0">permalink</a>
+        </p>
+        <div class="comment" id="t1_dtjue5h">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/ketralnis">ketralnis</a>
+        <span class="score"> | 2 points</span>
+        <span class="timestamp"> | Feb 01 2018 01:50:08</span>
+    </p>
+    <div class="collapsible">
+        <p>Yes</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtjue5h">permalink</a>
+        </p>
+        
+    </div>
+</div>
+    </div>
+</div>
+    </div>
+</div>
+    </div>
+</div>
+
+<div class="comment" id="t1_dtfckp5">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/9Ghillie">9Ghillie</a>
+        <span class="score"> | 26 points</span>
+        <span class="timestamp"> | Jan 29 2018 19:33:21</span>
+    </p>
+    <div class="collapsible">
+        <p>Any info on improving/fixing/restoring the search functionalities? Searching by flair still seems to be broken and the timestamp based search feature was removed completely, which is greatly missed. </p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfckp5">permalink</a>
+        </p>
+        <div class="comment" id="t1_dtfd072">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/priviReddit">priviReddit</a>
+        <span class="score"> | 9 points</span>
+        <span class="timestamp"> | Jan 29 2018 19:40:10</span>
+    </p>
+    <div class="collapsible">
+        <p>Can you elaborate on what you mean by searching by flair being broken?</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfd072">permalink</a>
+        </p>
+        <div class="comment" id="t1_dtfdbft">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/9Ghillie">9Ghillie</a>
+        <span class="score"> | 15 points</span>
+        <span class="timestamp"> | Jan 29 2018 19:45:01</span>
+    </p>
+    <div class="collapsible">
+        <p>In the case of my test, I searched for <code>flair:potm</code> in /r/itookapicture. Photo of the Month contest winners are flaired <em>PotM [Month] [Year]</em> and so far <a href="https://www.reddit.com/r/itookapicture/wiki/index#wiki_photo_of_the_month">there's 7 of them</a>, search only gives 5 results.</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfdbft">permalink</a>
+        </p>
+        <div class="comment" id="t1_dtfdr67">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/ketralnis">ketralnis</a>
+        <span class="score"> | 17 points</span>
+        <span class="timestamp"> | Jan 29 2018 19:51:50</span>
+    </p>
+    <div class="collapsible">
+        <p>Huh, 5 results but not 0. I bet we're not updating the search index on flair changes. I'll add it to the bug list</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfdr67">permalink</a>
+        </p>
+        <div class="comment" id="t1_dtfdwme">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/9Ghillie">9Ghillie</a>
+        <span class="score"> | 9 points</span>
+        <span class="timestamp"> | Jan 29 2018 19:54:16</span>
+    </p>
+    <div class="collapsible">
+        <p>Yeah, just some results seem to be missing.</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfdwme">permalink</a>
+        </p>
+        
+    </div>
+</div>
+    </div>
+</div>
+    </div>
+</div>
+
+<div class="comment" id="t1_dtfdqjr">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/MajorParadox">MajorParadox</a>
+        <span class="score"> | 12 points</span>
+        <span class="timestamp"> | Jan 29 2018 19:51:35</span>
+    </p>
+    <div class="collapsible">
+        <p>I don't know about the API, but searching by flair class went away the last time search was updated.  No way to search for a specific category that can have different text now.</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfdqjr">permalink</a>
+        </p>
+        <div class="comment" id="t1_dtfdsie">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/ketralnis">ketralnis</a>
+        <span class="score"> | 4 points</span>
+        <span class="timestamp"> | Jan 29 2018 19:52:26</span>
+    </p>
+    <div class="collapsible">
+        <p>Can you show me an example search that should work but doesn't?</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfdsie">permalink</a>
+        </p>
+        <div class="comment" id="t1_dtfdxo3">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/MajorParadox">MajorParadox</a>
+        <span class="score"> | 10 points</span>
+        <span class="timestamp"> | Jan 29 2018 19:54:44</span>
+    </p>
+    <div class="collapsible">
+        <p><a href="https://www.reddit.com/r/WritingPrompts/search?q=%28or+%28field+flair_css_class+%27flairwp+mc%27%29+%28field+flair_css_class+%27flaireu+mc%27%29+%28field+flair_css_class+%27flaircw+mc%27%29+%28field+flair_css_class+%27flairtt+mc%27%29+%28field+flair_css_class+%27flairmp+mc%27%29+%28field+flair_css_class+%27flairip+mc%27%29+%28field+flair_css_class+%27flairrf+mc%27%29+%28field+flair_css_class+%27flairpm+mc%27%29+%28field+flair_css_class+%27flairpi+mc%27%29+%28field+flair_css_class+%27flaircc+mc%27%29+%28field+flair_css_class+%27flairot+mc%27%29+%28field+flair_css_class+%27flairhp+mc%27%29+%29&amp;restrict_sr=on&amp;sort=new&amp;t=all&amp;syntax=cloudsearch">This</a> used to be our "Mods' Choice" filter search, but it no longer works.</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfdxo3">permalink</a>
+        </p>
+        <div class="comment" id="t1_dtfe3ju">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/ketralnis">ketralnis</a>
+        <span class="score"> | 7 points</span>
+        <span class="timestamp"> | Jan 29 2018 19:57:18</span>
+    </p>
+    <div class="collapsible">
+        <p>Thanks! I'll see where that went wrong</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfe3ju">permalink</a>
+        </p>
+        <div class="comment" id="t1_dtfeam9">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/MajorParadox">MajorParadox</a>
+        <span class="score"> | 9 points</span>
+        <span class="timestamp"> | Jan 29 2018 20:00:22</span>
+    </p>
+    <div class="collapsible">
+        <p>Thanks!  I dug up the last conversation I had about it <a href="https://www.reddit.com/r/ModSupport/comments/6n7zum/the_search_documentation_has_been_simplified_is/dnlsm0c/">here</a> and it sounded like the functionality for css_classes was removed.</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfeam9">permalink</a>
+        </p>
+        <div class="comment" id="t1_dtfewl0">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/Aiwayume">Aiwayume</a>
+        <span class="score"> | 3 points</span>
+        <span class="timestamp"> | Jan 29 2018 20:09:57</span>
+    </p>
+    <div class="collapsible">
+        <p>I would LOVE for this to come back, not sure if it is something that /u/ketralnis can take back as a feature request, but if not I understand (subs I mod used this to help users a lot, and when that functionality was removed, we ended up with some broken functionality)</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfewl0">permalink</a>
+        </p>
+        
+    </div>
+</div>
+    </div>
+</div>
+
+<div class="comment" id="t1_dtfekn5">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/antiproton">antiproton</a>
+        <span class="score"> | 7 points</span>
+        <span class="timestamp"> | Jan 29 2018 20:04:41</span>
+    </p>
+    <div class="collapsible">
+        <p>Not for nothing, but it feels REALLY bad when these issues only get surfaced when a thread like this rolls around. The last search update was god only knows how long ago, and clearly the devs didn't know. </p>
+<p>We need a way to submit issues and track the progress. Make it complicated, make it require 4+years old account, make submission only work on Tuesday afternoon... whatever it takes. </p>
+<p>I get that it would be a bear to moderate and manage, but you have to ask yourself - how many more things could be logged and improved that you didn't even know where an issue in the first place? </p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfekn5">permalink</a>
+        </p>
+        <div class="comment" id="t1_dtficdi">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/priviReddit">priviReddit</a>
+        <span class="score"> | 2 points</span>
+        <span class="timestamp"> | Jan 29 2018 21:03:28</span>
+    </p>
+    <div class="collapsible">
+        <p>Thanks for the feedback. In the short-term, feel free to surface bugs on this thread or on r/bugs. If you encounter an issue in the future please reach out at contact@reddit.com or /r/reddit.com modmail and we'll take a look.</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtficdi">permalink</a>
+        </p>
+        <div class="comment" id="t1_dtga4qw">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/Deimorz">Deimorz</a>
+        <span class="score"> | 6 points</span>
+        <span class="timestamp"> | Jan 30 2018 05:31:40</span>
+    </p>
+    <div class="collapsible">
+        <p>I've seen a number of search bugs reported over the last few months in /r/bugs. Some of them were reported multiple times, and some of them have been commented about again in this thread.</p>
+<p>As far as I saw, none of those posts received a response, and none of the bugs were addressed. Is someone going to start actually paying attention to /r/bugs? </p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtga4qw">permalink</a>
+        </p>
+        
+    </div>
+</div>
+
+<div class="comment" id="t1_dtg1i0v">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/throwaway_the_fourth">throwaway_the_fourth</a>
+        <span class="score"> | 0 points</span>
+        <span class="timestamp"> | Jan 30 2018 02:33:02</span>
+    </p>
+    <div class="collapsible">
+        <p>The problem with /r/bugs is that it's absolutely flooded with posts that are decidedly not bugs, like "I can't log into my account." Reddit admins already seem to have enough trouble sifting through the feedback they receive, so I doubt that most posts on /r/bugs are ever read by an admin. </p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtg1i0v">permalink</a>
+        </p>
+        <div class="comment" id="t1_dtgbj2d">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/Deimorz">Deimorz</a>
+        <span class="score"> | 5 points</span>
+        <span class="timestamp"> | Jan 30 2018 06:10:22</span>
+    </p>
+    <div class="collapsible">
+        <p>That's really not much of an issue. Even with all the mistaken posts (and the insect photos), it still usually only gets about 10 submissions per day. It only takes seconds to skim through it quickly. </p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtgbj2d">permalink</a>
+        </p>
+        
+    </div>
+</div>
+    </div>
+</div>
+    </div>
+</div>
+    </div>
+</div>
+    </div>
+</div>
+    </div>
+</div>
+    </div>
+</div>
+    </div>
+</div>
+    </div>
+</div>
+
+<div class="comment" id="t1_dtfda0w">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/DubTeeDub">DubTeeDub</a>
+        <span class="score"> | 1 points</span>
+        <span class="timestamp"> | Jan 29 2018 19:44:24</span>
+    </p>
+    <div class="collapsible">
+        <p>search by flair seems to be working for me</p>
+<p>https://www.reddit.com/r/BlackPeopleTwitter/search?q=flair%3AQuality%2BPost&amp;restrict_sr=on&amp;sort=new&amp;t=all</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfda0w">permalink</a>
+        </p>
+        
+    </div>
+</div>
+    </div>
+</div>
+
+<div class="comment" id="t1_dtfcgh3">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/Jakeable">Jakeable</a>
+        <span class="score"> | 20 points</span>
+        <span class="timestamp"> | Jan 29 2018 19:31:30</span>
+    </p>
+    <div class="collapsible">
+        <p>Something I've noticed with the new search is that certain characters don't work. Queries with question marks (<a href="https://www.reddit.com/r/politics/search?q=What%27s+behind+rich+people+pretending+to+be+self-made%3F&amp;restrict_sr=on">example</a>) don't seem to work. Is this an intentional design choice?</p>
+<p>I've also noticed that the <code>site</code> parameter doesn't seem to work as expected anymore. For example <a href="https://www.reddit.com/search?q=site%3Ayahoo.com&amp;sort=new&amp;restrict_sr=&amp;t=all">this search for <code>site:yahoo.com</code></a> also returns results for other sites that contain <code>yahoo.com</code> in the url. </p>
+<p>I don't think these queries are anything fancy or special, I just want them to work properly :(</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfcgh3">permalink</a>
+        </p>
+        <div class="comment" id="t1_dtfcsfo">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/ketralnis">ketralnis</a>
+        <span class="score"> | 12 points</span>
+        <span class="timestamp"> | Jan 29 2018 19:36:46</span>
+    </p>
+    <div class="collapsible">
+        <p>&rt; Queries with question marks (example) don't seem to work. Is this an intentional design choice?</p>
+<p>That URL looks like <code>https://www.reddit.com/r/politics/search?q=What%27s+behind+rich+people+pretending+to+be+self-made?&amp;restrict_sr=on</code> but in HTTP URLs, <code>?</code> is a special character. You'll need to escape the <code>?</code> as <code>%3f</code> like you would in any URL.</p>
+<p>Unless I'm misunderstanding the problem you're having</p>
+<p>&rt; this search for site:yahoo.com also returns results for other sites that contain yahoo.com in the url</p>
+<p>Hmm yeah that looks like a bug. I'll take a look</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfcsfo">permalink</a>
+        </p>
+        <div class="comment" id="t1_dtfcvoo">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/Jakeable">Jakeable</a>
+        <span class="score"> | 18 points</span>
+        <span class="timestamp"> | Jan 29 2018 19:38:11</span>
+    </p>
+    <div class="collapsible">
+        <p>I made that search URL using the search bar in the sidebar of a subreddit. I understand escaping it if this was an API call, but I think if searching with a question mark from the front end it should be auto escaped. </p>
+<p>&rt;Hmm yeah that looks like a bug. I'll take a look</p>
+<p>Thanks, I appreciate it. </p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfcvoo">permalink</a>
+        </p>
+        <div class="comment" id="t1_dtfcypw">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/ketralnis">ketralnis</a>
+        <span class="score"> | 13 points</span>
+        <span class="timestamp"> | Jan 29 2018 19:39:31</span>
+    </p>
+    <div class="collapsible">
+        <p>Ah gotcha, so it could be an issue on either side (web frontend or query backend). I'll take a look at both then</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfcypw">permalink</a>
+        </p>
+        
+    </div>
+</div>
+
+<div class="comment" id="t1_dtfcytn">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/therealandytuba">therealandytuba</a>
+        <span class="score"> | 4 points</span>
+        <span class="timestamp"> | Jan 29 2018 19:39:33</span>
+    </p>
+    <div class="collapsible">
+        <p>Whether API or HTML request, that's still a URL and question marks need escaping in URLs because they're special characters. Lemme look at this a little to see if something needs fixing (or maybe my understanding of things)..</p>
+<p>edit: Yes, the reddit sidebar search should url-encode question marks correctly: <a href="https://i.redd.it/l6o7a4vo82d01.gif">https://i.redd.it/l6o7a4vo82d01.gif</a></p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfcytn">permalink</a>
+        </p>
+        <div class="comment" id="t1_dtfd5dl">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/ketralnis">ketralnis</a>
+        <span class="score"> | 8 points</span>
+        <span class="timestamp"> | Jan 29 2018 19:42:24</span>
+    </p>
+    <div class="collapsible">
+        <p>Yeah, I think what /u/Jakeable means is that they didn't <em>type</em> that URL, they got that URL by using our actual HTML form element like a regular human person would do</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfd5dl">permalink</a>
+        </p>
+        <div class="comment" id="t1_dtfd709">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/Jakeable">Jakeable</a>
+        <span class="score"> | 5 points</span>
+        <span class="timestamp"> | Jan 29 2018 19:43:07</span>
+    </p>
+    <div class="collapsible">
+        <p>That is correct, sorry for the miscommunication. </p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfd709">permalink</a>
+        </p>
+        
+    </div>
+</div>
+
+<div class="comment" id="t1_dtfdcb9">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/therealandytuba">therealandytuba</a>
+        <span class="score"> | 2 points</span>
+        <span class="timestamp"> | Jan 29 2018 19:45:23</span>
+    </p>
+    <div class="collapsible">
+        <p>As a regular human, I repeated what u/Jakeable was describing--typing a string with a questin mark into the right sidebar search box-- and r2 seems to url-encode the ? correctly<a href="https://i.redd.it/l6o7a4vo82d01.gif">: https://i.redd.it/l6o7a4vo82d01.g</a>if</p>
+<p>Jakeable, is that the method you used? maybe mobile web or redesign has the bug? Could you try giving it a go and see if you can figure out the repro steps for the URL you shared above?</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfdcb9">permalink</a>
+        </p>
+        <div class="comment" id="t1_dtfefxu">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/Jakeable">Jakeable</a>
+        <span class="score"> | 6 points</span>
+        <span class="timestamp"> | Jan 29 2018 20:02:37</span>
+    </p>
+    <div class="collapsible">
+        <p>Yeah I just tested it again and still encountered this error.</p>
+<p><a href="https://gfycat.com/SerpentineAcademicChipmunk">Safari</a></p>
+<p><a href="https://gfycat.com/VelvetyThriftyHamster">Reddit for iOS</a></p>
+<p>I tested it on these browsers and still encountered the error: </p>
+<ul>
+<li>
+<p>Safari 11.0.2 (logged in and logged out, no extensions either time)</p>
+</li>
+<li>
+<p>Chrome (logged out, all extensions disabled)</p>
+</li>
+<li>
+<p>Reddit for iOS v4.2.0.301113 (logged in and anonymous mode)</p>
+</li>
+</ul>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfefxu">permalink</a>
+        </p>
+        <div class="comment" id="t1_dtffbul">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/therealandytuba">therealandytuba</a>
+        <span class="score"> | 4 points</span>
+        <span class="timestamp"> | Jan 29 2018 20:16:35</span>
+    </p>
+    <div class="collapsible">
+        <p>I see from your Safari gif that the URL is encoded correctly (note the <code>%3F</code> in the address bar), so I imagine there's a different error happening right now. Maybe the search boxes really are overloaded at the moment.</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtffbul">permalink</a>
+        </p>
+        <div class="comment" id="t1_dtffinw">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/ketralnis">ketralnis</a>
+        <span class="score"> | 6 points</span>
+        <span class="timestamp"> | Jan 29 2018 20:19:31</span>
+    </p>
+    <div class="collapsible">
+        <p>I think I'm just wrong about the original URL and the problem is actually with search</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtffinw">permalink</a>
+        </p>
+        <div class="comment" id="t1_dtfg4q1">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/therealandytuba">therealandytuba</a>
+        <span class="score"> | 5 points</span>
+        <span class="timestamp"> | Jan 29 2018 20:28:59</span>
+    </p>
+    <div class="collapsible">
+        <p>Yeah, does seem like a problem with search itself, especially since Jakeable and I are both seeing error result with correctly-encoded query params.</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfg4q1">permalink</a>
+        </p>
+        
+    </div>
+</div>
+    </div>
+</div>
+
+<div class="comment" id="t1_dtffgq9">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/Jakeable">Jakeable</a>
+        <span class="score"> | 1 points</span>
+        <span class="timestamp"> | Jan 29 2018 20:18:40</span>
+    </p>
+    <div class="collapsible">
+        <p>I did try searching “question” or “test” before and after each “question?” search, and those tests didn’t fail. This issue has also been occurring for several months now. </p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtffgq9">permalink</a>
+        </p>
+        <div class="comment" id="t1_dtfg83x">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/therealandytuba">therealandytuba</a>
+        <span class="score"> | 5 points</span>
+        <span class="timestamp"> | Jan 29 2018 20:30:26</span>
+    </p>
+    <div class="collapsible">
+        <p>Thanks for QAing with different variants -- same text, no question mark; different text, no questoin mark! Sounds like it's on <a href="/user/ketralnis">u/ketralnis</a>' radar now and hopefully he'll sort it out.</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfg83x">permalink</a>
+        </p>
+        <div class="comment" id="t1_dtfg8we">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/Jakeable">Jakeable</a>
+        <span class="score"> | 1 points</span>
+        <span class="timestamp"> | Jan 29 2018 20:30:47</span>
+    </p>
+    <div class="collapsible">
+        <p>No problem! Thanks for looking into this. </p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfg8we">permalink</a>
+        </p>
+        
+    </div>
+</div>
+    </div>
+</div>
+    </div>
+</div>
+    </div>
+</div>
+    </div>
+</div>
+    </div>
+</div>
+    </div>
+</div>
+
+<div class="comment" id="t1_dtfd1an">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/Jakeable">Jakeable</a>
+        <span class="score"> | 4 points</span>
+        <span class="timestamp"> | Jan 29 2018 19:40:38</span>
+    </p>
+    <div class="collapsible">
+        <p>I understand that, but I don't think it's the best user experience if regular users (who might not understand or care about escape characters) have to escape a question mark to search something if they're using reddit's frontend. </p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfd1an">permalink</a>
+        </p>
+        
+    </div>
+</div>
+    </div>
+</div>
+    </div>
+</div>
+
+<div class="comment" id="t1_dtfpaza">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/mavoti">mavoti</a>
+        <span class="score"> | 4 points</span>
+        <span class="timestamp"> | Jan 29 2018 22:56:11</span>
+    </p>
+    <div class="collapsible">
+        <p>/u/ketralnis</p>
+<p>&rt; You'll need to escape the <code>?</code> as <code>%3f</code> like you would in any URL</p>
+<p>/u/therealandytuba</p>
+<p>&rt; question marks need escaping in URLs because they're special characters</p>
+<p>That’s not correct.</p>
+<p>Inside the <a href="https://tools.ietf.org/html/rfc3986#section-3.4">query component</a>, the <code>?</code> has no reserved meaning, so it can be used unescaped there. </p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfpaza">permalink</a>
+        </p>
+        <div class="comment" id="t1_dtj0gsl">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/ketralnis">ketralnis</a>
+        <span class="score"> | 2 points</span>
+        <span class="timestamp"> | Jan 31 2018 17:36:31</span>
+    </p>
+    <div class="collapsible">
+        <p>Huh, today I learned</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtj0gsl">permalink</a>
+        </p>
+        
+    </div>
+</div>
+    </div>
+</div>
+    </div>
+</div>
+    </div>
+</div>
+
+<div class="comment" id="t1_dtfdb91">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/kungming2">kungming2</a>
+        <span class="score"> | 20 points</span>
+        <span class="timestamp"> | Jan 29 2018 19:44:56</span>
+    </p>
+    <div class="collapsible">
+        <p>u/bboe, what does this deprecation mean for PRAW's <a href="http://praw.readthedocs.io/en/latest/code_overview/models/subreddit.html#praw.models.Subreddit.submissions">submissions</a>?</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfdb91">permalink</a>
+        </p>
+        <div class="comment" id="t1_dtfq6zy">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/bboe">bboe</a>
+        <span class="score"> | 17 points</span>
+        <span class="timestamp"> | Jan 29 2018 23:11:21</span>
+    </p>
+    <div class="collapsible">
+        <p>It looks like <code>submissions</code> will have to be deprecated.</p>
+<p>/u/priviReddit is anything in the works to enable the possibility to list all submissions for a given subreddit? Without the timestamp specific search it seems there is now no way via Reddit's API other than iterating through all ids to find all submissions for a subreddit.</p>
+<p>Third party APIs like pushshift exist to provide this information, but there are people hesitant to rely on third parties for such information.</p>
+<p>Finally, I just want to say thanks in advance for providing a heads up about the deprecation. I really appreciate the opportunity to make a proactive change to PRAW, rather than a reactive one.</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfq6zy">permalink</a>
+        </p>
+        <div class="comment" id="t1_dto5f3x">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/13steinj">13steinj</a>
+        <span class="score"> | 1 points</span>
+        <span class="timestamp"> | Feb 03 2018 10:35:49</span>
+    </p>
+    <div class="collapsible">
+        <p>In theory it's possible to algorithmically predict posts' id ranges and distribution for a given subreddit over time, but this wouldn't be with any decent amount of certainty and furthermore would be inefficient because the maximum amount of posts that can be queried by id is 100.</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dto5f3x">permalink</a>
+        </p>
+        <div class="comment" id="t1_du7x12e">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/geitir">geitir</a>
+        <span class="score"> | 2 points</span>
+        <span class="timestamp"> | Feb 14 2018 04:35:20</span>
+    </p>
+    <div class="collapsible">
+        <p>that would imply consistently measuring usage statistics for the entirety of reddit would it not? ie finding out that, for example, reddit is currently receiving 200 comments a second, 50 posts a second, 10 pm's a second, and then continuing to measure this? </p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/du7x12e">permalink</a>
+        </p>
+        <div class="comment" id="t1_du7xant">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/13steinj">13steinj</a>
+        <span class="score"> | 2 points</span>
+        <span class="timestamp"> | Feb 14 2018 04:41:14</span>
+    </p>
+    <div class="collapsible">
+        <p>Something like that, yeah. Pushshift has live streaming capabilities with reddit on a small delay, so it's not <em>impossible</em>.</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/du7xant">permalink</a>
+        </p>
+        <div class="comment" id="t1_du7xfoa">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/geitir">geitir</a>
+        <span class="score"> | 1 points</span>
+        <span class="timestamp"> | Feb 14 2018 04:44:23</span>
+    </p>
+    <div class="collapsible">
+        <p>oh cool, interesting</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/du7xfoa">permalink</a>
+        </p>
+        
+    </div>
+</div>
+    </div>
+</div>
+    </div>
+</div>
+    </div>
+</div>
+    </div>
+</div>
+    </div>
+</div>
+
+<div class="comment" id="t1_dtffz0u">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/xHaZxMaTx">xHaZxMaTx</a>
+        <span class="score"> | 14 points</span>
+        <span class="timestamp"> | Jan 29 2018 20:26:33</span>
+    </p>
+    <div class="collapsible">
+        <p>Is there still not a way to search specifically for spoiler-marked posts like there is for searching for NSFW-marked posts, i.e. "spoiler:yes"?</p>
+<p>Also: I noticed that it's no longer possible to search for specific time frames using time codes.  This was suuuper useful for the annual Best Of nominations threads we'd make.  Example <a href="https://www.reddit.com/r/mylittlepony/comments/7lukut/rmylittlepony_best_of_2017_nomination_thread/drp2zzg/">here</a>.  Is there any plan to re-introduce this feature or a feature like it?</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtffz0u">permalink</a>
+        </p>
+        <div class="comment" id="t1_dtfghn4">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/ketralnis">ketralnis</a>
+        <span class="score"> | 3 points</span>
+        <span class="timestamp"> | Jan 29 2018 20:34:35</span>
+    </p>
+    <div class="collapsible">
+        <p>&rt; search specifically for spoiler-marked posts</p>
+<p>Not currently, and actually it seems a little weird to search specifically for spoilers (although I can imagine wanting to search while specifically excluding them). Can you talk more about what you have in mind there?</p>
+<p>&rt; specific time frames [...] any plan to re-introduce this</p>
+<p>No, not currently. I've heard mention of this "annual best of" use case a couple of times here in this thread. You can still limit searches to "past year" so I don't think I'm fully understanding what use-case is broken</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfghn4">permalink</a>
+        </p>
+        <div class="comment" id="t1_dtfjubz">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/Rene_Z">Rene_Z</a>
+        <span class="score"> | 14 points</span>
+        <span class="timestamp"> | Jan 29 2018 21:26:47</span>
+    </p>
+    <div class="collapsible">
+        <p>&rt; I've heard mention of this "annual best of" use case a couple of times here in this thread. You can still limit searches to "past year" so I don't think I'm fully understanding what use-case is broken</p>
+<p>"Past year" is a relative measure, you'll get different results if you click on it mid-December or mid-January. Also, a year later you won't be able to look at the top posts of two years ago, it'll just the results of the current year.</p>
+<p>And more importantly, <a href="https://www.reddit.com/r/mylittlepony/comments/7lukut/rmylittlepony_best_of_2017_nomination_thread/drp2zzg/">as can be seen in the linked post</a>, there's a separate search for each <em>month</em>, which wouldn't be possible at all with the new search. And as subreddit activity varies throughout the year, the top posts of less active months would get buried further down in a search for the whole year.</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfjubz">permalink</a>
+        </p>
+        
+    </div>
+</div>
+
+<div class="comment" id="t1_dtfgkmm">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/xHaZxMaTx">xHaZxMaTx</a>
+        <span class="score"> | 1 points</span>
+        <span class="timestamp"> | Jan 29 2018 20:35:54</span>
+    </p>
+    <div class="collapsible">
+        <p>Thanks for the quick response!</p>
+<p>&rt;Can you talk more about what you have in mind there?</p>
+<p>Well, to be perfectly honest, it's not something that comes up often, and as a user it probably would never come up, but as a moderator it can be a useful tool.</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfgkmm">permalink</a>
+        </p>
+        
+    </div>
+</div>
+    </div>
+</div>
+    </div>
+</div>
+
+<div class="comment" id="t1_dtfgmx8">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/SirBuckeye">SirBuckeye</a>
+        <span class="score"> | 13 points</span>
+        <span class="timestamp"> | Jan 29 2018 20:36:54</span>
+    </p>
+    <div class="collapsible">
+        <p><code>self:1</code> and <code>self:yes</code> still don't function at all since a change was made a few months ago.  Any plans on restoring these operators?</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfgmx8">permalink</a>
+        </p>
+        
+    </div>
+</div>
+
+<div class="comment" id="t1_dtfdl5f">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/reseph">reseph</a>
+        <span class="score"> | 5 points</span>
+        <span class="timestamp"> | Jan 29 2018 19:49:18</span>
+    </p>
+    <div class="collapsible">
+        <p>I believe I've been on the new search stack, and it has been generally broken for me. See:</p>
+<p><a href="https://www.reddit.com/r/bugs/comments/7fxpye/new_search_is_broken_site_and_self_do_not/">https://www.reddit.com/r/bugs/comments/7fxpye/new_search_is_broken_site_and_self_do_not/</a></p>
+<p>Am I doing something or is it just broken?</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfdl5f">permalink</a>
+        </p>
+        <div class="comment" id="t1_dtfdwcc">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/ketralnis">ketralnis</a>
+        <span class="score"> | 6 points</span>
+        <span class="timestamp"> | Jan 29 2018 19:54:09</span>
+    </p>
+    <div class="collapsible">
+        <p>Is that one still broken for you? We did change something related to this recently and it does work for me</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfdwcc">permalink</a>
+        </p>
+        <div class="comment" id="t1_dtfezdy">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/reseph">reseph</a>
+        <span class="score"> | 8 points</span>
+        <span class="timestamp"> | Jan 29 2018 20:11:10</span>
+    </p>
+    <div class="collapsible">
+        <p>Still broken, aye. `self:yes` is still showing picture/Imgur results, `site` is still stuck from 6 months ago at the latest in my example (and there are recent examples from say 2 months ago to said domain).</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfezdy">permalink</a>
+        </p>
+        <div class="comment" id="t1_dtfg5tz">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/ketralnis">ketralnis</a>
+        <span class="score"> | 3 points</span>
+        <span class="timestamp"> | Jan 29 2018 20:29:29</span>
+    </p>
+    <div class="collapsible">
+        <p>Weird, and thanks for double-checking me. Adding it to the list</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfg5tz">permalink</a>
+        </p>
+        
+    </div>
+</div>
+    </div>
+</div>
+    </div>
+</div>
+    </div>
+</div>
+
+<div class="comment" id="t1_du9g55k">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/FiveYearsAgoOnReddit">FiveYearsAgoOnReddit</a>
+        <span class="score"> | 5 points</span>
+        <span class="timestamp"> | Feb 15 2018 00:20:01</span>
+    </p>
+    <div class="collapsible">
+        <p>This has meant the end of two quite popular subs, just for the record:</p>
+<ul>
+<li>/r/FiveYearsAgoOnReddit</li>
+<li>/r/TenYearsAgoOnReddit</li>
+</ul>
+<p>which were fed by a bot using the cloudsearch timestamp feature.</p>
+<p>Oh well. I'd wouldn't mind someone explaining why, as it's not March 15th yet.</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/du9g55k">permalink</a>
+        </p>
+        
+    </div>
+</div>
+
+<div class="comment" id="t1_dtfq1da">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/DiscoPanda84">DiscoPanda84</a>
+        <span class="score"> | 4 points</span>
+        <span class="timestamp"> | Jan 29 2018 23:08:41</span>
+    </p>
+    <div class="collapsible">
+        <p>&rt; Besides some minor syntax differences, the most notable change is that searches by exact timestamp are no longer supported on the newer system.</p>
+<p>...is that why all the guides and comments I've seen on things like finding my oldest post (either in a particular subreddit, or just on reddit as a whole) don't work <em>at all</em> and instead give me zero search results?</p>
+<p>Edit: Is it really that odd for me to want to look at some of my older posts/comments? This is the first I'd seen <em>any</em> mention of anything that would explain why so many places would be suggesting a method that doesn't work at all...</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfq1da">permalink</a>
+        </p>
+        
+    </div>
+</div>
+
+<div class="comment" id="t1_dtiac25">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/SometimesY">SometimesY</a>
+        <span class="score"> | 4 points</span>
+        <span class="timestamp"> | Jan 31 2018 06:13:52</span>
+    </p>
+    <div class="collapsible">
+        <p>Hey thanks for slowly ruining our code base! </p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtiac25">permalink</a>
+        </p>
+        
+    </div>
+</div>
+
+<div class="comment" id="t1_du7qoxg">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/Murica4Eva">Murica4Eva</a>
+        <span class="score"> | 4 points</span>
+        <span class="timestamp"> | Feb 14 2018 02:36:19</span>
+    </p>
+    <div class="collapsible">
+        <p>This is awful. Why can't you make it easier to find old posts by time instead of harder? It seems like a obviously needed and easy to keep feature.</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/du7qoxg">permalink</a>
+        </p>
+        
+    </div>
+</div>
+
+<div class="comment" id="t1_dtfn33q">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/Exaskryz">Exaskryz</a>
+        <span class="score"> | 3 points</span>
+        <span class="timestamp"> | Jan 29 2018 22:18:49</span>
+    </p>
+    <div class="collapsible">
+        <p>Yo, since we have a thread about searching, I just wanted to ask: Is there a way to limit your searches to subreddits you are subscribed to?</p>
+<p>Just a day or two ago, I refreshed the front page. Silly me. Because wiħ the slight delay in it loading the refresh, a post caught my eye. It was an older post, and was removed from the front page as a result. I tried searching for keywords from the topic and trying to narrow it down to individual subreddits I thought it would be in, but to no avail.</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfn33q">permalink</a>
+        </p>
+        
+    </div>
+</div>
+
+<div class="comment" id="t1_dtjgdb1">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/appropriate-username">appropriate-username</a>
+        <span class="score"> | 2 points</span>
+        <span class="timestamp"> | Jan 31 2018 21:40:43</span>
+    </p>
+    <div class="collapsible">
+        <p>Are you planning on maybe eventually adding search to modmail?</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtjgdb1">permalink</a>
+        </p>
+        <div class="comment" id="t1_dxi1fm0">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/13steinj">13steinj</a>
+        <span class="score"> | 3 points</span>
+        <span class="timestamp"> | Apr 17 2018 08:50:35</span>
+    </p>
+    <div class="collapsible">
+        <p>Ha. We both know that /r/modmailbeta is in the gutter.</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dxi1fm0">permalink</a>
+        </p>
+        <div class="comment" id="t1_dxjc1k7">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/appropriate-username">appropriate-username</a>
+        <span class="score"> | 1 points</span>
+        <span class="timestamp"> | Apr 17 2018 22:50:00</span>
+    </p>
+    <div class="collapsible">
+        <p>F</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dxjc1k7">permalink</a>
+        </p>
+        
+    </div>
+</div>
+    </div>
+</div>
+    </div>
+</div>
+
+<div class="comment" id="t1_durj5k0">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/irrational_function">irrational_function</a>
+        <span class="score"> | 2 points</span>
+        <span class="timestamp"> | Feb 24 2018 17:31:30</span>
+    </p>
+    <div class="collapsible">
+        <p>Is there any way to do case-insensitive title searches with the new search stack?</p>
+<p>You might say "use all lowercase", but sometimes exact-case gives matches that all-lowercase does not.  For example, <a href="https://www.reddit.com/r/javascript/search?q=title%3AjQuery&amp;restrict_sr=on&amp;sort=new&amp;t=all">this title:jQuery search</a> includes <a href="https://www.reddit.com/r/javascript/comments/7wqiv4/need_some_help_on_creating_an_online_form_with/">this result with jQuery/JavaScript in the title</a>, but <a href="https://www.reddit.com/r/javascript/search?q=title%3Ajquery&amp;restrict_sr=on&amp;sort=new&amp;t=all">this title:jquery search</a> does not.</p>
+<p>It seems maybe like if the query term is only punctuation-separated in the title, not fully whitespace separated, then it needs to be exact case.  I can't be sure of the exact rule.</p>
+<p>A real case where this is a problem for bots is searching for username mentions in a title, as people may say "u\/username" in a title. A search for "title:privireddit" will match a title containing "priviReddit" or "privireddit" or "u\/privireddit", but not "u\/priviReddit". (A search for "title:priviReddit" will only match titles containing "priviReddit" and "u\/priviReddit", so that's no help.)</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/durj5k0">permalink</a>
+        </p>
+        
+    </div>
+</div>
+
+<div class="comment" id="t1_dw93hc1">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/Tsundere_Clegane">Tsundere_Clegane</a>
+        <span class="score"> | 2 points</span>
+        <span class="timestamp"> | Mar 25 2018 09:41:57</span>
+    </p>
+    <div class="collapsible">
+        <p>&rt;timestamps</p>
+<p>Oh, that feature was actually quite nice, hopefully the staff implement some other way to deal with date based searches. Reading through archived threads definitely is something that date range search was really helpful for.</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dw93hc1">permalink</a>
+        </p>
+        
+    </div>
+</div>
+
+<div class="comment" id="t1_dwu7dzz">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/spike77wbs">spike77wbs</a>
+        <span class="score"> | 2 points</span>
+        <span class="timestamp"> | Apr 05 2018 05:34:17</span>
+    </p>
+    <div class="collapsible">
+        <p>&rt;timestamp    </p>
+<p>So glad I wasted all that time helping you build content.  Thanks.  </p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dwu7dzz">permalink</a>
+        </p>
+        
+    </div>
+</div>
+
+<div class="comment" id="t1_dwvvl8c">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/agatha361">agatha361</a>
+        <span class="score"> | 2 points</span>
+        <span class="timestamp"> | Apr 06 2018 00:16:04</span>
+    </p>
+    <div class="collapsible">
+        <p>Did you just break RSS-based queries by switching those queries over?</p>
+<p>See also:<br>
+https://www.reddit.com/r/bugs/comments/89wx7b/advanced_search_changed_semantics/</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dwvvl8c">permalink</a>
+        </p>
+        <div class="comment" id="t1_dxi14b7">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/13steinj">13steinj</a>
+        <span class="score"> | 1 points</span>
+        <span class="timestamp"> | Apr 17 2018 08:37:46</span>
+    </p>
+    <div class="collapsible">
+        <p>Not all RSS based queries, just RSS based queries that use the cloudsearch syntax (and any queries that are shit on the new stack). RSS queries are done in the sams exact way as other API queries, just, well, rendered in atom/xml.</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dxi14b7">permalink</a>
+        </p>
+        
+    </div>
+</div>
+    </div>
+</div>
+
+<div class="comment" id="t1_dtfdep9">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/_BindersFullOfWomen_">_BindersFullOfWomen_</a>
+        <span class="score"> | 1 points</span>
+        <span class="timestamp"> | Jan 29 2018 19:46:27</span>
+    </p>
+    <div class="collapsible">
+        <p>As a squishy definitely human user of /r/totallynotrobots, I am glad to hear that the robots are losing their search abilities. </p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfdep9">permalink</a>
+        </p>
+        <div class="comment" id="t1_dtfdmue">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/priviReddit">priviReddit</a>
+        <span class="score"> | 9 points</span>
+        <span class="timestamp"> | Jan 29 2018 19:50:00</span>
+    </p>
+    <div class="collapsible">
+        <p>Robots are scary !!</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfdmue">permalink</a>
+        </p>
+        <div class="comment" id="t1_dtfgqzb">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/MajorParadox">MajorParadox</a>
+        <span class="score"> | 4 points</span>
+        <span class="timestamp"> | Jan 29 2018 20:38:39</span>
+    </p>
+    <div class="collapsible">
+        <p><a href="http://www.reactiongifs.com/r/r2.gif">:(</a></p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfgqzb">permalink</a>
+        </p>
+        
+    </div>
+</div>
+    </div>
+</div>
+    </div>
+</div>
+
+<div class="comment" id="t1_dthlah3">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/GangstaCuddles">GangstaCuddles</a>
+        <span class="score"> | 1 points</span>
+        <span class="timestamp"> | Jan 30 2018 22:33:12</span>
+    </p>
+    <div class="collapsible">
+        <p>Fuck you.  Turn off the shitty myspace profiles. </p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dthlah3">permalink</a>
+        </p>
+        
+    </div>
+</div>
+
+<div class="comment" id="t1_duhh48x">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/escortspoint">escortspoint</a>
+        <span class="score"> | 1 points</span>
+        <span class="timestamp"> | Feb 19 2018 10:18:49</span>
+    </p>
+    <div class="collapsible">
+        <p>The best Independent Escort service in Bangalore. We Provide Hot and Sexy VIP Escort service in Bangalore round the clock. escorts in bangalore
+http://www.escortspoint.com/
+http://bangalorecallgirlsclub.com/
+http://escortsin-bangalore.com/
+http://www.escortservice-delhi.com/
+http://www.escortswala.com
+http://www.escortswala.in
+http://www.escortswala.co.in
+http://www.escortwala.co.in
+http://www.escortwala.in
+http://paqos.in/
+http://www.akashbhatiseoexpert.online/</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/duhh48x">permalink</a>
+        </p>
+        
+    </div>
+</div>
+
+<div class="comment" id="t1_dx27dsg">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/w0ut">w0ut</a>
+        <span class="score"> | 1 points</span>
+        <span class="timestamp"> | Apr 09 2018 08:47:47</span>
+    </p>
+    <div class="collapsible">
+        <p>This is not good, in /r/art we use a bot to stop people from spamming multiple posts in an 48 hour time frame, and we use this call to poll the latest few posts and we check those against our database (python + praw):</p>
+<pre><code>submissions = reddit.subreddit('art').submissions(start = last_submission_date_timestamp)
+</code></pre>
+<p>The query returned exactly what was needed, without unnecessary traffic, and I don't even get from this what is replacing this.</p>
+<p>I guess we'll just allow the spam and bloat reddit further with unwanted content, that seems to be the goal of this. At least the new search of all this spam will be fast?</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dx27dsg">permalink</a>
+        </p>
+        
+    </div>
+</div>
+
+<div class="comment" id="t1_dx5go1h">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/assertiveashwin">assertiveashwin</a>
+        <span class="score"> | 1 points</span>
+        <span class="timestamp"> | Apr 10 2018 21:54:27</span>
+    </p>
+    <div class="collapsible">
+        <p>The same holier than thou attitude. We are the admins, so we do whatever the f*** we feel like. Kneeeeeel......</p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dx5go1h">permalink</a>
+        </p>
+        
+    </div>
+</div>
+
+<div class="comment" id="t1_dxi1ef0">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/13steinj">13steinj</a>
+        <span class="score"> | 1 points</span>
+        <span class="timestamp"> | Apr 17 2018 08:49:15</span>
+    </p>
+    <div class="collapsible">
+        <p>Please notify the owners of bots and applications who this has caused an issue of.</p>
+<p>It is clearly evident that you miscalculated the scale of applications that this would affect, and their intersection with the redditdev and changelog communities.</p>
+<p>Given the massive amount of analytics you collect, I would think it relatively simple to query all OAuth app ids that have been hitting the /search endpoint and sending the developers an email from api@reddit.com and from /u/reddit. It should be noted it seems that given the comments on this thread, more than just cloudsearch has been affected, so narrowing it down to only cloudsearch users is not enough. Not to mention that email address was specifically noted to be for special api changes, and this is a large one.</p>
+<p>Furthermore, it would be nice if you let them know of alternatives they now have, which are</p>
+<ul>
+<li>
+<p>hitting a third party API such as pushshift</p>
+</li>
+<li>
+<p>hitting /api/info with consecutive ids and yielding results, filtering them as they yield</p>
+</li>
+</ul>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dxi1ef0">permalink</a>
+        </p>
+        
+    </div>
+</div>
+
+<div class="comment" id="t1_dtfkpul">
+    <p class="userinfo">
+        <a
+        class="toggle_hide_button"
+        href="javascript:void(0)"
+        onclick="toggle_collapse(this.parentElement.parentElement)">[-]
+        </a>
+        <a href="https://www.reddit.com/u/rbevans">rbevans</a>
+        <span class="score"> | -1 points</span>
+        <span class="timestamp"> | Jan 29 2018 21:40:22</span>
+    </p>
+    <div class="collapsible">
+        <p>Oh nice, this will free up my spacebar now for other things. </p>
+        <p class="toolbar">
+            <a href="https://www.reddit.com/r/changelog/comments/7tus5f/_/dtfkpul">permalink</a>
+        </p>
+        
+    </div>
+</div>
+</body>
+
+<script>
+function toggle_collapse(comment_div)
+{
+    var button = comment_div.getElementsByClassName("toggle_hide_button")[0];
+    var collapsible = comment_div.getElementsByClassName("collapsible")[0];
+    if (collapsible.classList.contains("hidden"))
+    {
+        collapsible.classList.remove("hidden");
+        button.innerText = "[-]";
+    }
+    else
+    {
+        collapsible.classList.add("hidden");
+        button.innerText = "[+]";
+    }
+}
+</script>
+</html>
