@@ -3,7 +3,7 @@ timesearch
 
 # NEWS (2018 04 09):
 
-[Reddit has removed the timestamp search feature which timesearch was built off of](https://www.reddit.com/r/changelog/comments/7tus5f/update_to_search_api/dtfcdn0/). Please message the admins by [sending a PM to /r/reddit.com](https://www.reddit.com/message/compose?to=%2Fr%2Freddit.com&subject=Timestamp+search). Let them know that this feature is important to you, and you would like them to restore it on the new search stack.
+[Reddit has removed the timestamp search feature which timesearch was built off of](https://voussoir.github.io/t3_7tus5f.html#t1_dtfcdn0) ([original](https://www.reddit.com/r/changelog/comments/7tus5f/update_to_search_api/dtfcdn0/)). Please message the admins by [sending a PM to /r/reddit.com](https://www.reddit.com/message/compose?to=%2Fr%2Freddit.com&subject=Timestamp+search). Let them know that this feature is important to you, and you would like them to restore it on the new search stack.
 
 Thankfully, Jason Baumgartner aka [/u/Stuck_in_the_Matrix](https://reddit.com/u/Stuck_in_the_Matrix/overview), owner of [Pushshift.io](https://github.com/pushshift/api), has made it easy to interact with his dataset. Timesearch now queries his API to get post data, and then uses reddit's /api/info to get up-to-date information about those posts (scores, edited text bodies, ...). While we're at it, this also gives us the ability to speed up commentaugment. In addition, we can get all of a user's comments which was not possible through reddit alone.
 
