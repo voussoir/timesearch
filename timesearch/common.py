@@ -4,7 +4,7 @@ import os
 import time
 import traceback
 
-VERSION = '2018.04.09.0'
+VERSION = '2019.11.02.0'
 
 try:
     import praw
