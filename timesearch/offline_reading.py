@@ -9,31 +9,33 @@ from . import tsdb
 HTML_HEADER = '''
 <html>
 <head>
+<title>{title}</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
 <style>
 .comment
-{
+{{
     padding-left: 20px;
     margin-top: 4px;
     margin-right: 4px;
     margin-bottom: 4px;
     border: 2px #000 solid;
-}
+}}
 .submission
-{
+{{
     border: 4px #00f solid;
     padding-left: 20px;
-}
+}}
 .hidden
-{
+{{
     display: none;
-}
+}}
 </style>
 </head>
 <body>
 '''.strip()
+
 HTML_FOOTER = '''
 </body>
 
@@ -55,7 +57,7 @@ function toggle_collapse(comment_div)
 }
 </script>
 </html>
-'''
+'''.strip()
 
 HTML_COMMENT = '''
 <div class="comment" id="{id}">
@@ -243,9 +245,14 @@ def html_from_database(subreddit=None, username=None, specific_submission=None):
         html_basename = '%s.html' % submission_tree.identifier
         html_filepath = database.offline_reading_dir.with_child(html_basename)
         html_handle = open(html_filepath.absolute_path, 'w', encoding='utf-8')
-        html_handle.write(HTML_HEADER)
+
+        header = HTML_HEADER.format(title=submission_tree.data.title)
+        html_handle.write(header)
+
         html_handle.write(page)
+
         html_handle.write(HTML_FOOTER)
+
         html_handle.close()
         print('Wrote', html_filepath.relative_path)
 
