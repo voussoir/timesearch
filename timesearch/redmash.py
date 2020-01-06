@@ -11,7 +11,7 @@ LINE_FORMAT_TXT = '''
 '''.replace('\n', '')
 
 LINE_FORMAT_HTML = '''
-{timestamp}: <a href=\"{shortlink}\">[{flairtext}] {title}</a> - <a href=\"{authorlink}\">{author}</a> (+{score})<br>
+<div>{timestamp}: <a href=\"{shortlink}\">[{flairtext}] {title}</a> - <a href=\"{authorlink}\">{author}</a> (+{score})</div>
 '''.replace('\n', '')
 
 TIMESTAMP_FORMAT = '%Y %b %d'
