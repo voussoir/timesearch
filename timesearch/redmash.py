@@ -15,7 +15,7 @@ LINE_FORMAT_HTML = '''
 '''.replace('\n', '')
 
 TIMESTAMP_FORMAT = '%Y %b %d'
-#The time format.
+# The time format.
 # "%Y %b %d" = "2016 August 10"
 # See http://strftime.org/
 
@@ -51,6 +51,7 @@ def redmash(
         do_subreddit=False,
         do_flair=False,
         html=False,
+        offline=False,
         score_threshold=0,
     ):
     if not common.is_xor(subreddit, username):
@@ -61,7 +62,7 @@ def redmash(
     else:
         database = tsdb.TSDB.for_user(username, do_create=False)
 
-    kwargs = {'html': html, 'score_threshold': score_threshold}
+    kwargs = {'html': html, 'offline': offline, 'score_threshold': score_threshold}
     wrote = None
 
     if do_all or do_date:
@@ -100,6 +101,7 @@ def redmash_worker(
         orderby,
         score_threshold=0,
         html=False,
+        offline=False,
     ):
     cur = database.sql.cursor()
     statement = 'SELECT * FROM submissions WHERE score >= {threshold} ORDER BY {order}'
@@ -132,8 +134,12 @@ def redmash_worker(
         else:
             timestamp = ''
 
-        short_link = 'https://redd.it/%s' % item.idstr[3:]
-        author = item.author
+        if offline:
+            link = f'../offline_reading/{submission.idstr}.html'
+        else:
+            link = f'https://redd.it/{submission.idstr[3:]}'
+
+        author = submission.author
         if author.lower() == '[deleted]':
             author_link = '#'
         else:
@@ -147,11 +153,11 @@ def redmash_worker(
             id=submission.idstr,
             numcomments=submission.num_comments,
             score=submission.score,
-            link=short_link,
+            link=link,
             subreddit=submission.subreddit,
             timestamp=timestamp,
             title=submission.title.replace('\n', ' '),
-            url=submission.url or short_link,
+            url=submission.url or link,
         )
         line += '\n'
         mash_handle.write(line)
@@ -174,5 +180,6 @@ def redmash_argparse(args):
         do_subreddit=args.do_subreddit,
         do_flair=args.do_flair,
         html=args.html,
+        offline=args.offline,
         score_threshold=common.int_none(args.score_threshold),
     )
