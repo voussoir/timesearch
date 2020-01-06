@@ -346,7 +346,7 @@ def trees_from_database(database, specific_submission=None):
         cur1.execute('SELECT idstr FROM submissions ORDER BY created ASC')
         submission_ids = common.fetchgenerator(cur1)
     else:
-        specific_submission = 't3_' + specific_submission.split('_')[-1]
+        specific_submission = common.t3_prefix(specific_submission)
         # Insert as a tuple to behave like the sql fetch results
         submission_ids = [(specific_submission, None)]
 
