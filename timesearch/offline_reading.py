@@ -364,22 +364,22 @@ def trees_from_database(database, specific_submission=None):
     if not found_some_posts:
         raise Exception('Found no submissions!')
 
-def tree_from_submission(submission, commentpool):
+def tree_from_submission(submission_dbrow, comments_dbrows):
     '''
     Given the sqlite data for a submission and all of its comments,
     return a tree with the submission id as the root
     '''
-    submission = DBEntry(submission)
-    commentpool = [DBEntry(c) for c in commentpool]
-    commentpool.sort(key=lambda x: x.created)
+    submission = DBEntry(submission_dbrow)
+    comments = [DBEntry(c) for c in comments_dbrows]
+    comments.sort(key=lambda x: x.created)
 
-    print('Building tree for %s (%d comments)' % (submission.idstr, len(commentpool)))
+    print('Building tree for %s (%d comments)' % (submission.idstr, len(comments)))
     # Thanks Martin Schmidt for the algorithm
     # http://stackoverflow.com/a/29942118/5430534
     tree = TreeNode(identifier=submission.idstr, data=submission)
     node_map = {}
 
-    for comment in commentpool:
+    for comment in comments:
         # Ensure this comment is in a node of its own
         this_node = node_map.get(comment.idstr, None)
         if this_node:
