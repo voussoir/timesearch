@@ -122,33 +122,36 @@ def redmash_worker(
 
     do_timestamp = '{timestamp}' in line_format
 
-    for item in common.fetchgenerator(cur):
+    for submission in common.fetchgenerator(cur):
+        submission = tsdb.DBEntry(submission)
+
         if do_timestamp:
-            timestamp = int(item[tsdb.SQL_SUBMISSION['created']])
+            timestamp = int(submission.created)
             timestamp = datetime.datetime.utcfromtimestamp(timestamp)
             timestamp = timestamp.strftime(TIMESTAMP_FORMAT)
         else:
             timestamp = ''
 
-        short_link = 'https://redd.it/%s' % item[tsdb.SQL_SUBMISSION['idstr']][3:]
-        author = item[tsdb.SQL_SUBMISSION['author']]
+        short_link = 'https://redd.it/%s' % item.idstr[3:]
+        author = item.author
         if author.lower() == '[deleted]':
             author_link = '#'
         else:
             author_link = 'https://reddit.com/u/%s' % author
+
         line = line_format.format(
             author=author,
             authorlink=author_link,
-            flaircss=item[tsdb.SQL_SUBMISSION['flair_css_class']] or '',
-            flairtext=item[tsdb.SQL_SUBMISSION['flair_text']] or '',
-            id=item[tsdb.SQL_SUBMISSION['idstr']],
-            numcomments=item[tsdb.SQL_SUBMISSION['num_comments']],
-            score=item[tsdb.SQL_SUBMISSION['score']],
+            flaircss=submission.flair_css_class or '',
+            flairtext=submission.flair_text or '',
+            id=submission.idstr,
+            numcomments=submission.num_comments,
+            score=submission.score,
             link=short_link,
-            subreddit=item[tsdb.SQL_SUBMISSION['subreddit']],
+            subreddit=submission.subreddit,
             timestamp=timestamp,
-            title=item[tsdb.SQL_SUBMISSION['title']].replace('\n', ' '),
-            url=item[tsdb.SQL_SUBMISSION['url']] or short_link,
+            title=submission.title.replace('\n', ' '),
+            url=submission.url or short_link,
         )
         line += '\n'
         mash_handle.write(line)
