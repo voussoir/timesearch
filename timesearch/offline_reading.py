@@ -345,15 +345,14 @@ def trees_from_database(database, specific_submission=None):
     if specific_submission is None:
         cur1.execute('SELECT idstr FROM submissions ORDER BY created ASC')
         submission_ids = common.fetchgenerator(cur1)
+        # sql always returns rows as tuples, even when selecting one column.
+        submission_ids = (x[0] for x in submission_ids)
     else:
         specific_submission = common.t3_prefix(specific_submission)
-        # Insert as a tuple to behave like the sql fetch results
-        submission_ids = [(specific_submission, None)]
+        submission_ids = [specific_submission]
 
     found_some_posts = False
     for submission_id in submission_ids:
-        # Extract sql fetch
-        submission_id = submission_id[0]
         found_some_posts = True
         cur2.execute('SELECT * FROM submissions WHERE idstr == ?', [submission_id])
         submission = cur2.fetchone()
