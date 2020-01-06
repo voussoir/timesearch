@@ -216,45 +216,28 @@ def html_format_submission(submission):
     )
     return text
 
-def html_from_database(subreddit=None, username=None, specific_submission=None):
+def html_from_database(database, specific_submission=None):
     '''
-    Given a timesearch database filename, produce .html files for each
+    Given a timesearch database, produce html pages for each
     of the submissions it contains (or one particular submission fullname)
     '''
     if markdown is None:
         raise ImportError('Page cannot be rendered without the markdown module')
 
-    if not specific_submission and not common.is_xor(subreddit, username):
-        raise exceptions.NotExclusive(['subreddit', 'username'])
-    if username and specific_submission:
-        raise exceptions.NotExclusive(['username', 'specific_submission'])
-
-    if specific_submission:
-        database = tsdb.TSDB.for_submission(specific_submission, do_create=False)
-
-    elif subreddit:
-        database = tsdb.TSDB.for_subreddit(subreddit, do_create=False)
-
-    else:
-        database = tsdb.TSDB.for_user(username, do_create=False)
-
     submission_trees = trees_from_database(database, specific_submission)
     for submission_tree in submission_trees:
         page = html_from_tree(submission_tree, sort=lambda x: x.data.score * -1)
         os.makedirs(database.offline_reading_dir.absolute_path, exist_ok=True)
-        html_basename = '%s.html' % submission_tree.identifier
-        html_filepath = database.offline_reading_dir.with_child(html_basename)
-        html_handle = open(html_filepath.absolute_path, 'w', encoding='utf-8')
+
+        html = ''
 
         header = HTML_HEADER.format(title=submission_tree.data.title)
-        html_handle.write(header)
+        html += header
 
-        html_handle.write(page)
+        html += page
 
-        html_handle.write(HTML_FOOTER)
-
-        html_handle.close()
-        print('Wrote', html_filepath.relative_path)
+        html += HTML_FOOTER
+        yield (submission_tree.identifier, html)
 
 def html_from_tree(tree, sort=None):
     '''
@@ -333,7 +316,7 @@ def sanitize_braces(text):
 
 def trees_from_database(database, specific_submission=None):
     '''
-    Given a timesearch database filename, take all of the submission
+    Given a timesearch database, take all of the submission
     ids, take all of the comments for each submission id, and run them
     through `tree_from_submission`.
 
@@ -402,8 +385,31 @@ def tree_from_submission(submission_dbrow, comments_dbrows):
             this_node.parent = parent_node
     return tree
 
+def offline_reading(subreddit=None, username=None, specific_submission=None):
+    if not specific_submission and not common.is_xor(subreddit, username):
+        raise exceptions.NotExclusive(['subreddit', 'username'])
+
+    if specific_submission and not username:
+        database = tsdb.TSDB.for_submission(specific_submission, do_create=False)
+
+    elif subreddit:
+        database = tsdb.TSDB.for_subreddit(subreddit, do_create=False)
+
+    else:
+        database = tsdb.TSDB.for_user(username, do_create=False)
+
+    htmls = html_from_database(database, specific_submission=specific_submission)
+
+    for (id, html) in htmls:
+        html_basename = '%s.html' % id
+        html_filepath = database.offline_reading_dir.with_child(html_basename)
+        html_handle = open(html_filepath.absolute_path, 'w', encoding='utf-8')
+        html_handle.write(html)
+        html_handle.close()
+        print('Wrote', html_filepath.relative_path)
+
 def offline_reading_argparse(args):
-    return html_from_database(
+    return offline_reading(
         subreddit=args.subreddit,
         username=args.username,
         specific_submission=args.specific_submission,
