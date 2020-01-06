@@ -141,6 +141,29 @@ SQL_COMMENT = {key:index for (index, key) in enumerate(SQL_COMMENT_COLUMNS)}
 SUBMISSION_TYPES = (common.praw.models.Submission, pushshift.DummySubmission)
 COMMENT_TYPES = (common.praw.models.Comment, pushshift.DummyComment)
 
+
+class DBEntry:
+    '''
+    This class converts a tuple row from the database into an object so that
+    you can access the attributes with dot notation.
+    '''
+    def __init__(self, dbrow):
+        if dbrow[1].startswith('t3_'):
+            columns = SQL_SUBMISSION_COLUMNS
+            self.object_type = 'submission'
+        else:
+            columns = SQL_COMMENT_COLUMNS
+            self.object_type = 'comment'
+
+        self.id = None
+        self.idstr = None
+        for (index, attribute) in enumerate(columns):
+            setattr(self, attribute, dbrow[index])
+
+    def __repr__(self):
+        return 'DBEntry(\'%s\')' % self.id
+
+
 class TSDB:
     def __init__(self, filepath, do_create=True):
         self.filepath = pathclass.Path(filepath)

@@ -98,24 +98,6 @@ HTML_SUBMISSION = '''
 '''.strip()
 
 
-class DBEntry:
-    def __init__(self, fetch):
-        if fetch[1].startswith('t3_'):
-            columns = tsdb.SQL_SUBMISSION_COLUMNS
-            self.object_type = 'submission'
-        else:
-            columns = tsdb.SQL_COMMENT_COLUMNS
-            self.object_type = 'comment'
-
-        self.id = None
-        self.idstr = None
-        for (index, attribute) in enumerate(columns):
-            setattr(self, attribute, fetch[index])
-
-    def __repr__(self):
-        return 'DBEntry(\'%s\')' % self.id
-
-
 class TreeNode:
     def __init__(self, identifier, data, parent=None):
         assert isinstance(identifier, str)
@@ -352,8 +334,8 @@ def tree_from_submission(submission_dbrow, comments_dbrows):
     Given the sqlite data for a submission and all of its comments,
     return a tree with the submission id as the root
     '''
-    submission = DBEntry(submission_dbrow)
-    comments = [DBEntry(c) for c in comments_dbrows]
+    submission = tsdb.DBEntry(submission_dbrow)
+    comments = [tsdb.DBEntry(c) for c in comments_dbrows]
     comments.sort(key=lambda x: x.created)
 
     print('Building tree for %s (%d comments)' % (submission.idstr, len(comments)))
