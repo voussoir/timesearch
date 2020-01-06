@@ -7,11 +7,11 @@ from . import tsdb
 
 
 LINE_FORMAT_TXT = '''
-{timestamp}: [{title}]({shortlink}) - /u/{author} (+{score})
+{timestamp}: [{title}]({link}) - /u/{author} (+{score})
 '''.replace('\n', '')
 
 LINE_FORMAT_HTML = '''
-<div>{timestamp}: <a href=\"{shortlink}\">[{flairtext}] {title}</a> - <a href=\"{authorlink}\">{author}</a> (+{score})</div>
+<div>{timestamp}: <a href="{link}">[{flairtext}] {title}</a> - <a href="{authorlink}">{author}</a> (+{score})</div>
 '''.replace('\n', '')
 
 TIMESTAMP_FORMAT = '%Y %b %d'
@@ -144,7 +144,7 @@ def redmash_worker(
             id=item[tsdb.SQL_SUBMISSION['idstr']],
             numcomments=item[tsdb.SQL_SUBMISSION['num_comments']],
             score=item[tsdb.SQL_SUBMISSION['score']],
-            shortlink=short_link,
+            link=short_link,
             subreddit=item[tsdb.SQL_SUBMISSION['subreddit']],
             timestamp=timestamp,
             title=item[tsdb.SQL_SUBMISSION['title']].replace('\n', ' '),
