@@ -27,7 +27,7 @@ Commands for collecting:
 {get_submissions}
 {get_comments}
 {livestream}
-{getstyles}
+{get_styles}
 {getwiki}
 
 Commands for processing:
@@ -92,11 +92,11 @@ get_comments:
         If provided, print extra information to the screen.
 ''',
 
-    'getstyles': '''
-getstyles:
+    'get_styles': '''
+get_styles:
     Collect the stylesheet, and css images.
 
-    > timesearch.py getstyles -r subredditname
+    > timesearch.py get_styles -r subredditname
 ''',
 
     'getwiki': '''
@@ -268,6 +268,7 @@ get_submissions:
 OLD_COMMAND_ALIASES = {
     'timesearch': 'get_submissions',
     'commentaugment': 'get_comments',
+    'getstyles': 'get_styles',
     'redmash': 'index',
 }
 
@@ -307,9 +308,9 @@ def get_comments_gateway(args):
     from . import get_comments
     get_comments.get_comments_argparse(args)
 
-def getstyles_gateway(args):
-    from . import getstyles
-    getstyles.getstyles_argparse(args)
+def get_styles_gateway(args):
+    from . import get_styles
+    get_styles.get_styles_argparse(args)
 
 def getwiki_gateway(args):
     from . import getwiki
@@ -355,9 +356,9 @@ p_get_comments.add_argument('-l', '--lower', dest='lower', default='update')
 p_get_comments.add_argument('-up', '--upper', dest='upper', default=None)
 p_get_comments.set_defaults(func=get_comments_gateway)
 
-p_getstyles = subparsers.add_parser('getstyles')
-p_getstyles.add_argument('-r', '--subreddit', dest='subreddit')
-p_getstyles.set_defaults(func=getstyles_gateway)
+p_get_styles = subparsers.add_parser('get_styles', aliases=['getstyles'])
+p_get_styles.add_argument('-r', '--subreddit', dest='subreddit')
+p_get_styles.set_defaults(func=get_styles_gateway)
 
 p_getwiki = subparsers.add_parser('getwiki')
 p_getwiki.add_argument('-r', '--subreddit', dest='subreddit')

@@ -5,7 +5,7 @@ from . import common
 from . import tsdb
 
 
-def getstyles(subreddit):
+def get_styles(subreddit):
     (database, subreddit) = tsdb.TSDB.for_subreddit(subreddit, fix_name=True)
 
     print('Getting styles for /r/%s' % subreddit)
@@ -27,5 +27,5 @@ def getstyles(subreddit):
             response = requests.get(image['url'])
             image_file.write(response.content)
 
-def getstyles_argparse(args):
-    return getstyles(args.subreddit)
+def get_styles_argparse(args):
+    return get_styles(args.subreddit)
