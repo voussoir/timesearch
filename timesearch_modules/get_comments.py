@@ -6,7 +6,7 @@ from . import pushshift; print('Thank you Jason Baumgartner, owner of Pushshift.
 from . import tsdb
 
 
-def commentaugment(
+def get_comments(
         subreddit=None,
         username=None,
         specific_submission=None,
@@ -99,11 +99,11 @@ def commentaugment(
         cur.execute(query, bindings)
         database.sql.commit()
 
-def commentaugment_argparse(args):
+def get_comments_argparse(args):
     if args.verbose:
         common.log.setLevel(common.logging.DEBUG)
 
-    return commentaugment(
+    return get_comments(
         subreddit=args.subreddit,
         username=args.username,
         #limit=common.int_none(args.limit),

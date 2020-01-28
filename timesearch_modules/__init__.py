@@ -17,7 +17,7 @@ The basics:
     > timesearch.py get_submissions -r subredditname
 
 2. Collect the comments for those submissions
-    > timesearch.py commentaugment -r subredditname
+    > timesearch.py get_comments -r subredditname
 
 3. Stay up-to-date
     > timesearch.py livestream -r subredditname
@@ -25,7 +25,7 @@ The basics:
 
 Commands for collecting:
 {get_submissions}
-{commentaugment}
+{get_comments}
 {livestream}
 {getstyles}
 {getwiki}
@@ -63,12 +63,12 @@ breakdown:
         Sort the output.
 ''',
 
-    'commentaugment': '''
-commentaugment:
+    'get_comments': '''
+get_comments:
     Collect comments on a subreddit or comments made by a user.
 
-    > timesearch.py commentaugment -r subredditname <flags>
-    > timesearch.py commentaugment -u username <flags>
+    > timesearch.py get_comments -r subredditname <flags>
+    > timesearch.py get_comments -u username <flags>
 
     flags:
     -s "t3_xxxxxx" | --specific "t3_xxxxxx":
@@ -267,6 +267,7 @@ get_submissions:
 
 OLD_COMMAND_ALIASES = {
     'timesearch': 'get_submissions',
+    'commentaugment': 'get_comments',
 }
 
 
@@ -301,9 +302,9 @@ def breakdown_gateway(args):
     from . import breakdown
     breakdown.breakdown_argparse(args)
 
-def commentaugment_gateway(args):
-    from . import commentaugment
-    commentaugment.commentaugment_argparse(args)
+def get_comments_gateway(args):
+    from . import get_comments
+    get_comments.get_comments_argparse(args)
 
 def getstyles_gateway(args):
     from . import getstyles
@@ -343,15 +344,15 @@ p_breakdown.add_argument('-r', '--subreddit', dest='subreddit', default=None)
 p_breakdown.add_argument('-u', '--user', dest='username', default=None)
 p_breakdown.set_defaults(func=breakdown_gateway)
 
-p_commentaugment = subparsers.add_parser('commentaugment')
-p_commentaugment.add_argument('-r', '--subreddit', dest='subreddit', default=None)
-p_commentaugment.add_argument('-s', '--specific', dest='specific_submission', default=None)
-p_commentaugment.add_argument('-u', '--user', dest='username', default=None)
-p_commentaugment.add_argument('-v', '--verbose', dest='verbose', action='store_true')
-p_commentaugment.add_argument('--dont_supplement', dest='do_supplement', action='store_false')
-p_commentaugment.add_argument('-l', '--lower', dest='lower', default='update')
-p_commentaugment.add_argument('-up', '--upper', dest='upper', default=None)
-p_commentaugment.set_defaults(func=commentaugment_gateway)
+p_get_comments = subparsers.add_parser('get_comments', aliases=['commentaugment'])
+p_get_comments.add_argument('-r', '--subreddit', dest='subreddit', default=None)
+p_get_comments.add_argument('-s', '--specific', dest='specific_submission', default=None)
+p_get_comments.add_argument('-u', '--user', dest='username', default=None)
+p_get_comments.add_argument('-v', '--verbose', dest='verbose', action='store_true')
+p_get_comments.add_argument('--dont_supplement', dest='do_supplement', action='store_false')
+p_get_comments.add_argument('-l', '--lower', dest='lower', default='update')
+p_get_comments.add_argument('-up', '--upper', dest='upper', default=None)
+p_get_comments.set_defaults(func=get_comments_gateway)
 
 p_getstyles = subparsers.add_parser('getstyles')
 p_getstyles.add_argument('-r', '--subreddit', dest='subreddit')
