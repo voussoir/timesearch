@@ -6,7 +6,7 @@ logging.getLogger().addHandler(handler)
 
 
 import sys
-import timesearch
+import timesearch_modules
 
-status_code = timesearch.main(sys.argv[1:])
+status_code = timesearch_modules.main(sys.argv[1:])
 raise SystemExit(status_code)
