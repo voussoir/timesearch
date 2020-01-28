@@ -29,7 +29,7 @@ DB_FORMATS_USER = [
     '.\\users\\@{name}\\@{name}.db',
 ]
 
-DATABASE_VERSION = 1
+DATABASE_VERSION = 2
 DB_VERSION_PRAGMA = f'''
 PRAGMA user_version = {DATABASE_VERSION};
 '''
@@ -184,7 +184,7 @@ class TSDB:
 
         self.breakdown_dir = self.filepath.parent.with_child('breakdown')
         self.offline_reading_dir = self.filepath.parent.with_child('offline_reading')
-        self.index_dir = self.filepath.parent.with_child('redmash')
+        self.index_dir = self.filepath.parent.with_child('index')
         self.styles_dir = self.filepath.parent.with_child('styles')
         self.wiki_dir = self.filepath.parent.with_child('wiki')
 
