@@ -34,7 +34,7 @@ Commands for processing:
 {offline_reading}
 {index}
 {breakdown}
-{mergedb}
+{merge_db}
 
 TO SEE DETAILS ON EACH COMMAND, RUN
 > timesearch.py <command>
@@ -106,11 +106,11 @@ get_wiki:
     > timesearch.py get_wiki -r subredditname
 ''',
 
-    'mergedb': '''
-mergedb:
+    'merge_db': '''
+merge_db:
     Copy all new posts from one timesearch database into another.
 
-    > timesearch mergedb --from redditdev1.db --to redditdev2.db
+    > timesearch merge_db --from redditdev1.db --to redditdev2.db
 
     flags:
     --from:
@@ -270,6 +270,7 @@ OLD_COMMAND_ALIASES = {
     'commentaugment': 'get_comments',
     'getstyles': 'get_styles',
     'getwiki': 'get_wiki',
+    'mergedb': 'merge_db',
     'redmash': 'index',
 }
 
@@ -321,9 +322,9 @@ def livestream_gateway(args):
     from . import livestream
     livestream.livestream_argparse(args)
 
-def mergedb_gateway(args):
-    from . import mergedb
-    mergedb.mergedb_argparse(args)
+def merge_db_gateway(args):
+    from . import merge_db
+    merge_db.merge_db_argparse(args)
 
 def offline_reading_gateway(args):
     from . import offline_reading
@@ -376,10 +377,10 @@ p_livestream.add_argument('-v', '--verbose', dest='verbose', action='store_true'
 p_livestream.add_argument('-w', '--wait', dest='sleepy', default=30)
 p_livestream.set_defaults(func=livestream_gateway)
 
-p_mergedb = subparsers.add_parser('mergedb')
-p_mergedb.add_argument('--from', dest='from_db_path', required=True)
-p_mergedb.add_argument('--to', dest='to_db_path', required=True)
-p_mergedb.set_defaults(func=mergedb_gateway)
+p_merge_db = subparsers.add_parser('merge_db', aliases=['mergedb'])
+p_merge_db.add_argument('--from', dest='from_db_path', required=True)
+p_merge_db.add_argument('--to', dest='to_db_path', required=True)
+p_merge_db.set_defaults(func=merge_db_gateway)
 
 p_offline_reading = subparsers.add_parser('offline_reading')
 p_offline_reading.add_argument('-r', '--subreddit', dest='subreddit', default=None)

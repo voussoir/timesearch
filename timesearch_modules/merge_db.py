@@ -23,7 +23,7 @@ def _migrate_helper(db, tablename):
     newcount = db.cur.execute('SELECT count(*) FROM %s' % tablename).fetchone()[0]
     print('Gained %d items.' % (newcount - oldcount))
 
-def mergedb(from_db_path, to_db_path):
+def merge_db(from_db_path, to_db_path):
     to_db = tsdb.TSDB(to_db_path)
     from_db = tsdb.TSDB(from_db_path)
 
@@ -31,5 +31,5 @@ def mergedb(from_db_path, to_db_path):
     _migrate_helper(to_db, 'submissions')
     _migrate_helper(to_db, 'comments')
 
-def mergedb_argparse(args):
-    return mergedb(args.from_db_path, args.to_db_path)
+def merge_db_argparse(args):
+    return merge_db(args.from_db_path, args.to_db_path)
