@@ -32,7 +32,7 @@ Commands for collecting:
 
 Commands for processing:
 {offline_reading}
-{redmash}
+{index}
 {breakdown}
 {mergedb}
 
@@ -168,12 +168,12 @@ offline_reading:
         Otherwise render every submission in the database.
 ''',
 
-    'redmash': '''
-redmash:
+    'index': '''
+index:
     Dump submission listings to a plaintext or HTML file.
 
-    > timesearch.py redmash -r subredditname <flags>
-    > timesearch.py redmash -u username <flags>
+    > timesearch.py index -r subredditname <flags>
+    > timesearch.py index -u username <flags>
 
     flags:
     -r "test" | --subreddit "test":
@@ -219,16 +219,16 @@ redmash:
         Perform a mash sorted by flair.
 
     examples:
-        `timesearch redmash -r botwatch --date`
+        `timesearch index -r botwatch --date`
         does only the date file.
 
-        `timesearch redmash -r botwatch --score --title`
+        `timesearch index -r botwatch --score --title`
         does both the score and title files.
 
-        `timesearch redmash -r botwatch --score --score_threshold 50`
+        `timesearch index -r botwatch --score --score_threshold 50`
         only shows submissions with >= 50 points.
 
-        `timesearch redmash -r botwatch --all`
+        `timesearch index -r botwatch --all`
         performs all of the different mashes.
 ''',
 
@@ -268,6 +268,7 @@ get_submissions:
 OLD_COMMAND_ALIASES = {
     'timesearch': 'get_submissions',
     'commentaugment': 'get_comments',
+    'redmash': 'index',
 }
 
 
@@ -326,9 +327,9 @@ def offline_reading_gateway(args):
     from . import offline_reading
     offline_reading.offline_reading_argparse(args)
 
-def redmash_gateway(args):
-    from . import redmash
-    redmash.redmash_argparse(args)
+def index_gateway(args):
+    from . import index
+    index.index_argparse(args)
 
 def get_submissions_gateway(args):
     from . import get_submissions
@@ -384,20 +385,20 @@ p_offline_reading.add_argument('-s', '--specific', dest='specific_submission', d
 p_offline_reading.add_argument('-u', '--user', dest='username', default=None)
 p_offline_reading.set_defaults(func=offline_reading_gateway)
 
-p_redmash = subparsers.add_parser('redmash')
-p_redmash.add_argument('--all', dest='do_all', action='store_true')
-p_redmash.add_argument('--author', dest='do_author', action='store_true')
-p_redmash.add_argument('--date', dest='do_date', action='store_true')
-p_redmash.add_argument('--flair', dest='do_flair', action='store_true')
-p_redmash.add_argument('--html', dest='html', action='store_true')
-p_redmash.add_argument('--score', dest='do_score', action='store_true')
-p_redmash.add_argument('--sub', dest='do_subreddit', action='store_true')
-p_redmash.add_argument('--title', dest='do_title', action='store_true')
-p_redmash.add_argument('--offline', dest='offline', action='store_true')
-p_redmash.add_argument('-r', '--subreddit', dest='subreddit', default=None)
-p_redmash.add_argument('-st', '--score_threshold', dest='score_threshold', default=0)
-p_redmash.add_argument('-u', '--user', dest='username', default=None)
-p_redmash.set_defaults(func=redmash_gateway)
+p_index = subparsers.add_parser('index', aliases=['redmash'])
+p_index.add_argument('--all', dest='do_all', action='store_true')
+p_index.add_argument('--author', dest='do_author', action='store_true')
+p_index.add_argument('--date', dest='do_date', action='store_true')
+p_index.add_argument('--flair', dest='do_flair', action='store_true')
+p_index.add_argument('--html', dest='html', action='store_true')
+p_index.add_argument('--score', dest='do_score', action='store_true')
+p_index.add_argument('--sub', dest='do_subreddit', action='store_true')
+p_index.add_argument('--title', dest='do_title', action='store_true')
+p_index.add_argument('--offline', dest='offline', action='store_true')
+p_index.add_argument('-r', '--subreddit', dest='subreddit', default=None)
+p_index.add_argument('-st', '--score_threshold', dest='score_threshold', default=0)
+p_index.add_argument('-u', '--user', dest='username', default=None)
+p_index.set_defaults(func=index_gateway)
 
 p_get_submissions = subparsers.add_parser('get_submissions', aliases=['timesearch'])
 p_get_submissions.add_argument('-l', '--lower', dest='lower', default='update')

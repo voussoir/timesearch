@@ -40,7 +40,7 @@ HTML_FOOTER = '''
 '''
 
 
-def redmash(
+def index(
         subreddit=None,
         username=None,
         do_all=False,
@@ -67,35 +67,35 @@ def redmash(
 
     if do_all or do_date:
         print('Writing time file')
-        wrote = redmash_worker(database, suffix='_date', orderby='created ASC', **kwargs)
+        wrote = index_worker(database, suffix='_date', orderby='created ASC', **kwargs)
 
     if do_all or do_title:
         print('Writing title file')
-        wrote = redmash_worker(database, suffix='_title', orderby='title ASC', **kwargs)
+        wrote = index_worker(database, suffix='_title', orderby='title ASC', **kwargs)
 
     if do_all or do_score:
         print('Writing score file')
-        wrote = redmash_worker(database, suffix='_score', orderby='score DESC', **kwargs)
+        wrote = index_worker(database, suffix='_score', orderby='score DESC', **kwargs)
 
     if not username and (do_all or do_author):
         print('Writing author file')
-        wrote = redmash_worker(database, suffix='_author', orderby='author ASC', **kwargs)
+        wrote = index_worker(database, suffix='_author', orderby='author ASC', **kwargs)
 
     if username and (do_all or do_subreddit):
         print('Writing subreddit file')
-        wrote = redmash_worker(database, suffix='_subreddit', orderby='subreddit ASC', **kwargs)
+        wrote = index_worker(database, suffix='_subreddit', orderby='subreddit ASC', **kwargs)
 
     if do_all or do_flair:
         print('Writing flair file')
         # Items with flair come before items without. Each group is sorted by time separately.
         orderby = 'flair_text IS NULL ASC, created ASC'
-        wrote = redmash_worker(database, suffix='_flair', orderby=orderby, **kwargs)
+        wrote = index_worker(database, suffix='_flair', orderby=orderby, **kwargs)
 
     if not wrote:
         raise Exception('No sorts selected! Read the docstring')
     print('Done.')
 
-def redmash_worker(
+def index_worker(
         database,
         suffix,
         orderby,
@@ -108,12 +108,12 @@ def redmash_worker(
     statement = statement.format(threshold=score_threshold, order=orderby)
     cur.execute(statement)
 
-    os.makedirs(database.redmash_dir.absolute_path, exist_ok=True)
+    os.makedirs(database.index_dir.absolute_path, exist_ok=True)
 
     extension = '.html' if html else '.txt'
     mash_basename = database.filepath.replace_extension('').basename
     mash_basename += suffix + extension
-    mash_filepath = database.redmash_dir.with_child(mash_basename)
+    mash_filepath = database.index_dir.with_child(mash_basename)
 
     mash_handle = open(mash_filepath.absolute_path, 'w', encoding='UTF-8')
     if html:
@@ -168,8 +168,8 @@ def redmash_worker(
     print('Wrote', mash_filepath.relative_path)
     return mash_filepath
 
-def redmash_argparse(args):
-    return redmash(
+def index_argparse(args):
+    return index(
         subreddit=args.subreddit,
         username=args.username,
         do_all=args.do_all,

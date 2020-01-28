@@ -176,7 +176,7 @@ class TSDB:
 
         self.breakdown_dir = self.filepath.parent.with_child('breakdown')
         self.offline_reading_dir = self.filepath.parent.with_child('offline_reading')
-        self.redmash_dir = self.filepath.parent.with_child('redmash')
+        self.index_dir = self.filepath.parent.with_child('redmash')
         self.styles_dir = self.filepath.parent.with_child('styles')
         self.wiki_dir = self.filepath.parent.with_child('wiki')
 
