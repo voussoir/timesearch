@@ -30,8 +30,16 @@ DB_FORMATS_USER = [
 ]
 
 DATABASE_VERSION = 1
-DB_INIT = '''
-PRAGMA user_version = {user_version};
+DB_VERSION_PRAGMA = f'''
+PRAGMA user_version = {DATABASE_VERSION};
+'''
+
+DB_PRAGMAS = f'''
+'''
+
+DB_INIT = f'''
+{DB_PRAGMAS}
+{DB_VERSION_PRAGMA}
 ----------------------------------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS config(
     key TEXT,
@@ -88,7 +96,7 @@ CREATE TABLE IF NOT EXISTS comment_edits(
     replaced_at INT
 );
 CREATE INDEX IF NOT EXISTS comment_edits_index ON comment_edits(idstr);
-'''.format(user_version=DATABASE_VERSION)
+'''
 
 DEFAULT_CONFIG = {
     'store_edits': True,
@@ -165,7 +173,7 @@ class DBEntry:
 
 
 class TSDB:
-    def __init__(self, filepath, do_create=True):
+    def __init__(self, filepath, *, do_create=True, skip_version_check=False):
         self.filepath = pathclass.Path(filepath)
         if not self.filepath.is_file:
             if not do_create:
@@ -185,15 +193,11 @@ class TSDB:
         self.cur = self.sql.cursor()
 
         if existing_database:
-            self.cur.execute('PRAGMA user_version')
-            existing_version = self.cur.fetchone()[0]
-            if existing_version > 0 and existing_version != DATABASE_VERSION:
-                raise exceptions.DatabaseOutOfDate(current=existing_version, new=DATABASE_VERSION)
-
-        statements = DB_INIT.split(';')
-        for statement in statements:
-            self.cur.execute(statement)
-        self.sql.commit()
+            if not skip_version_check:
+                self._check_version()
+            self._load_pragmas()
+        else:
+            self._first_time_setup()
 
         self.config = {}
         for (key, default_value) in DEFAULT_CONFIG.items():
@@ -207,6 +211,23 @@ class TSDB:
                 if isinstance(default_value, int):
                     existing_value = int(existing_value)
                 self.config[key] = existing_value
+
+    def _check_version(self):
+        '''
+        Compare database's user_version against constants.DATABASE_VERSION,
+        raising exceptions.DatabaseOutOfDate if not correct.
+        '''
+        existing = self.cur.execute('PRAGMA user_version').fetchone()[0]
+        if existing != DATABASE_VERSION:
+            raise exceptions.DatabaseOutOfDate(current=existing, new=DATABASE_VERSION)
+
+    def _first_time_setup(self):
+        self.sql.executescript(DB_INIT)
+        self.sql.commit()
+
+    def _load_pragmas(self):
+        self.sql.executescript(DB_PRAGMAS)
+        self.sql.commit()
 
     def __repr__(self):
         return 'TSDB(%s)' % self.filepath
