@@ -3,7 +3,7 @@ import os
 import sqlite3
 import sys
 
-import timesearch.tsdb
+import timesearch_modules.tsdb
 
 
 def upgrade_all(database_filename):
@@ -19,7 +19,7 @@ def upgrade_all(database_filename):
 
     cur.execute('PRAGMA user_version')
     current_version = cur.fetchone()[0]
-    needed_version = timesearch.tsdb.DATABASE_VERSION
+    needed_version = timesearch_modules.tsdb.DATABASE_VERSION
 
     if current_version == needed_version:
         print('Already up to date with version %d.' % needed_version)
