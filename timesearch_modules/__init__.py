@@ -31,10 +31,10 @@ Commands for collecting:
 {get_wiki}
 
 Commands for processing:
-{offline_reading}
-{index}
 {breakdown}
+{index}
 {merge_db}
+{offline_reading}
 
 TO SEE DETAILS ON EACH COMMAND, RUN
 > timesearch.py <command>
@@ -99,73 +99,43 @@ get_styles:
     > timesearch.py get_styles -r subredditname
 ''',
 
+    'get_submissions': '''
+get_submissions:
+    Collect submissions from the subreddit across all of history, or
+    Collect submissions by a user (as many as possible).
+
+    > timesearch.py get_submissions -r subredditname <flags>
+    > timesearch.py get_submissions -u username <flags>
+
+    -r "test" | --subreddit "test":
+        The subreddit to scan. Mutually exclusive with username.
+
+    -u "test" | --username "test":
+        The user to scan. Mutually exclusive with subreddit.
+
+    -l "update" | --lower "update":
+        If a number - the unix timestamp to start at.
+        If "update" - continue from latest submission in db.
+        Default: update
+
+    -up 1467460221 | --upper 1467460221:
+        If a number - the unix timestamp to stop at.
+        If not provided - stop at current time.
+        Default: current time
+
+    --dont_supplement:
+        If provided, trust the pushshift data and do not fetch live copies
+        from reddit.
+
+    -v | --verbose:
+        If provided, print extra information to the screen.
+''',
+
     'get_wiki': '''
 get_wiki:
     Collect all available wiki pages.
 
     > timesearch.py get_wiki -r subredditname
-''',
-
-    'merge_db': '''
-merge_db:
-    Copy all new posts from one timesearch database into another.
-
-    > timesearch merge_db --from redditdev1.db --to redditdev2.db
-
-    flags:
-    --from:
-        The database file containing the posts you wish to copy.
-
-    --to:
-        The database file to which you will copy the posts.
-        The database is modified in-place.
-        Existing posts will be ignored and not updated.
-''',
-
-    'livestream': '''
-livestream:
-    Continously collect submissions and/or comments.
-
-    > timesearch.py livestream -r subredditname <flags>
-    > timesearch.py livestream -u username <flags>
-
-    flags:
-    -r "test" | --subreddit "test":
-        The subreddit to collect from.
-
-    -u "test" | --username "test":
-        The redditor to collect from.
-
-    -s | --submissions:
-        If provided, do collect submissions. Otherwise don't.
-
-    -c | --comments:
-        If provided, do collect comments. Otherwise don't.
-
-    If submissions and comments are BOTH left unspecified, then they will
-    BOTH be collected.
-
-    -v | --verbose:
-        If provided, print extra information to the screen.
-
-    -w 30 | --wait 30:
-        The number of seconds to wait between cycles.
-
-    -1 | --once:
-        If provided, only do a single loop. Otherwise go forever.
-''',
-
-    'offline_reading': '''
-offline_reading:
-    Render submissions and comment threads to HTML via Markdown.
-
-    > timesearch.py offline_reading -r subredditname <flags>
-    > timesearch.py offline_reading -u username <flags>
-
-    flags:
-    -s "t3_xxxxxx" | --specific "t3_xxxxxx":
-        Given a submission ID, t3_xxxxxx, render only that submission.
-        Otherwise render every submission in the database.
 ''',
 
     'index': '''
@@ -232,36 +202,66 @@ index:
         performs all of the different mashes.
 ''',
 
-    'get_submissions': '''
-get_submissions:
-    Collect submissions from the subreddit across all of history, or
-    Collect submissions by a user (as many as possible).
+    'livestream': '''
+livestream:
+    Continously collect submissions and/or comments.
 
-    > timesearch.py get_submissions -r subredditname <flags>
-    > timesearch.py get_submissions -u username <flags>
+    > timesearch.py livestream -r subredditname <flags>
+    > timesearch.py livestream -u username <flags>
 
+    flags:
     -r "test" | --subreddit "test":
-        The subreddit to scan. Mutually exclusive with username.
+        The subreddit to collect from.
 
     -u "test" | --username "test":
-        The user to scan. Mutually exclusive with subreddit.
+        The redditor to collect from.
 
-    -l "update" | --lower "update":
-        If a number - the unix timestamp to start at.
-        If "update" - continue from latest submission in db.
-        Default: update
+    -s | --submissions:
+        If provided, do collect submissions. Otherwise don't.
 
-    -up 1467460221 | --upper 1467460221:
-        If a number - the unix timestamp to stop at.
-        If not provided - stop at current time.
-        Default: current time
+    -c | --comments:
+        If provided, do collect comments. Otherwise don't.
 
-    --dont_supplement:
-        If provided, trust the pushshift data and do not fetch live copies
-        from reddit.
+    If submissions and comments are BOTH left unspecified, then they will
+    BOTH be collected.
 
     -v | --verbose:
         If provided, print extra information to the screen.
+
+    -w 30 | --wait 30:
+        The number of seconds to wait between cycles.
+
+    -1 | --once:
+        If provided, only do a single loop. Otherwise go forever.
+''',
+
+    'merge_db': '''
+merge_db:
+    Copy all new posts from one timesearch database into another.
+
+    > timesearch merge_db --from redditdev1.db --to redditdev2.db
+
+    flags:
+    --from:
+        The database file containing the posts you wish to copy.
+
+    --to:
+        The database file to which you will copy the posts.
+        The database is modified in-place.
+        Existing posts will be ignored and not updated.
+''',
+
+    'offline_reading': '''
+offline_reading:
+    Render submissions and comment threads to HTML via Markdown.
+
+    > timesearch.py offline_reading -r subredditname <flags>
+    > timesearch.py offline_reading -u username <flags>
+
+    flags:
+    -s "t3_xxxxxx" | --specific "t3_xxxxxx":
+        Given a submission ID, t3_xxxxxx, render only that submission.
+        Otherwise render every submission in the database.
 ''',
 }
 
