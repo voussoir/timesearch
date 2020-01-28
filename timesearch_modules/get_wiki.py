@@ -4,7 +4,7 @@ from . import common
 from . import tsdb
 
 
-def getwiki(subreddit):
+def get_wiki(subreddit):
     (database, subreddit) = tsdb.TSDB.for_subreddit(subreddit, fix_name=True)
 
     print('Getting wiki pages for /r/%s' % subreddit)
@@ -20,5 +20,5 @@ def getwiki(subreddit):
             handle.write(wikipage.content_md)
         print('Wrote', wikipage_path.relative_path)
 
-def getwiki_argparse(args):
-    return getwiki(args.subreddit)
+def get_wiki_argparse(args):
+    return get_wiki(args.subreddit)

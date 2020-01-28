@@ -28,7 +28,7 @@ Commands for collecting:
 {get_comments}
 {livestream}
 {get_styles}
-{getwiki}
+{get_wiki}
 
 Commands for processing:
 {offline_reading}
@@ -99,11 +99,11 @@ get_styles:
     > timesearch.py get_styles -r subredditname
 ''',
 
-    'getwiki': '''
-getwiki:
+    'get_wiki': '''
+get_wiki:
     Collect all available wiki pages.
 
-    > timesearch.py getwiki -r subredditname
+    > timesearch.py get_wiki -r subredditname
 ''',
 
     'mergedb': '''
@@ -269,6 +269,7 @@ OLD_COMMAND_ALIASES = {
     'timesearch': 'get_submissions',
     'commentaugment': 'get_comments',
     'getstyles': 'get_styles',
+    'getwiki': 'get_wiki',
     'redmash': 'index',
 }
 
@@ -312,9 +313,9 @@ def get_styles_gateway(args):
     from . import get_styles
     get_styles.get_styles_argparse(args)
 
-def getwiki_gateway(args):
-    from . import getwiki
-    getwiki.getwiki_argparse(args)
+def get_wiki_gateway(args):
+    from . import get_wiki
+    get_wiki.get_wiki_argparse(args)
 
 def livestream_gateway(args):
     from . import livestream
@@ -360,9 +361,9 @@ p_get_styles = subparsers.add_parser('get_styles', aliases=['getstyles'])
 p_get_styles.add_argument('-r', '--subreddit', dest='subreddit')
 p_get_styles.set_defaults(func=get_styles_gateway)
 
-p_getwiki = subparsers.add_parser('getwiki')
-p_getwiki.add_argument('-r', '--subreddit', dest='subreddit')
-p_getwiki.set_defaults(func=getwiki_gateway)
+p_get_wiki = subparsers.add_parser('get_wiki', aliases=['getwiki'])
+p_get_wiki.add_argument('-r', '--subreddit', dest='subreddit')
+p_get_wiki.set_defaults(func=get_wiki_gateway)
 
 p_livestream = subparsers.add_parser('livestream')
 p_livestream.add_argument('-1', '--once', dest='once', action='store_true')
