@@ -14,7 +14,7 @@ The subreddit archiver
 
 The basics:
 1. Collect a subreddit's submissions
-    > timesearch.py timesearch -r subredditname
+    > timesearch.py get_submissions -r subredditname
 
 2. Collect the comments for those submissions
     > timesearch.py commentaugment -r subredditname
@@ -24,7 +24,7 @@ The basics:
 
 
 Commands for collecting:
-{timesearch}
+{get_submissions}
 {commentaugment}
 {livestream}
 {getstyles}
@@ -232,13 +232,13 @@ redmash:
         performs all of the different mashes.
 ''',
 
-    'timesearch': '''
-timesearch:
+    'get_submissions': '''
+get_submissions:
     Collect submissions from the subreddit across all of history, or
     Collect submissions by a user (as many as possible).
 
-    > timesearch.py timesearch -r subredditname <flags>
-    > timesearch.py timesearch -u username <flags>
+    > timesearch.py get_submissions -r subredditname <flags>
+    > timesearch.py get_submissions -u username <flags>
 
     -r "test" | --subreddit "test":
         The subreddit to scan. Mutually exclusive with username.
@@ -263,6 +263,10 @@ timesearch:
     -v | --verbose:
         If provided, print extra information to the screen.
 ''',
+}
+
+OLD_COMMAND_ALIASES = {
+    'timesearch': 'get_submissions',
 }
 
 
@@ -325,9 +329,9 @@ def redmash_gateway(args):
     from . import redmash
     redmash.redmash_argparse(args)
 
-def timesearch_gateway(args):
-    from . import timesearch
-    timesearch.timesearch_argparse(args)
+def get_submissions_gateway(args):
+    from . import get_submissions
+    get_submissions.get_submissions_argparse(args)
 
 
 parser = argparse.ArgumentParser()
@@ -394,19 +398,20 @@ p_redmash.add_argument('-st', '--score_threshold', dest='score_threshold', defau
 p_redmash.add_argument('-u', '--user', dest='username', default=None)
 p_redmash.set_defaults(func=redmash_gateway)
 
-p_timesearch = subparsers.add_parser('timesearch')
-p_timesearch.add_argument('-l', '--lower', dest='lower', default='update')
-p_timesearch.add_argument('-r', '--subreddit', dest='subreddit', default=None)
-p_timesearch.add_argument('-u', '--user', dest='username', default=None)
-p_timesearch.add_argument('-up', '--upper', dest='upper', default=None)
-p_timesearch.add_argument('-v', '--verbose', dest='verbose', action='store_true')
-p_timesearch.add_argument('--dont_supplement', dest='do_supplement', action='store_false')
-p_timesearch.set_defaults(func=timesearch_gateway)
+p_get_submissions = subparsers.add_parser('get_submissions', aliases=['timesearch'])
+p_get_submissions.add_argument('-l', '--lower', dest='lower', default='update')
+p_get_submissions.add_argument('-r', '--subreddit', dest='subreddit', default=None)
+p_get_submissions.add_argument('-u', '--user', dest='username', default=None)
+p_get_submissions.add_argument('-up', '--upper', dest='upper', default=None)
+p_get_submissions.add_argument('-v', '--verbose', dest='verbose', action='store_true')
+p_get_submissions.add_argument('--dont_supplement', dest='do_supplement', action='store_false')
+p_get_submissions.set_defaults(func=get_submissions_gateway)
 
 def main(argv):
     helpstrings = {'', 'help', '-h', '--help'}
 
     command = listget(argv, 0, '').lower()
+    command = OLD_COMMAND_ALIASES.get(command, command)
 
     # The user did not enter a command, or entered something unrecognized.
     if command not in MODULE_DOCSTRINGS:

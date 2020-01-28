@@ -6,7 +6,6 @@ from . import exceptions
 from . import pushshift; print('Thank you Jason Baumgartner, owner of Pushshift.io!')
 from . import tsdb
 
-
 def _normalize_subreddit(subreddit):
     if subreddit is None:
         pass
@@ -25,7 +24,7 @@ def _normalize_user(user):
         raise TypeError(type(user))
     return user
 
-def timesearch(
+def get_submissions(
         subreddit=None,
         username=None,
         lower=None,
@@ -86,7 +85,7 @@ def timesearch(
 
     print('Ended with %d items in %s' % (itemcount, database.filepath.basename))
 
-def timesearch_argparse(args):
+def get_submissions_argparse(args):
     if args.verbose:
         common.log.setLevel(common.logging.DEBUG)
 
@@ -95,7 +94,7 @@ def timesearch_argparse(args):
     else:
         lower = common.int_none(args.lower)
 
-    return timesearch(
+    return get_submissions(
         subreddit=args.subreddit,
         username=args.username,
         lower=lower,
