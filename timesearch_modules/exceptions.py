@@ -17,7 +17,7 @@ class TimesearchException(Exception):
 
 OUTOFDATE = '''
 Database is out of date. {current} should be {new}.
-Please use utilities\\database_upgrader.py
+Please run utilities\\database_upgrader.py "{filepath.absolute_path}"
 '''.strip()
 class DatabaseOutOfDate(TimesearchException):
     '''

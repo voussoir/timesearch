@@ -219,7 +219,11 @@ class TSDB:
         '''
         existing = self.cur.execute('PRAGMA user_version').fetchone()[0]
         if existing != DATABASE_VERSION:
-            raise exceptions.DatabaseOutOfDate(current=existing, new=DATABASE_VERSION)
+            raise exceptions.DatabaseOutOfDate(
+                current=existing,
+                new=DATABASE_VERSION,
+                filepath=self.filepath,
+            )
 
     def _first_time_setup(self):
         self.sql.executescript(DB_INIT)
