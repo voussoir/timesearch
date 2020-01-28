@@ -128,5 +128,5 @@ ____
 I want to live in a future where everyone uses UTC and agrees on daylight savings.
 
 <p align="center">
-    <img src="https://github.com/voussoir/reddit/blob/master/.GitImages/timesearch_logo_256.png?raw=true" alt="Timesearch"/>
+    <img height=256 src="https://github.com/voussoir/timesearch/blob/master/timesearch_logo.svg?raw=true&sanitize=true" alt="Timesearch"/>
 </p>
