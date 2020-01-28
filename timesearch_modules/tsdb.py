@@ -214,7 +214,7 @@ class TSDB:
 
     def _check_version(self):
         '''
-        Compare database's user_version against constants.DATABASE_VERSION,
+        Compare database's user_version against DATABASE_VERSION,
         raising exceptions.DatabaseOutOfDate if not correct.
         '''
         existing = self.cur.execute('PRAGMA user_version').fetchone()[0]
