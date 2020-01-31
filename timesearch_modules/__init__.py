@@ -1,6 +1,8 @@
 import argparse
 import sys
 
+from voussoirkit import betterhelp
+
 from . import exceptions
 
 # NOTE: Originally I wanted the docstring for each module to be within their
@@ -22,26 +24,32 @@ The basics:
 3. Stay up-to-date
     > timesearch.py livestream -r subredditname
 
-
 Commands for collecting:
 {get_submissions}
+
 {get_comments}
+
 {livestream}
+
 {get_styles}
+
 {get_wiki}
 
 Commands for processing:
 {breakdown}
+
 {index}
+
 {merge_db}
+
 {offline_reading}
 
 TO SEE DETAILS ON EACH COMMAND, RUN
 > timesearch.py <command>
-'''
+'''.lstrip()
 
-MODULE_DOCSTRINGS = {
-    'breakdown': '''
+MODULE_DOCSTRINGS = dict(
+breakdown='''
 breakdown:
     Give the comment / submission counts for users in a subreddit, or
     the subreddits that a user posts to.
@@ -61,9 +69,9 @@ breakdown:
 
     --sort "name" | "submissions" | "comments" | "total_posts"
         Sort the output.
-''',
+'''.strip(),
 
-    'get_comments': '''
+get_comments='''
 get_comments:
     Collect comments on a subreddit or comments made by a user.
 
@@ -77,6 +85,10 @@ get_comments:
     -l "update" | --lower "update":
         If a number - the unix timestamp to start at.
         If "update" - continue from latest comment in db.
+        WARNING: If at some point you collected comments for a particular
+        submission which was ahead of the rest of your comments, using "update"
+        will start from that later submission, and you will miss the stuff in
+        between that specific post and the past.
         Default: update
 
     -up 1467460221 | --upper 1467460221:
@@ -90,16 +102,16 @@ get_comments:
 
     -v | --verbose:
         If provided, print extra information to the screen.
-''',
+'''.strip(),
 
-    'get_styles': '''
+get_styles='''
 get_styles:
     Collect the stylesheet, and css images.
 
     > timesearch.py get_styles -r subredditname
-''',
+'''.strip(),
 
-    'get_submissions': '''
+get_submissions='''
 get_submissions:
     Collect submissions from the subreddit across all of history, or
     Collect submissions by a user (as many as possible).
@@ -129,16 +141,16 @@ get_submissions:
 
     -v | --verbose:
         If provided, print extra information to the screen.
-''',
+'''.strip(),
 
-    'get_wiki': '''
+get_wiki='''
 get_wiki:
     Collect all available wiki pages.
 
     > timesearch.py get_wiki -r subredditname
-''',
+'''.strip(),
 
-    'index': '''
+index='''
 index:
     Dump submission listings to a plaintext or HTML file.
 
@@ -200,9 +212,9 @@ index:
 
         `timesearch index -r botwatch --all`
         performs all of the different mashes.
-''',
+'''.strip(),
 
-    'livestream': '''
+livestream='''
 livestream:
     Continously collect submissions and/or comments.
 
@@ -233,9 +245,9 @@ livestream:
 
     -1 | --once:
         If provided, only do a single loop. Otherwise go forever.
-''',
+'''.strip(),
 
-    'merge_db': '''
+merge_db='''
 merge_db:
     Copy all new posts from one timesearch database into another.
 
@@ -249,9 +261,9 @@ merge_db:
         The database file to which you will copy the posts.
         The database is modified in-place.
         Existing posts will be ignored and not updated.
-''',
+'''.strip(),
 
-    'offline_reading': '''
+offline_reading='''
 offline_reading:
     Render submissions and comment threads to HTML via Markdown.
 
@@ -262,18 +274,10 @@ offline_reading:
     -s "t3_xxxxxx" | --specific "t3_xxxxxx":
         Given a submission ID, t3_xxxxxx, render only that submission.
         Otherwise render every submission in the database.
-''',
-}
+'''.strip(),
+)
 
-OLD_COMMAND_ALIASES = {
-    'timesearch': 'get_submissions',
-    'commentaugment': 'get_comments',
-    'getstyles': 'get_styles',
-    'getwiki': 'get_wiki',
-    'mergedb': 'merge_db',
-    'redmash': 'index',
-}
-
+DOCSTRING = betterhelp.add_previews(DOCSTRING, MODULE_DOCSTRINGS)
 
 def docstring_preview(text):
     '''
@@ -412,27 +416,8 @@ p_get_submissions.add_argument('-v', '--verbose', dest='verbose', action='store_
 p_get_submissions.add_argument('--dont_supplement', dest='do_supplement', action='store_false')
 p_get_submissions.set_defaults(func=get_submissions_gateway)
 
+@betterhelp.subparser_betterhelp(parser, main_docstring=DOCSTRING, sub_docstrings=MODULE_DOCSTRINGS)
 def main(argv):
-    helpstrings = {'', 'help', '-h', '--help'}
-
-    command = listget(argv, 0, '').lower()
-    command = OLD_COMMAND_ALIASES.get(command, command)
-
-    # The user did not enter a command, or entered something unrecognized.
-    if command not in MODULE_DOCSTRINGS:
-        print(DOCSTRING)
-        if command == '':
-            print('You are seeing the default help text because you did not choose a command.')
-        elif command not in helpstrings:
-            print('You are seeing the default help text because "%s" was not recognized' % command)
-        return 1
-
-    # The user entered a command, but no further arguments, or just help.
-    argument = listget(argv, 1, '').lower()
-    if argument in helpstrings:
-        print(MODULE_DOCSTRINGS[command])
-        return 1
-
     args = parser.parse_args(argv)
     try:
         args.func(args)
