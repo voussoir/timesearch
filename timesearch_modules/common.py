@@ -19,8 +19,15 @@ try:
 except ImportError:
     bot = None
 if bot is None or bot.praw != praw:
-    import bot4
-    bot = bot4
+    try:
+        import bot4
+        bot = bot4
+    except ImportError:
+        message = '\n'.join([
+        'Could not find your PRAW4 bot file as either `bot.py` or `bot4.py`.',
+        'Please see the README.md file for instructions on how to prepare it.'
+        ])
+        raise ImportError(message)
 
 
 logging.basicConfig()
