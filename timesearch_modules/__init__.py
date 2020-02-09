@@ -25,6 +25,7 @@ The basics:
     > timesearch.py livestream -r subredditname
 
 Commands for collecting:
+
 {get_submissions}
 
 {get_comments}
@@ -36,6 +37,7 @@ Commands for collecting:
 {get_wiki}
 
 Commands for processing:
+
 {breakdown}
 
 {index}
