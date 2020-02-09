@@ -420,14 +420,12 @@ p_get_submissions.set_defaults(func=get_submissions_gateway)
 def main(argv):
     args = parser.parse_args(argv)
     try:
-        args.func(args)
+        return args.func(args)
     except exceptions.DatabaseNotFound as e:
         message = str(e)
         message += '\nHave you used any of the other utilities to collect data?'
         print(message)
         return 1
-
-    return 0
 
 if __name__ == '__main__':
     raise SystemExit(main(sys.argv[1:]))
