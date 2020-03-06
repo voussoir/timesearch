@@ -26,8 +26,8 @@ Timesearch is a collection of utilities for archiving subreddits.
 ### This package consists of:
 
 - **get_submissions**: If you try to page through `/new` on a subreddit, you'll hit a limit at or before 1,000 posts. Timesearch uses the pushshift.io dataset to get information about very old posts, and then queries the reddit api to update their information. Previously, we used the `timestamp` cloudsearch query parameter on reddit's own API, but reddit has removed that feature and pushshift is now the only viable source for initial data.  
-    `> timesearch.py timesearch -r subredditname <flags>`  
-    `> timesearch.py timesearch -u username <flags>`
+    `> timesearch.py get_submissions -r subredditname <flags>`  
+    `> timesearch.py get_submissions -u username <flags>`
 
 - **get_comments**: Similar to `get_submissions`, this tool queries pushshift for comment data and updates it from reddit.  
     `> timesearch.py get_comments -r subredditname <flags>`  
