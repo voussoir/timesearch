@@ -26,38 +26,38 @@ Timesearch is a collection of utilities for archiving subreddits.
 ### This package consists of:
 
 - **get_submissions**: If you try to page through `/new` on a subreddit, you'll hit a limit at or before 1,000 posts. Timesearch uses the pushshift.io dataset to get information about very old posts, and then queries the reddit api to update their information. Previously, we used the `timestamp` cloudsearch query parameter on reddit's own API, but reddit has removed that feature and pushshift is now the only viable source for initial data.  
-    `> timesearch.py get_submissions -r subredditname <flags>`  
-    `> timesearch.py get_submissions -u username <flags>`
+    `python timesearch.py get_submissions -r subredditname <flags>`  
+    `python timesearch.py get_submissions -u username <flags>`
 
 - **get_comments**: Similar to `get_submissions`, this tool queries pushshift for comment data and updates it from reddit.  
-    `> timesearch.py get_comments -r subredditname <flags>`  
-    `> timesearch.py get_comments -u username <flags>`
+    `python timesearch.py get_comments -r subredditname <flags>`  
+    `python timesearch.py get_comments -u username <flags>`
 
 - **livestream**: get_submissions+get_comments is great for starting your database and getting the historical posts, but it's not the best for staying up-to-date. Instead, livestream monitors `/new` and `/comments` to continuously ingest data.  
-    `> timesearch.py livestream -r subredditname <flags>`  
-    `> timesearch.py livestream -u username <flags>`
+    `python timesearch.py livestream -r subredditname <flags>`  
+    `python timesearch.py livestream -u username <flags>`
 
 - **get_styles**: Downloads the stylesheet and CSS images.  
-    `> timesearch.py get_styles -r subredditname`
+    `python timesearch.py get_styles -r subredditname`
 
 - **get_wiki**: Downloads the wiki pages, sidebar, etc. from /wiki/pages.  
-    `> timesearch.py get_wiki -r subredditname`
+    `python timesearch.py get_wiki -r subredditname`
 
 - **offline_reading**: Renders comment threads into HTML via markdown.  
     Note: I'm currently using the [markdown library from pypi](https://pypi.python.org/pypi/Markdown), and it doesn't do reddit's custom markdown like `/r/` or `/u/`, obviously. So far I don't think anybody really uses o_r so I haven't invested much time into improving it.  
-    `> timesearch.py offline_reading -r subredditname <flags>`  
-    `> timesearch.py offline_reading -u username <flags>`
+    `python timesearch.py offline_reading -r subredditname <flags>`  
+    `python timesearch.py offline_reading -u username <flags>`
 
 - **index**: Generates plaintext or HTML lists of submissions, sorted by a property of your choosing. You can order by date, author, flair, etc. With the `--offline` parameter, you can make all the links point to the files you generated with `offline_reading`.  
-    `> timesearch.py index -r subredditname <flags>`  
-    `> timesearch.py index -u username <flags>`
+    `python timesearch.py index -r subredditname <flags>`  
+    `python timesearch.py index -u username <flags>`
 
 - **breakdown**: Produces a JSON file indicating which users make the most posts in a subreddit, or which subreddits a user posts in.  
-    `> timesearch.py breakdown -r subredditname` <flags>  
-    `> timesearch.py breakdown -u username` <flags>
+    `python timesearch.py breakdown -r subredditname` <flags>  
+    `python timesearch.py breakdown -u username` <flags>
 
 - **merge_db**: Copy all new data from one timesearch database into another. Useful for syncing or merging two scans of the same subreddit.  
-    `> timesearch.py merge_db --from filepath/database1.db --to filepath/database2.db`
+    `python timesearch.py merge_db --from filepath/database1.db --to filepath/database2.db`
 
 ### To use it
 

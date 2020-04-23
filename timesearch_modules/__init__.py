@@ -16,13 +16,13 @@ The subreddit archiver
 
 The basics:
 1. Collect a subreddit's submissions
-    > timesearch.py get_submissions -r subredditname
+    python timesearch.py get_submissions -r subredditname
 
 2. Collect the comments for those submissions
-    > timesearch.py get_comments -r subredditname
+    python timesearch.py get_comments -r subredditname
 
 3. Stay up-to-date
-    > timesearch.py livestream -r subredditname
+    python timesearch.py livestream -r subredditname
 
 Commands for collecting:
 
@@ -47,7 +47,7 @@ Commands for processing:
 {offline_reading}
 
 TO SEE DETAILS ON EACH COMMAND, RUN
-> timesearch.py <command>
+python timesearch.py <command>
 '''.lstrip()
 
 MODULE_DOCSTRINGS = dict(
@@ -59,8 +59,8 @@ breakdown:
     Automatically dumps into a <database>_breakdown.json file
     in the same directory as the database.
 
-    > timesearch.py breakdown -r subredditname <flags>
-    > timesearch.py breakdown -u username <flags>
+    python timesearch.py breakdown -r subredditname <flags>
+    python timesearch.py breakdown -u username <flags>
 
     flags:
     -r "test" | --subreddit "test":
@@ -77,8 +77,8 @@ get_comments='''
 get_comments:
     Collect comments on a subreddit or comments made by a user.
 
-    > timesearch.py get_comments -r subredditname <flags>
-    > timesearch.py get_comments -u username <flags>
+    python timesearch.py get_comments -r subredditname <flags>
+    python timesearch.py get_comments -u username <flags>
 
     flags:
     -s "t3_xxxxxx" | --specific "t3_xxxxxx":
@@ -110,7 +110,7 @@ get_styles='''
 get_styles:
     Collect the stylesheet, and css images.
 
-    > timesearch.py get_styles -r subredditname
+    python timesearch.py get_styles -r subredditname
 '''.strip(),
 
 get_submissions='''
@@ -118,8 +118,8 @@ get_submissions:
     Collect submissions from the subreddit across all of history, or
     Collect submissions by a user (as many as possible).
 
-    > timesearch.py get_submissions -r subredditname <flags>
-    > timesearch.py get_submissions -u username <flags>
+    python timesearch.py get_submissions -r subredditname <flags>
+    python timesearch.py get_submissions -u username <flags>
 
     -r "test" | --subreddit "test":
         The subreddit to scan. Mutually exclusive with username.
@@ -149,15 +149,15 @@ get_wiki='''
 get_wiki:
     Collect all available wiki pages.
 
-    > timesearch.py get_wiki -r subredditname
+    python timesearch.py get_wiki -r subredditname
 '''.strip(),
 
 index='''
 index:
     Dump submission listings to a plaintext or HTML file.
 
-    > timesearch.py index -r subredditname <flags>
-    > timesearch.py index -u username <flags>
+    python timesearch.py index -r subredditname <flags>
+    python timesearch.py index -u username <flags>
 
     flags:
     -r "test" | --subreddit "test":
@@ -220,8 +220,8 @@ livestream='''
 livestream:
     Continously collect submissions and/or comments.
 
-    > timesearch.py livestream -r subredditname <flags>
-    > timesearch.py livestream -u username <flags>
+    python timesearch.py livestream -r subredditname <flags>
+    python timesearch.py livestream -u username <flags>
 
     flags:
     -r "test" | --subreddit "test":
@@ -253,7 +253,7 @@ merge_db='''
 merge_db:
     Copy all new posts from one timesearch database into another.
 
-    > timesearch merge_db --from redditdev1.db --to redditdev2.db
+    python timesearch.py merge_db --from redditdev1.db --to redditdev2.db
 
     flags:
     --from:
@@ -269,8 +269,8 @@ offline_reading='''
 offline_reading:
     Render submissions and comment threads to HTML via Markdown.
 
-    > timesearch.py offline_reading -r subredditname <flags>
-    > timesearch.py offline_reading -u username <flags>
+    python timesearch.py offline_reading -r subredditname <flags>
+    python timesearch.py offline_reading -u username <flags>
 
     flags:
     -s "t3_xxxxxx" | --specific "t3_xxxxxx":
