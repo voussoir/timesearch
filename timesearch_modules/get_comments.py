@@ -28,10 +28,10 @@ def get_comments(
         database.insert(specific_submission)
 
     elif subreddit:
-        (database, subreddit) = tsdb.TSDB.for_subreddit(subreddit, do_create=False, fix_name=True)
+        (database, subreddit) = tsdb.TSDB.for_subreddit(subreddit, do_create=True, fix_name=True)
 
     else:
-        (database, username) = tsdb.TSDB.for_user(username, do_create=False, fix_name=True)
+        (database, username) = tsdb.TSDB.for_user(username, do_create=True, fix_name=True)
 
     cur = database.sql.cursor()
 
