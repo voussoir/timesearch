@@ -1,5 +1,4 @@
 import os
-import requests
 
 from . import common
 from . import tsdb
