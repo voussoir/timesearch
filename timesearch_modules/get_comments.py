@@ -78,7 +78,8 @@ def get_comments(
 
     if do_supplement:
         comments = pushshift.supplement_reddit_data(comments, chunk_size=100)
-    comments = common.generator_chunker(comments, 200)
+
+    comments = common.generator_chunker(comments, 500)
     for chunk in comments:
         step = database.insert(chunk)
         message = form.format(
