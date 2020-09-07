@@ -44,7 +44,7 @@ if not getattr(common.bot, 'CONTACT_INFO', ''):
     raise ValueError(contact_info_message)
 
 useragent = USERAGENT.format(version=common.VERSION, contact=common.bot.CONTACT_INFO)
-ratelimit = ratelimiter.Ratelimiter(allowance=60, period=60)
+ratelimit = None
 session = requests.Session()
 session.headers.update({'User-Agent': useragent})
 
@@ -136,7 +136,21 @@ def _pagination_core(url, params, dummy_type, lower=None, upper=None):
         prev_batch_ids = batch_ids
         ratelimit.limit()
 
+def _initialize_ratelimiter():
+    global ratelimit
+    if ratelimit is not None:
+        return
+    common.log.debug('Initializing pushshift ratelimiter.')
+    url = 'https://api.pushshift.io/meta'
+    response = session.get(url)
+    response.raise_for_status()
+    response = response.json()
+    limit = response['server_ratelimit_per_minute']
+    common.log.debug('Pushshift ratelimit is %d items per minute.', limit)
+    ratelimit = ratelimiter.Ratelimiter(allowance=limit, period=60)
+
 def get(url, params=None):
+    _initialize_ratelimiter()
     if not url.startswith('https://'):
         url = API_URL + url.lstrip('/')
 
@@ -147,6 +161,7 @@ def get(url, params=None):
         params.setdefault(key, val)
 
     common.log.debug('Requesting %s with %s', url, params)
+    ratelimit.limit()
     response = session.get(url, params=params)
     response.raise_for_status()
     response = response.json()
