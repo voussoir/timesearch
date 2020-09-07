@@ -117,6 +117,8 @@ def _pagination_core(url, params, dummy_type, lower=None, upper=None):
                 traceback.print_exc()
                 print('Retrying in 5...')
                 time.sleep(5)
+            else:
+                break
 
         batch_ids = setify(batch)
         if len(batch_ids) == 0 or batch_ids.issubset(prev_batch_ids):
