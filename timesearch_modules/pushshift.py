@@ -109,6 +109,7 @@ def _pagination_core(url, params, dummy_type, lower=None, upper=None):
 
     setify = lambda items: set(item['id'] for item in items)
     prev_batch_ids = set()
+
     while True:
         for retry in range(5):
             try:
@@ -120,6 +121,7 @@ def _pagination_core(url, params, dummy_type, lower=None, upper=None):
             else:
                 break
 
+        common.log.debug('Got batch of %d items.', len(batch))
         batch_ids = setify(batch)
         if len(batch_ids) == 0 or batch_ids.issubset(prev_batch_ids):
             break
