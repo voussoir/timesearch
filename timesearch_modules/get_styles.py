@@ -16,14 +16,14 @@ def get_styles(subreddit):
 
     stylesheet_filepath = database.styles_dir.with_child('stylesheet.css')
     print('Downloading %s' % stylesheet_filepath.relative_path)
-    with open(stylesheet_filepath.absolute_path, 'w', encoding='utf-8') as stylesheet:
+    with stylesheet_filepath.open('w', encoding='utf-8') as stylesheet:
         stylesheet.write(styles.stylesheet)
 
     for image in styles.images:
         image_basename = image['name'] + '.' + image['url'].split('.')[-1]
         image_filepath = database.styles_dir.with_child(image_basename)
         print('Downloading %s' % image_filepath.relative_path)
-        with open(image_filepath.absolute_path, 'wb') as image_file:
+        with image_filepath.open('wb') as image_file:
             response = requests.get(image['url'])
             image_file.write(response.content)
 

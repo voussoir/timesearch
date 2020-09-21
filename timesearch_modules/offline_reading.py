@@ -385,7 +385,7 @@ def offline_reading(subreddit=None, username=None, specific_submission=None):
     for (id, html) in htmls:
         html_basename = '%s.html' % id
         html_filepath = database.offline_reading_dir.with_child(html_basename)
-        html_handle = open(html_filepath.absolute_path, 'w', encoding='utf-8')
+        html_handle = html_filepath.open('w', encoding='utf-8')
         html_handle.write(html)
         html_handle.close()
         print('Wrote', html_filepath.relative_path)

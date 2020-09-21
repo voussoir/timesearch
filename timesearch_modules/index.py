@@ -115,7 +115,7 @@ def index_worker(
     mash_basename += suffix + extension
     mash_filepath = database.index_dir.with_child(mash_basename)
 
-    mash_handle = open(mash_filepath.absolute_path, 'w', encoding='UTF-8')
+    mash_handle = mash_filepath.open('w', encoding='UTF-8')
     if html:
         mash_handle.write(HTML_HEADER)
         line_format = LINE_FORMAT_HTML
