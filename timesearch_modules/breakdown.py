@@ -94,7 +94,7 @@ def breakdown_argparse(args):
 
     breakdown_basename = breakdown_basename % database.filepath.replace_extension('').basename
     breakdown_filepath = database.breakdown_dir.with_child(breakdown_basename)
-    os.makedirs(breakdown_filepath.parent.absolute_path, exist_ok=True)
+    breakdown_filepath.parent.makedirs(exist_ok=True)
     breakdown_file = breakdown_filepath.open('w')
     with breakdown_file:
         breakdown_file.write(dump)

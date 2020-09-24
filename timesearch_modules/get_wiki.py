@@ -15,7 +15,7 @@ def get_wiki(subreddit):
             continue
 
         wikipage_path = database.wiki_dir.join(wikipage.name).replace_extension('md')
-        os.makedirs(wikipage_path.parent.absolute_path, exist_ok=True)
+        wikipage_path.parent.makedirs(exist_ok=True)
         with wikipage_path.open('w', encoding='utf-8') as handle:
             handle.write(wikipage.content_md)
         print('Wrote', wikipage_path.relative_path)

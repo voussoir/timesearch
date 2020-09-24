@@ -108,7 +108,7 @@ def index_worker(
     statement = statement.format(threshold=score_threshold, order=orderby)
     cur.execute(statement)
 
-    os.makedirs(database.index_dir.absolute_path, exist_ok=True)
+    database.index_dir.makedirs(exist_ok=True)
 
     extension = '.html' if html else '.txt'
     mash_basename = database.filepath.replace_extension('').basename

@@ -180,7 +180,7 @@ class TSDB:
                 raise exceptions.DatabaseNotFound(self.filepath)
             print('New database', self.filepath.relative_path)
 
-        os.makedirs(self.filepath.parent.absolute_path, exist_ok=True)
+        self.filepath.parent.makedirs(exist_ok=True)
 
         self.breakdown_dir = self.filepath.parent.with_child('breakdown')
         self.offline_reading_dir = self.filepath.parent.with_child('offline_reading')

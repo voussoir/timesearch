@@ -12,7 +12,7 @@ def get_styles(subreddit):
     subreddit = common.r.subreddit(subreddit)
     styles = subreddit.stylesheet()
 
-    os.makedirs(database.styles_dir.absolute_path, exist_ok=True)
+    database.styles_dir.makedirs(exist_ok=True)
 
     stylesheet_filepath = database.styles_dir.with_child('stylesheet.css')
     print('Downloading %s' % stylesheet_filepath.relative_path)

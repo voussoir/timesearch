@@ -209,7 +209,7 @@ def html_from_database(database, specific_submission=None):
     submission_trees = trees_from_database(database, specific_submission)
     for submission_tree in submission_trees:
         page = html_from_tree(submission_tree, sort=lambda x: x.data.score * -1)
-        os.makedirs(database.offline_reading_dir.absolute_path, exist_ok=True)
+        database.offline_reading_dir.makedirs(exist_ok=True)
 
         html = ''
 
