@@ -50,7 +50,7 @@ TO SEE DETAILS ON EACH COMMAND, RUN
 python timesearch.py <command>
 '''.lstrip()
 
-MODULE_DOCSTRINGS = dict(
+SUB_DOCSTRINGS = dict(
 breakdown='''
 breakdown:
     Give the comment / submission counts for users in a subreddit, or
@@ -279,7 +279,7 @@ offline_reading:
 '''.strip(),
 )
 
-DOCSTRING = betterhelp.add_previews(DOCSTRING, MODULE_DOCSTRINGS)
+DOCSTRING = betterhelp.add_previews(DOCSTRING, SUB_DOCSTRINGS)
 
 def docstring_preview(text):
     '''
@@ -300,7 +300,7 @@ def indent(text, spaces=4):
 
 docstring_headers = {
     key: indent(docstring_preview(value))
-    for (key, value) in MODULE_DOCSTRINGS.items()
+    for (key, value) in SUB_DOCSTRINGS.items()
 }
 
 DOCSTRING = DOCSTRING.format(**docstring_headers)
@@ -344,87 +344,89 @@ def get_submissions_gateway(args):
     from . import get_submissions
     get_submissions.get_submissions_argparse(args)
 
-
-parser = argparse.ArgumentParser()
-subparsers = parser.add_subparsers()
-
-p_breakdown = subparsers.add_parser('breakdown')
-p_breakdown.add_argument('--sort', dest='sort', default=None)
-p_breakdown.add_argument('-r', '--subreddit', dest='subreddit', default=None)
-p_breakdown.add_argument('-u', '--user', dest='username', default=None)
-p_breakdown.set_defaults(func=breakdown_gateway)
-
-p_get_comments = subparsers.add_parser('get_comments', aliases=['commentaugment'])
-p_get_comments.add_argument('-r', '--subreddit', dest='subreddit', default=None)
-p_get_comments.add_argument('-s', '--specific', dest='specific_submission', default=None)
-p_get_comments.add_argument('-u', '--user', dest='username', default=None)
-p_get_comments.add_argument('-v', '--verbose', dest='verbose', action='store_true')
-p_get_comments.add_argument('--dont_supplement', '--dont-supplement', dest='do_supplement', action='store_false')
-p_get_comments.add_argument('-l', '--lower', dest='lower', default='update')
-p_get_comments.add_argument('-up', '--upper', dest='upper', default=None)
-p_get_comments.set_defaults(func=get_comments_gateway)
-
-p_get_styles = subparsers.add_parser('get_styles', aliases=['getstyles'])
-p_get_styles.add_argument('-r', '--subreddit', dest='subreddit')
-p_get_styles.set_defaults(func=get_styles_gateway)
-
-p_get_wiki = subparsers.add_parser('get_wiki', aliases=['getwiki'])
-p_get_wiki.add_argument('-r', '--subreddit', dest='subreddit')
-p_get_wiki.set_defaults(func=get_wiki_gateway)
-
-p_livestream = subparsers.add_parser('livestream')
-p_livestream.add_argument('-1', '--once', dest='once', action='store_true')
-p_livestream.add_argument('-c', '--comments', dest='comments', action='store_true')
-p_livestream.add_argument('-l', '--limit', dest='limit', default=None)
-p_livestream.add_argument('-r', '--subreddit', dest='subreddit', default=None)
-p_livestream.add_argument('-s', '--submissions', dest='submissions', action='store_true')
-p_livestream.add_argument('-u', '--user', dest='username', default=None)
-p_livestream.add_argument('-v', '--verbose', dest='verbose', action='store_true')
-p_livestream.add_argument('-w', '--wait', dest='sleepy', default=30)
-p_livestream.set_defaults(func=livestream_gateway)
-
-p_merge_db = subparsers.add_parser('merge_db', aliases=['mergedb'])
-p_merge_db.add_argument('--from', dest='from_db_path', required=True)
-p_merge_db.add_argument('--to', dest='to_db_path', required=True)
-p_merge_db.set_defaults(func=merge_db_gateway)
-
-p_offline_reading = subparsers.add_parser('offline_reading')
-p_offline_reading.add_argument('-r', '--subreddit', dest='subreddit', default=None)
-p_offline_reading.add_argument('-s', '--specific', dest='specific_submission', default=None)
-p_offline_reading.add_argument('-u', '--user', dest='username', default=None)
-p_offline_reading.set_defaults(func=offline_reading_gateway)
-
-p_index = subparsers.add_parser('index', aliases=['redmash'])
-p_index.add_argument('--all', dest='do_all', action='store_true')
-p_index.add_argument('--author', dest='do_author', action='store_true')
-p_index.add_argument('--date', dest='do_date', action='store_true')
-p_index.add_argument('--flair', dest='do_flair', action='store_true')
-p_index.add_argument('--html', dest='html', action='store_true')
-p_index.add_argument('--score', dest='do_score', action='store_true')
-p_index.add_argument('--sub', dest='do_subreddit', action='store_true')
-p_index.add_argument('--title', dest='do_title', action='store_true')
-p_index.add_argument('--offline', dest='offline', action='store_true')
-p_index.add_argument('-r', '--subreddit', dest='subreddit', default=None)
-p_index.add_argument('-st', '--score_threshold', '--score-threshold', dest='score_threshold', default=0)
-p_index.add_argument('-u', '--user', dest='username', default=None)
-p_index.set_defaults(func=index_gateway)
-
-p_get_submissions = subparsers.add_parser('get_submissions', aliases=['timesearch'])
-p_get_submissions.add_argument('-l', '--lower', dest='lower', default='update')
-p_get_submissions.add_argument('-r', '--subreddit', dest='subreddit', default=None)
-p_get_submissions.add_argument('-u', '--user', dest='username', default=None)
-p_get_submissions.add_argument('-up', '--upper', dest='upper', default=None)
-p_get_submissions.add_argument('-v', '--verbose', dest='verbose', action='store_true')
-p_get_submissions.add_argument('--dont_supplement', '--dont-supplement', dest='do_supplement', action='store_false')
-p_get_submissions.set_defaults(func=get_submissions_gateway)
-
-@betterhelp.subparser_betterhelp(parser, main_docstring=DOCSTRING, sub_docstrings=MODULE_DOCSTRINGS)
 def main(argv):
-    args = parser.parse_args(argv)
+    parser = argparse.ArgumentParser(description=__doc__)
+    subparsers = parser.add_subparsers()
+
+    p_breakdown = subparsers.add_parser('breakdown')
+    p_breakdown.add_argument('--sort', dest='sort', default=None)
+    p_breakdown.add_argument('-r', '--subreddit', dest='subreddit', default=None)
+    p_breakdown.add_argument('-u', '--user', dest='username', default=None)
+    p_breakdown.set_defaults(func=breakdown_gateway)
+
+    p_get_comments = subparsers.add_parser('get_comments', aliases=['commentaugment'])
+    p_get_comments.add_argument('-r', '--subreddit', dest='subreddit', default=None)
+    p_get_comments.add_argument('-s', '--specific', dest='specific_submission', default=None)
+    p_get_comments.add_argument('-u', '--user', dest='username', default=None)
+    p_get_comments.add_argument('-v', '--verbose', dest='verbose', action='store_true')
+    p_get_comments.add_argument('--dont_supplement', '--dont-supplement', dest='do_supplement', action='store_false')
+    p_get_comments.add_argument('-l', '--lower', dest='lower', default='update')
+    p_get_comments.add_argument('-up', '--upper', dest='upper', default=None)
+    p_get_comments.set_defaults(func=get_comments_gateway)
+
+    p_get_styles = subparsers.add_parser('get_styles', aliases=['getstyles'])
+    p_get_styles.add_argument('-r', '--subreddit', dest='subreddit')
+    p_get_styles.set_defaults(func=get_styles_gateway)
+
+    p_get_wiki = subparsers.add_parser('get_wiki', aliases=['getwiki'])
+    p_get_wiki.add_argument('-r', '--subreddit', dest='subreddit')
+    p_get_wiki.set_defaults(func=get_wiki_gateway)
+
+    p_livestream = subparsers.add_parser('livestream')
+    p_livestream.add_argument('-1', '--once', dest='once', action='store_true')
+    p_livestream.add_argument('-c', '--comments', dest='comments', action='store_true')
+    p_livestream.add_argument('-l', '--limit', dest='limit', default=None)
+    p_livestream.add_argument('-r', '--subreddit', dest='subreddit', default=None)
+    p_livestream.add_argument('-s', '--submissions', dest='submissions', action='store_true')
+    p_livestream.add_argument('-u', '--user', dest='username', default=None)
+    p_livestream.add_argument('-v', '--verbose', dest='verbose', action='store_true')
+    p_livestream.add_argument('-w', '--wait', dest='sleepy', default=30)
+    p_livestream.set_defaults(func=livestream_gateway)
+
+    p_merge_db = subparsers.add_parser('merge_db', aliases=['mergedb'])
+    p_merge_db.add_argument('--from', dest='from_db_path', required=True)
+    p_merge_db.add_argument('--to', dest='to_db_path', required=True)
+    p_merge_db.set_defaults(func=merge_db_gateway)
+
+    p_offline_reading = subparsers.add_parser('offline_reading')
+    p_offline_reading.add_argument('-r', '--subreddit', dest='subreddit', default=None)
+    p_offline_reading.add_argument('-s', '--specific', dest='specific_submission', default=None)
+    p_offline_reading.add_argument('-u', '--user', dest='username', default=None)
+    p_offline_reading.set_defaults(func=offline_reading_gateway)
+
+    p_index = subparsers.add_parser('index', aliases=['redmash'])
+    p_index.add_argument('--all', dest='do_all', action='store_true')
+    p_index.add_argument('--author', dest='do_author', action='store_true')
+    p_index.add_argument('--date', dest='do_date', action='store_true')
+    p_index.add_argument('--flair', dest='do_flair', action='store_true')
+    p_index.add_argument('--html', dest='html', action='store_true')
+    p_index.add_argument('--score', dest='do_score', action='store_true')
+    p_index.add_argument('--sub', dest='do_subreddit', action='store_true')
+    p_index.add_argument('--title', dest='do_title', action='store_true')
+    p_index.add_argument('--offline', dest='offline', action='store_true')
+    p_index.add_argument('-r', '--subreddit', dest='subreddit', default=None)
+    p_index.add_argument('-st', '--score_threshold', '--score-threshold', dest='score_threshold', default=0)
+    p_index.add_argument('-u', '--user', dest='username', default=None)
+    p_index.set_defaults(func=index_gateway)
+
+    p_get_submissions = subparsers.add_parser('get_submissions', aliases=['timesearch'])
+    p_get_submissions.add_argument('-l', '--lower', dest='lower', default='update')
+    p_get_submissions.add_argument('-r', '--subreddit', dest='subreddit', default=None)
+    p_get_submissions.add_argument('-u', '--user', dest='username', default=None)
+    p_get_submissions.add_argument('-up', '--upper', dest='upper', default=None)
+    p_get_submissions.add_argument('-v', '--verbose', dest='verbose', action='store_true')
+    p_get_submissions.add_argument('--dont_supplement', '--dont-supplement', dest='do_supplement', action='store_false')
+    p_get_submissions.set_defaults(func=get_submissions_gateway)
+
     try:
-        return args.func(args)
-    except exceptions.DatabaseNotFound as e:
-        message = str(e)
+        return betterhelp.subparser_main(
+            argv,
+            parser,
+            main_docstring=DOCSTRING,
+            sub_docstrings=SUB_DOCSTRINGS,
+        )
+    except exceptions.DatabaseNotFound as exc:
+        message = str(exc)
         message += '\nHave you used any of the other utilities to collect data?'
         print(message)
         return 1
