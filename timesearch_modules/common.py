@@ -30,8 +30,7 @@ if bot is None or bot.praw != praw:
         raise ImportError(message)
 
 
-logging.basicConfig()
-log = logging.getLogger(__name__)
+log = logging.getLogger('timesearch')
 
 r = bot.anonymous()
 
