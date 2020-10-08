@@ -5,7 +5,6 @@ from . import exceptions
 from . import pushshift
 from . import tsdb
 
-
 def get_comments(
         subreddit=None,
         username=None,
@@ -74,12 +73,11 @@ def get_comments(
     elif username:
         comments = pushshift.get_comments_from_user(username, lower=lower, upper=upper)
 
-
     if do_supplement:
         comments = pushshift.supplement_reddit_data(comments, chunk_size=100)
+    comments = common.generator_chunker(comments, 500)
 
     form = '{lower} ({lower_unix}) - {upper} ({upper_unix}) +{gain}'
-    comments = common.generator_chunker(comments, 500)
     for chunk in comments:
         step = database.insert(chunk)
         message = form.format(
@@ -90,6 +88,7 @@ def get_comments(
             gain=step['new_comments'],
         )
         print(message)
+
     if specific_submission:
         query = '''
             UPDATE submissions

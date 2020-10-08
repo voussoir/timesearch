@@ -346,7 +346,7 @@ class TSDB:
             new_values[key] += status
 
         if commit:
-            common.log.debug('Committing insert')
+            common.log.debug('Committing insert.')
             self.sql.commit()
 
         common.log.debug('Done inserting.')

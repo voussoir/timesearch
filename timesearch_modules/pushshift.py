@@ -238,6 +238,7 @@ def supplement_reddit_data(dummies, chunk_size=100):
     '''
     chunks = common.generator_chunker(dummies, chunk_size)
     for chunk in chunks:
+        common.log.debug('Supplementing %d items with live reddit data.', len(chunk))
         ids = [item.fullname for item in chunk]
         live_copies = list(common.r.info(ids))
         live_copies = {item.fullname: item for item in live_copies}
