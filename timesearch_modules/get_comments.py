@@ -74,11 +74,11 @@ def get_comments(
     elif username:
         comments = pushshift.get_comments_from_user(username, lower=lower, upper=upper)
 
-    form = '{lower} ({lower_unix}) - {upper} ({upper_unix}) +{gain}'
 
     if do_supplement:
         comments = pushshift.supplement_reddit_data(comments, chunk_size=100)
 
+    form = '{lower} ({lower_unix}) - {upper} ({upper_unix}) +{gain}'
     comments = common.generator_chunker(comments, 500)
     for chunk in comments:
         step = database.insert(chunk)

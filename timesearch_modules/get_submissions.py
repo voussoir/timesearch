@@ -69,14 +69,16 @@ def get_submissions(
         submissions = pushshift.supplement_reddit_data(submissions, chunk_size=100)
     submissions = common.generator_chunker(submissions, 200)
 
-    form = '{lower} - {upper} +{gain}'
+    form = '{lower} ({lower_unix}) - {upper} ({upper_unix}) +{gain}'
     for chunk in submissions:
         chunk.sort(key=lambda x: x.created_utc)
-        new_count = database.insert(chunk)['new_submissions']
+        step = database.insert(chunk)
         message = form.format(
             lower=common.human(chunk[0].created_utc),
             upper=common.human(chunk[-1].created_utc),
-            gain=new_count,
+            lower_unix=int(chunk[0].created_utc),
+            upper_unix=int(chunk[-1].created_utc),
+            gain=step['new_submissions'],
         )
         print(message)
 
