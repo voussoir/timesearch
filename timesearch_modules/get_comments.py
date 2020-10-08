@@ -2,7 +2,7 @@ import traceback
 
 from . import common
 from . import exceptions
-from . import pushshift; print('Thank you Jason Baumgartner, owner of Pushshift.io!')
+from . import pushshift
 from . import tsdb
 
 

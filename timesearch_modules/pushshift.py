@@ -16,6 +16,7 @@ from . import common
 
 from voussoirkit import ratelimiter
 
+print('Thank you Jason Baumgartner of Pushshift.io!')
 
 USERAGENT = 'Timesearch ({version}) ({contact})'
 API_URL = 'https://api.pushshift.io/reddit/'
