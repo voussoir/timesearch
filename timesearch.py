@@ -60,7 +60,7 @@ Commands for processing:
 {offline_reading}
 
 TO SEE DETAILS ON EACH COMMAND, RUN
-python timesearch.py <command>
+> python timesearch.py <command> --help
 '''.lstrip()
 
 SUB_DOCSTRINGS = dict(
