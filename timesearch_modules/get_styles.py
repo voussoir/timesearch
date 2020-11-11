@@ -4,6 +4,7 @@ import requests
 from . import common
 from . import tsdb
 
+session = requests.Session()
 
 def get_styles(subreddit):
     (database, subreddit) = tsdb.TSDB.for_subreddit(subreddit, fix_name=True)
@@ -24,7 +25,7 @@ def get_styles(subreddit):
         image_filepath = database.styles_dir.with_child(image_basename)
         print('Downloading %s' % image_filepath.relative_path)
         with image_filepath.open('wb') as image_file:
-            response = requests.get(image['url'])
+            response = session.get(image['url'])
             image_file.write(response.content)
 
 def get_styles_argparse(args):
