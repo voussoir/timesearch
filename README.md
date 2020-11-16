@@ -130,3 +130,7 @@ I want to live in a future where everyone uses UTC and agrees on daylight saving
 <p align="center">
     <img height=256 src="https://github.com/voussoir/timesearch/blob/master/timesearch_logo.svg?raw=true&sanitize=true" alt="Timesearch"/>
 </p>
+
+https://github.com/voussoir/timesearch
+
+https://gitlab.com/voussoir/timesearch
