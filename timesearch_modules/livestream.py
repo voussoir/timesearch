@@ -1,4 +1,5 @@
 import copy
+import prawcore
 import time
 import traceback
 
@@ -152,6 +153,10 @@ def _livestream_as_a_generator(
             )
             newitems = database.insert(items)
             yield newitems
+        except prawcore.exceptions.NotFound:
+            print(database.filepath.basename, '404 not found')
+            step = {'tsdb': database, 'new_comments': 0, 'new_submissions': 0}
+            yield step
         except Exception:
             traceback.print_exc()
             print('Retrying...')
