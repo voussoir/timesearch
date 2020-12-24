@@ -1,7 +1,7 @@
 timesearch
 ==========
 
-# NEWS (2018 04 09):
+## NEWS (2018 04 09):
 
 [Reddit has removed the timestamp search feature which timesearch was built off of](https://voussoir.github.io/t3_7tus5f.html#t1_dtfcdn0) ([original](https://www.reddit.com/r/changelog/comments/7tus5f/update_to_search_api/dtfcdn0/)). Please message the admins by [sending a PM to /r/reddit.com](https://www.reddit.com/message/compose?to=%2Fr%2Freddit.com&subject=Timestamp+search). Let them know that this feature is important to you, and you would like them to restore it on the new search stack.
 
@@ -15,7 +15,7 @@ I don't have a test suite. You're my test suite! Messages go to [/u/GoldenSights
 
 Timesearch is a collection of utilities for archiving subreddits.
 
-### Make sure you have:
+## Make sure you have:
 - Installed [Python](https://www.python.org/download). I use Python 3.7.
 - Installed PRAW >= 4, as well as the other modules in `requirements.txt`. Try `pip install -r requirements.txt` to get them all.
 - Created an OAuth app at https://reddit.com/prefs/apps. Make it `script` type, and set the redirect URI to `http://localhost:8080`. The title and description can be anything you want, and the about URL is not required.
@@ -23,7 +23,7 @@ Timesearch is a collection of utilities for archiving subreddits.
 - Downloaded a copy of [this file](https://github.com/voussoir/reddit/blob/master/bot4.py) and saved it as `bot.py`. Fill out the variables using your OAuth information, and read the instructions to see where to put it. The Useragent is a description of your API usage. Typically "/u/username's praw client" is sufficient.
 - Downloaded this project using the green "Clone or Download" button in the upper right.
 
-### This package consists of:
+## This package consists of:
 
 - **get_submissions**: If you try to page through `/new` on a subreddit, you'll hit a limit at or before 1,000 posts. Timesearch uses the pushshift.io dataset to get information about very old posts, and then queries the reddit api to update their information. Previously, we used the `timestamp` cloudsearch query parameter on reddit's own API, but reddit has removed that feature and pushshift is now the only viable source for initial data.  
     `python timesearch.py get_submissions -r subredditname <flags>`  
@@ -67,7 +67,7 @@ You can view a summarized version of all the help text by running `timesearch.py
 
 I recommend [sqlitebrowser](https://github.com/sqlitebrowser/sqlitebrowser/releases) if you want to inspect the database yourself.
 
-### Changelog
+## Changelog
 - 2020 01 27
     - When I first created Timesearch, it was simply a collection of all the random scripts I had written to archive various things. And they tended to have wacky names like `commentaugment` and `redmash`. Well, since the timesearch toolkit is meant to be a singular cohesive package now I decided to finally rename everything. I believe I have aliased everything properly so the old names still work for backwards compat, except for the fact the modules folder is now called `timesearch_modules` which may break your import statements if you ever imported that on your own.
 
@@ -130,6 +130,8 @@ I want to live in a future where everyone uses UTC and agrees on daylight saving
 <p align="center">
     <img height=256 src="https://github.com/voussoir/timesearch/blob/master/timesearch_logo.svg?raw=true&sanitize=true" alt="Timesearch"/>
 </p>
+
+## Mirrors
 
 https://github.com/voussoir/timesearch
 
