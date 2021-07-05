@@ -3,15 +3,15 @@ timesearch
 
 ## NEWS (2018 04 09):
 
-[Reddit has removed the timestamp search feature which timesearch was built off of](https://voussoir.github.io/t3_7tus5f.html#t1_dtfcdn0) ([original](https://www.reddit.com/r/changelog/comments/7tus5f/update_to_search_api/dtfcdn0/)). Please message the admins by [sending a PM to /r/reddit.com](https://www.reddit.com/message/compose?to=%2Fr%2Freddit.com&subject=Timestamp+search). Let them know that this feature is important to you, and you would like them to restore it on the new search stack.
+[Reddit has removed the timestamp search feature which timesearch was built off of](https://voussoir.github.io/t3_7tus5f.html#t1_dtfcdn0) ([original](https://old.reddit.com/r/changelog/comments/7tus5f/update_to_search_api/dtfcdn0/)). Please message the admins by [sending a PM to /r/reddit.com](https://old.reddit.com/message/compose?to=%2Fr%2Freddit.com&subject=Timestamp+search). Let them know that this feature is important to you, and you would like them to restore it on the new search stack.
 
-Thankfully, Jason Baumgartner aka [/u/Stuck_in_the_Matrix](https://reddit.com/u/Stuck_in_the_Matrix/overview), owner of [Pushshift.io](https://github.com/pushshift/api), has made it easy to interact with his dataset. Timesearch now queries his API to get post data, and then uses reddit's /api/info to get up-to-date information about those posts (scores, edited text bodies, ...). While we're at it, this also gives us the ability to speed up `get_comments`. In addition, we can get all of a user's comments which was not possible through reddit alone.
+Thankfully, Jason Baumgartner aka [/u/Stuck_in_the_Matrix](https://old.reddit.com/u/Stuck_in_the_Matrix/overview), owner of [Pushshift.io](https://github.com/pushshift/api), has made it easy to interact with his dataset. Timesearch now queries his API to get post data, and then uses reddit's /api/info to get up-to-date information about those posts (scores, edited text bodies, ...). While we're at it, this also gives us the ability to speed up `get_comments`. In addition, we can get all of a user's comments which was not possible through reddit alone.
 
 NOTE: Because Pushshift is an independent dataset run by a regular person, it does not contain posts from private subreddits. Without the timestamp search parameter, scanning private subreddits is now impossible. I urge once again that you contact ~~your senator~~ the admins to have this feature restored.
 
 ---
 
-I don't have a test suite. You're my test suite! Messages go to [/u/GoldenSights](https://reddit.com/u/GoldenSights).
+I don't have a test suite. You're my test suite! Messages go to [/u/GoldenSights](https://old.reddit.com/u/GoldenSights).
 
 Timesearch is a collection of utilities for archiving subreddits.
 
@@ -19,7 +19,7 @@ Timesearch is a collection of utilities for archiving subreddits.
 - Downloaded this project using the green "Clone or Download" button in the upper right.
 - Installed [Python](https://www.python.org/download). I use Python 3.7.
 - Installed PRAW >= 4, as well as the other modules in `requirements.txt`. Try `pip install -r requirements.txt` to get them all.
-- Created an OAuth app at https://reddit.com/prefs/apps. Make it `script` type, and set the redirect URI to `http://localhost:8080`. The title and description can be anything you want, and the about URL is not required.
+- Created an OAuth app at https://old.reddit.com/prefs/apps. Make it `script` type, and set the redirect URI to `http://localhost:8080`. The title and description can be anything you want, and the about URL is not required.
 - Used [this PRAW script](https://praw.readthedocs.io/en/latest/tutorials/refresh_token.html) to generate a refresh token. Just save it as a .py file somewhere and run it through your terminal / command line. For simplicity's sake, I just choose `all` for the scopes.
   - The instructions mention `export praw_client_id=...`. This creates environment variables on Linux. If you are on Windows, or simply don't want to create environment variables, you can alternatively add `client_id='...'` and `client_secret='...'` to the `praw.Reddit` instance on line 40, alongside the `redirect_uri` and `user_agent` arguments.
 - Downloaded a copy of [this file](https://github.com/voussoir/reddit/blob/master/bot4.py) and saved it as `bot.py`. Fill out the variables using your OAuth information, and read the instructions to see where to put it. The most simple way is to save it in the same folder as this README file.
