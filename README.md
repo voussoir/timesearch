@@ -16,12 +16,15 @@ I don't have a test suite. You're my test suite! Messages go to [/u/GoldenSights
 Timesearch is a collection of utilities for archiving subreddits.
 
 ## Make sure you have:
+- Downloaded this project using the green "Clone or Download" button in the upper right.
 - Installed [Python](https://www.python.org/download). I use Python 3.7.
 - Installed PRAW >= 4, as well as the other modules in `requirements.txt`. Try `pip install -r requirements.txt` to get them all.
 - Created an OAuth app at https://reddit.com/prefs/apps. Make it `script` type, and set the redirect URI to `http://localhost:8080`. The title and description can be anything you want, and the about URL is not required.
 - Used [this PRAW script](https://praw.readthedocs.io/en/latest/tutorials/refresh_token.html) to generate a refresh token. Just save it as a .py file somewhere and run it through your terminal / command line. For simplicity's sake, I just choose `all` for the scopes.
-- Downloaded a copy of [this file](https://github.com/voussoir/reddit/blob/master/bot4.py) and saved it as `bot.py`. Fill out the variables using your OAuth information, and read the instructions to see where to put it. The Useragent is a description of your API usage. Typically "/u/username's praw client" is sufficient.
-- Downloaded this project using the green "Clone or Download" button in the upper right.
+  - The instructions mention `export praw_client_id=...`. This creates environment variables on Linux. If you are on Windows, or simply don't want to create environment variables, you can alternatively add `client_id='...'` and `client_secret='...'` to the `praw.Reddit` instance on line 40, alongside the `redirect_uri` and `user_agent` arguments.
+- Downloaded a copy of [this file](https://github.com/voussoir/reddit/blob/master/bot4.py) and saved it as `bot.py`. Fill out the variables using your OAuth information, and read the instructions to see where to put it. The most simple way is to save it in the same folder as this README file.
+  - The `USERAGENT` is a description of your API usage. Typically "/u/username's praw client" is sufficient.
+  - The `CONTACT_INFO` is sent when downloading from Pushshift, [as encouraged by Stuck_in_the_Matrix](https://old.reddit.com/r/pushshift/comments/c5yr9l/i_had_to_ban_a_couple_ips_that_were_making/). It could just be your email address or reddit username.
 
 ## This package consists of:
 
