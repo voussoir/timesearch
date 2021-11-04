@@ -5,16 +5,11 @@ When you run `python timesearch.py get_submissions -r subredditname` or any
 other command, your arguments will go to the timesearch_modules file as
 appropriate for your command.
 '''
-import logging
-handler = logging.StreamHandler()
-log_format = '{levelname}:timesearch.{module}.{funcName}: {message}'
-handler.setFormatter(logging.Formatter(log_format, style='{'))
-logging.getLogger().addHandler(handler)
-
 import argparse
 import sys
 
 from voussoirkit import betterhelp
+from voussoirkit import vlogging
 
 from timesearch_modules import exceptions
 
@@ -333,6 +328,7 @@ def get_submissions_gateway(args):
     from timesearch_modules import get_submissions
     get_submissions.get_submissions_argparse(args)
 
+@vlogging.main_decorator
 def main(argv):
     parser = argparse.ArgumentParser(description=__doc__)
     subparsers = parser.add_subparsers()
