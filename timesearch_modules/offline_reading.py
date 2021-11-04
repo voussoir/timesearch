@@ -249,7 +249,7 @@ def html_helper_permalink(item):
     '''
     Given a submission or a comment, return the URL for its permalink.
     '''
-    link = 'https://www.reddit.com/r/%s/comments/' % item.subreddit
+    link = 'https://old.reddit.com/r/%s/comments/' % item.subreddit
     if item.object_type == 'submission':
         link += item.idstr[3:]
     elif item.object_type == 'comment':
@@ -277,7 +277,7 @@ def html_helper_userlink(item):
     name = item.author
     if name.lower() == '[deleted]':
         return '[deleted]'
-    link = 'https://www.reddit.com/u/{name}'
+    link = 'https://old.reddit.com/u/{name}'
     link = '<a href="%s">{name}</a>' % link
     link = link.format(name=name)
     return link
