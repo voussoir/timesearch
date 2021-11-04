@@ -371,7 +371,7 @@ def offline_reading(subreddit=None, username=None, specific_submission=None):
     if not specific_submission and not common.is_xor(subreddit, username):
         raise exceptions.NotExclusive(['subreddit', 'username'])
 
-    if specific_submission and not username:
+    if specific_submission and not username and not subreddit:
         database = tsdb.TSDB.for_submission(specific_submission, do_create=False)
 
     elif subreddit:
