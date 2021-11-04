@@ -14,18 +14,20 @@ HTML_HEADER = '''
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
 <style>
-.comment
+.submission, .comment
 {{
     padding-left: 20px;
+    padding-right: 4px;
+}}
+.comment
+{{
     margin-top: 4px;
-    margin-right: 4px;
     margin-bottom: 4px;
-    border: 2px #000 solid;
+    border: 1px solid black;
 }}
 .submission
 {{
-    border: 4px #00f solid;
-    padding-left: 20px;
+    border: 2px solid blue;
 }}
 .hidden
 {{
@@ -68,14 +70,13 @@ HTML_COMMENT = '''
         onclick="toggle_collapse(this.parentElement.parentElement)">[-]
         </a>
         {usernamelink}
-        <span class="score"> | {score} points</span>
-        <span class="timestamp"> | {human}</span>
+        |
+        <span class="score">{score} points</span>
+        |
+        <a class="timestamp" href="{permalink}">{human}</a>
     </p>
     <div class="collapsible">
         {body}
-        <p class="toolbar">
-            {permalink}
-        </p>
         {{children}}
     </div>
 </div>
@@ -85,14 +86,13 @@ HTML_SUBMISSION = '''
 <div class="submission" id="{id}">
     <p class="userinfo">
         {usernamelink}
-        <span class="score"> | {score} points</span>
-        <span class="timestamp"> | {human}</span>
+        |
+        <span class="score">{score} points</span>
+        |
+        <a class="timestamp" href="{permalink}">{human}</a>
     </p>
     <strong>{title}</strong>
     <p>{url_or_text}</p>
-    <p class="toolbar">
-        {permalink}
-    </p>
 </div>
 {{children}}
 '''.strip()
@@ -247,14 +247,13 @@ def html_from_tree(tree, sort=None):
 
 def html_helper_permalink(item):
     '''
-    Given a submission or a comment, return an <a> tag for its permalink.
+    Given a submission or a comment, return the URL for its permalink.
     '''
     link = 'https://www.reddit.com/r/%s/comments/' % item.subreddit
     if item.object_type == 'submission':
         link += item.idstr[3:]
     elif item.object_type == 'comment':
         link += '%s/_/%s' % (item.submission[3:], item.idstr[3:])
-    link = '<a href="%s">permalink</a>' % link
     return link
 
 def html_helper_urlortext(submission):
