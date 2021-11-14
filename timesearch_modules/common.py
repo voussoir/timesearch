@@ -4,6 +4,8 @@ import os
 import time
 import traceback
 
+from voussoirkit import vlogging
+
 VERSION = '2020.09.06.0'
 
 try:
@@ -30,7 +32,7 @@ if bot is None or bot.praw != praw:
         raise ImportError(message)
 
 
-log = logging.getLogger('timesearch')
+log = vlogging.get_logger(__name__)
 
 r = bot.anonymous()
 

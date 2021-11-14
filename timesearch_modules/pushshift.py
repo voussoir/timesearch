@@ -15,6 +15,9 @@ import traceback
 from . import common
 
 from voussoirkit import ratelimiter
+from voussoirkit import vlogging
+
+log = vlogging.get_logger(__name__)
 
 print('Thank you Jason Baumgartner of Pushshift.io!')
 
@@ -122,7 +125,7 @@ def _pagination_core(url, params, dummy_type, lower=None, upper=None):
             else:
                 break
 
-        common.log.debug('Got batch of %d items.', len(batch))
+        log.debug('Got batch of %d items.', len(batch))
         batch_ids = setify(batch)
         if len(batch_ids) == 0 or batch_ids.issubset(prev_batch_ids):
             break
@@ -141,13 +144,13 @@ def _initialize_ratelimiter():
     global ratelimit
     if ratelimit is not None:
         return
-    common.log.debug('Initializing pushshift ratelimiter.')
+    log.debug('Initializing pushshift ratelimiter.')
     url = 'https://api.pushshift.io/meta'
     response = session.get(url)
     response.raise_for_status()
     response = response.json()
     limit = response['server_ratelimit_per_minute']
-    common.log.debug('Pushshift ratelimit is %d items per minute.', limit)
+    log.debug('Pushshift ratelimit is %d requests per minute.', limit)
     ratelimit = ratelimiter.Ratelimiter(allowance=limit, period=60)
 
 def get(url, params=None):
@@ -161,7 +164,7 @@ def get(url, params=None):
     for (key, val) in DEFAULT_PARAMS.items():
         params.setdefault(key, val)
 
-    common.log.debug('Requesting %s with %s', url, params)
+    log.debug('Requesting %s with %s', url, params)
     ratelimit.limit()
     response = session.get(url, params=params)
     response.raise_for_status()
@@ -238,7 +241,7 @@ def supplement_reddit_data(dummies, chunk_size=100):
     '''
     chunks = common.generator_chunker(dummies, chunk_size)
     for chunk in chunks:
-        common.log.debug('Supplementing %d items with live reddit data.', len(chunk))
+        log.debug('Supplementing %d items with live reddit data.', len(chunk))
         ids = [item.fullname for item in chunk]
         live_copies = list(common.r.info(ids))
         live_copies = {item.fullname: item for item in live_copies}

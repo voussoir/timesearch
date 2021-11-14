@@ -9,7 +9,9 @@ from . import pushshift
 
 from voussoirkit import pathclass
 from voussoirkit import sqlhelpers
+from voussoirkit import vlogging
 
+log = vlogging.get_logger(__name__)
 
 # For backwards compatibility reasons, this list of format strings will help
 # timesearch find databases that are using the old filename style.
@@ -324,7 +326,7 @@ class TSDB:
     def insert(self, objects, commit=True):
         if not isinstance(objects, (list, tuple, types.GeneratorType)):
             objects = [objects]
-        common.log.debug('Trying to insert %d objects.', len(objects))
+        log.debug('Trying to insert %d objects.', len(objects))
 
         new_values = {
             'tsdb': self,
@@ -346,10 +348,10 @@ class TSDB:
             new_values[key] += status
 
         if commit:
-            common.log.debug('Committing insert.')
+            log.debug('Committing insert.')
             self.sql.commit()
 
-        common.log.debug('Done inserting.')
+        log.debug('Done inserting.')
         return new_values
 
     def insert_edited(self, obj, old_text):

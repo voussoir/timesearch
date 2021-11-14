@@ -7,6 +7,9 @@ from . import common
 from . import exceptions
 from . import tsdb
 
+from voussoirkit import vlogging
+
+log = vlogging.get_logger(__name__)
 
 def _listify(x):
     '''
@@ -32,7 +35,7 @@ def generator_printer(generator):
         clear_prev = (' ' * prev_message_length) + '\r'
         print(clear_prev + status, end='')
         prev_message_length = len(status)
-        if totalnew == 0 and common.log.level != common.logging.DEBUG:
+        if totalnew == 0 and log.level == 0 or log.level > vlogging.DEBUG:
             # Since there were no news, allow the next line to overwrite status
             print('\r', end='', flush=True)
         else:
@@ -131,13 +134,13 @@ def _livestream_as_a_generator(
     common.login()
 
     if subreddit:
-        common.log.debug('Getting subreddit %s', subreddit)
+        log.debug('Getting subreddit %s', subreddit)
         (database, subreddit) = tsdb.TSDB.for_subreddit(subreddit, fix_name=True)
         subreddit = common.r.subreddit(subreddit)
         submission_function = subreddit.new if do_submissions else None
         comment_function = subreddit.comments if do_comments else None
     else:
-        common.log.debug('Getting redditor %s', username)
+        log.debug('Getting redditor %s', username)
         (database, username) = tsdb.TSDB.for_user(username, fix_name=True)
         user = common.r.redditor(username)
         submission_function = user.submissions.new if do_submissions else None
@@ -180,16 +183,16 @@ def _livestream_helper(
     results = []
 
     if submission_function:
-        common.log.debug('Getting submissions %s %s', args, kwargs)
+        log.debug('Getting submissions %s %s', args, kwargs)
         this_kwargs = copy.deepcopy(kwargs)
         submission_batch = submission_function(*args, **this_kwargs)
         results.extend(submission_batch)
     if comment_function:
-        common.log.debug('Getting comments %s %s', args, kwargs)
+        log.debug('Getting comments %s %s', args, kwargs)
         this_kwargs = copy.deepcopy(kwargs)
         comment_batch = comment_function(*args, **this_kwargs)
         results.extend(comment_batch)
-    common.log.debug('Got %d posts', len(results))
+    log.debug('Got %d posts', len(results))
     return results
 
 def livestream_argparse(args):
