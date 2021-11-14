@@ -88,9 +88,6 @@ def get_submissions(
     print('Ended with %d items in %s' % (itemcount, database.filepath.basename))
 
 def get_submissions_argparse(args):
-    if args.verbose:
-        common.log.setLevel(common.logging.DEBUG)
-
     if args.lower == 'update':
         lower = 'update'
     else:

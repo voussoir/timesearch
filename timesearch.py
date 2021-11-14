@@ -109,9 +109,6 @@ get_comments:
     --dont_supplement:
         If provided, trust the pushshift data and do not fetch live copies
         from reddit.
-
-    -v | --verbose:
-        If provided, print extra information to the screen.
 '''.strip(),
 
 get_styles='''
@@ -148,9 +145,6 @@ get_submissions:
     --dont_supplement:
         If provided, trust the pushshift data and do not fetch live copies
         from reddit.
-
-    -v | --verbose:
-        If provided, print extra information to the screen.
 '''.strip(),
 
 get_wiki='''
@@ -247,9 +241,6 @@ livestream:
     If submissions and comments are BOTH left unspecified, then they will
     BOTH be collected.
 
-    -v | --verbose:
-        If provided, print extra information to the screen.
-
     -w 30 | --wait 30:
         The number of seconds to wait between cycles.
 
@@ -343,7 +334,6 @@ def main(argv):
     p_get_comments.add_argument('-r', '--subreddit', dest='subreddit', default=None)
     p_get_comments.add_argument('-s', '--specific', dest='specific_submission', default=None)
     p_get_comments.add_argument('-u', '--user', dest='username', default=None)
-    p_get_comments.add_argument('-v', '--verbose', dest='verbose', action='store_true')
     p_get_comments.add_argument('--dont_supplement', '--dont-supplement', dest='do_supplement', action='store_false')
     p_get_comments.add_argument('-l', '--lower', dest='lower', default='update')
     p_get_comments.add_argument('-up', '--upper', dest='upper', default=None)
@@ -364,7 +354,6 @@ def main(argv):
     p_livestream.add_argument('-r', '--subreddit', dest='subreddit', default=None)
     p_livestream.add_argument('-s', '--submissions', dest='submissions', action='store_true')
     p_livestream.add_argument('-u', '--user', dest='username', default=None)
-    p_livestream.add_argument('-v', '--verbose', dest='verbose', action='store_true')
     p_livestream.add_argument('-w', '--wait', dest='sleepy', default=30)
     p_livestream.set_defaults(func=livestream_gateway)
 
@@ -399,7 +388,6 @@ def main(argv):
     p_get_submissions.add_argument('-r', '--subreddit', dest='subreddit', default=None)
     p_get_submissions.add_argument('-u', '--user', dest='username', default=None)
     p_get_submissions.add_argument('-up', '--upper', dest='upper', default=None)
-    p_get_submissions.add_argument('-v', '--verbose', dest='verbose', action='store_true')
     p_get_submissions.add_argument('--dont_supplement', '--dont-supplement', dest='do_supplement', action='store_false')
     p_get_submissions.set_defaults(func=get_submissions_gateway)
 

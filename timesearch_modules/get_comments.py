@@ -100,16 +100,12 @@ def get_comments(
         database.sql.commit()
 
 def get_comments_argparse(args):
-    if args.verbose:
-        common.log.setLevel(common.logging.DEBUG)
-
     return get_comments(
         subreddit=args.subreddit,
         username=args.username,
         #limit=common.int_none(args.limit),
         #threshold=common.int_none(args.threshold),
         #num_thresh=common.int_none(args.num_thresh),
-        #verbose=args.verbose,
         specific_submission=args.specific_submission,
         do_supplement=args.do_supplement,
         lower=args.lower,

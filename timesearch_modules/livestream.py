@@ -193,9 +193,6 @@ def _livestream_helper(
     return results
 
 def livestream_argparse(args):
-    if args.verbose:
-        common.log.setLevel(common.logging.DEBUG)
-
     if args.submissions is args.comments is False:
         args.submissions = True
         args.comments = True
