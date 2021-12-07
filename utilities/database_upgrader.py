@@ -17,10 +17,9 @@ def upgrade_1_to_2(db):
     cur = db.sql.cursor()
     redmash_dir = db.index_dir.parent.with_child('redmash')
     if redmash_dir.exists:
-        if not redmash_dir.is_dir:
-            raise Exception(f'{redmash_dir.absolute_path} is not a directory!')
+        redmash_dir.assert_is_directory()
         print('Renaming redmash folder to index.')
-        os.rename(redmash_dir.absolute_path, db.index_dir.absolute_path)
+        os.rename(redmash_dir, db.index_dir)
 
 def upgrade_all(database_filename):
     '''
