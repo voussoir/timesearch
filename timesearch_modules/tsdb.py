@@ -376,8 +376,8 @@ class TSDB:
             'replaced_at': replaced_at,
         }
         cur = self.sql.cursor()
-        (qmarks, bindings) = sqlhelpers.insert_filler(SQL_EDITS_COLUMNS, postdata)
-        query = 'INSERT INTO %s VALUES(%s)' % (table, qmarks)
+        (qmarks, bindings) = sqlhelpers.insert_filler(postdata)
+        query = f'INSERT INTO {table} {qmarks}'
         cur.execute(query, bindings)
 
     def insert_submission(self, submission):
@@ -417,8 +417,8 @@ class TSDB:
                 'augmented_at': None,
                 'augmented_count': None,
             }
-            (qmarks, bindings) = sqlhelpers.insert_filler(SQL_SUBMISSION_COLUMNS, postdata)
-            query = 'INSERT INTO submissions VALUES(%s)' % qmarks
+            (qmarks, bindings) = sqlhelpers.insert_filler(postdata)
+            query = f'INSERT INTO submissions {qmarks}'
             cur.execute(query, bindings)
 
         else:
@@ -473,8 +473,8 @@ class TSDB:
                 'distinguish': comment.distinguished,
                 'textlen': len(comment.body),
             }
-            (qmarks, bindings) = sqlhelpers.insert_filler(SQL_COMMENT_COLUMNS, postdata)
-            query = 'INSERT INTO comments VALUES(%s)' % qmarks
+            (qmarks, bindings) = sqlhelpers.insert_filler(postdata)
+            query = f'INSERT INTO comments {qmarks}'
             cur.execute(query, bindings)
 
         else:
