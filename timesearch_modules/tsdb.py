@@ -362,8 +362,10 @@ class TSDB:
         '''
         if isinstance(obj, SUBMISSION_TYPES):
             table = 'submission_edits'
+            key = 'previous_selftext'
         else:
             table = 'comment_edits'
+            key = 'previous_body'
 
         if obj.edited is False:
             replaced_at = int(time.time())
@@ -372,7 +374,7 @@ class TSDB:
 
         postdata = {
             'idstr': obj.fullname,
-            'text': old_text,
+            key: old_text,
             'replaced_at': replaced_at,
         }
         cur = self.sql.cursor()
