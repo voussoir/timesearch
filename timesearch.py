@@ -118,7 +118,7 @@ def main(argv):
     # GET_COMMENTS
     p_get_comments = subparsers.add_parser(
         'get_comments',
-        aliases=['commentaugment'],
+        aliases=['get-comments', 'commentaugment'],
         description='''
         Collect comments on a subreddit or comments made by a user.
         ''',
@@ -181,7 +181,7 @@ def main(argv):
     # GET_STYLES
     p_get_styles = subparsers.add_parser(
         'get_styles',
-        aliases=['getstyles'],
+        aliases=['get-styles', 'getstyles'],
         help='''
         Collect the stylesheet, and css images.
         ''',
@@ -196,7 +196,7 @@ def main(argv):
     # GET_WIKI
     p_get_wiki = subparsers.add_parser(
         'get_wiki',
-        aliases=['getwiki'],
+        aliases=['get-wiki', 'getwiki'],
         description='''
         Collect all available wiki pages.
         ''',
@@ -288,7 +288,7 @@ def main(argv):
     # MERGEDB'
     p_merge_db = subparsers.add_parser(
         'merge_db',
-        aliases=['mergedb'],
+        aliases=['merge-db', 'mergedb'],
         description='''
         Copy all new posts from one timesearch database into another.
         ''',
@@ -485,7 +485,7 @@ def main(argv):
     # GET_SUBMISSIONS
     p_get_submissions = subparsers.add_parser(
         'get_submissions',
-        aliases=['timesearch'],
+        aliases=['get-submissions', 'timesearch'],
         description='''
         Collect submissions from the subreddit across all of history, or
         Collect submissions by a user (as many as possible).
