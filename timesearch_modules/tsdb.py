@@ -396,8 +396,13 @@ class TSDB:
             if submission.is_self:
                 # Selfpost's URL leads back to itself, so just ignore it.
                 url = None
+            elif hasattr(submission, 'crosspost_parent') and getattr(submission, 'crosspost_parent_list'):
+                url = submission.crosspost_parent_list[0]['permalink']
             else:
-                url = submission.url
+                url = getattr(submission, 'url', None)
+
+            if url and url.startswith('/r/'):
+                url = 'https://reddit.com' + url
 
             postdata = {
                 'idint': common.b36(submission.id),
