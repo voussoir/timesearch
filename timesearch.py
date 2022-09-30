@@ -319,6 +319,7 @@ def main(argv):
     # OFFLINE_READING
     p_offline_reading = subparsers.add_parser(
         'offline_reading',
+        aliases=['offline-reading'],
         description='''
         Render submissions and comment threads to HTML via Markdown.
         ''',
