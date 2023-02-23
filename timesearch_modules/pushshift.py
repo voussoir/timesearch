@@ -71,6 +71,11 @@ class DummyObject:
                 val = DummyObject(display_name=val)
             elif key in ['body', 'selftext']:
                 val = html.unescape(val)
+            elif key == 'parent_id':
+                if val is None:
+                    val = attributes['link_id']
+                elif isinstance(val, int):
+                    val = 't1_' + common.b36(val)
 
             setattr(self, key, val)
 
