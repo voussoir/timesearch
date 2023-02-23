@@ -26,8 +26,8 @@ API_URL = 'https://api.pushshift.io/reddit/'
 
 DEFAULT_PARAMS = {
     'size': 1000,
-    'sort': 'asc',
-    'sort_type': 'created_utc',
+    'order': 'asc',
+    'sort': 'created_utc',
 }
 
 # Pushshift does not supply attributes that are null. So we fill them back in.
@@ -51,7 +51,7 @@ useragent = USERAGENT.format(version=common.VERSION, contact=common.bot.CONTACT_
 ratelimit = None
 session = requests.Session()
 session.headers.update({'User-Agent': useragent})
-
+ratelimit = ratelimiter.Ratelimiter(allowance=120, period=60)
 
 class DummyObject:
     '''
@@ -140,21 +140,7 @@ def _pagination_core(url, params, dummy_type, lower=None, upper=None):
         prev_batch_ids = batch_ids
         ratelimit.limit()
 
-def _initialize_ratelimiter():
-    global ratelimit
-    if ratelimit is not None:
-        return
-    log.debug('Initializing pushshift ratelimiter.')
-    url = 'https://api.pushshift.io/meta'
-    response = session.get(url)
-    response.raise_for_status()
-    response = response.json()
-    limit = response['server_ratelimit_per_minute']
-    log.debug('Pushshift ratelimit is %d requests per minute.', limit)
-    ratelimit = ratelimiter.Ratelimiter(allowance=limit, period=60)
-
 def get(url, params=None):
-    _initialize_ratelimiter()
     if not url.startswith('https://'):
         url = API_URL + url.lstrip('/')
 
