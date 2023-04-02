@@ -1,4 +1,5 @@
 import os
+import markdown
 
 from . import common
 from . import tsdb
@@ -14,11 +15,15 @@ def get_wiki(subreddit):
         if wikipage.name == 'config/stylesheet':
             continue
 
-        wikipage_path = database.wiki_dir.join(wikipage.name).replace_extension('md')
+        wikipage_path = database.wiki_dir.join(wikipage.name).add_extension('md')
         wikipage_path.parent.makedirs(exist_ok=True)
-        with wikipage_path.open('w', encoding='utf-8') as handle:
-            handle.write(wikipage.content_md)
+        wikipage_path.write('w', wikipage.content_md, encoding='utf-8')
         print('Wrote', wikipage_path.relative_path)
+
+        html_path = wikipage_path.replace_extension('html')
+        escaped = wikipage.content_md.replace('<', '&lt;').replace('>', '&rt;')
+        html_path.write('w', markdown.markdown(escaped, output_format='html5'), encoding='utf-8')
+        print('Wrote', html_path.relative_path)
 
 def get_wiki_argparse(args):
     return get_wiki(args.subreddit)
