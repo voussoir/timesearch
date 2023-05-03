@@ -1,6 +1,10 @@
 timesearch
 ==========
 
+## NEWS (2023 05 01):
+
+[Reddit has revoked Pushshift's API access](https://old.reddit.com/r/modnews/comments/134tjpe/reddit_data_api_update_changes_to_pushshift_access/), so [pushshift.io](https://pushshift.io) may not be able to continue ingesting reddit content.
+
 ## NEWS (2018 04 09):
 
 [Reddit has removed the timestamp search feature which timesearch was built off of](https://voussoir.github.io/t3_7tus5f.html#t1_dtfcdn0) ([original](https://old.reddit.com/r/changelog/comments/7tus5f/update_to_search_api/dtfcdn0/)). Please message the admins by [sending a PM to /r/reddit.com](https://old.reddit.com/message/compose?to=%2Fr%2Freddit.com&subject=Timestamp+search). Let them know that this feature is important to you, and you would like them to restore it on the new search stack.
