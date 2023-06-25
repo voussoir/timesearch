@@ -326,7 +326,11 @@ class TSDB:
     def insert(self, objects, commit=True):
         if not isinstance(objects, (list, tuple, types.GeneratorType)):
             objects = [objects]
-        log.debug('Trying to insert %d objects.', len(objects))
+
+        if isinstance(objects, types.GeneratorType):
+            log.debug('Trying to insert a generator of objects.')
+        else:
+            log.debug('Trying to insert %d objects.', len(objects))
 
         new_values = {
             'tsdb': self,

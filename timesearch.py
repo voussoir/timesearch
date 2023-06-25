@@ -35,6 +35,10 @@ def get_wiki_gateway(args):
     from timesearch_modules import get_wiki
     get_wiki.get_wiki_argparse(args)
 
+def ingest_jsonfile_gateway(args):
+    from timesearch_modules import ingest_jsonfile
+    ingest_jsonfile.ingest_jsonfile_argparse(args)
+
 def livestream_gateway(args):
     from timesearch_modules import livestream
     livestream.livestream_argparse(args)
@@ -207,6 +211,41 @@ def main(argv):
         dest='subreddit',
     )
     p_get_wiki.set_defaults(func=get_wiki_gateway)
+
+    # INGEST_JSONFILE
+    p_ingest_jsonfile = subparsers.add_parser(
+        'ingest_jsonfile',
+        description='''
+        This module was added after reddit's June 2023 API changes which
+        resulted in pushshift losing API access, and pushshift's own API was
+        disabled. The community has made archive files available for download.
+        These archive files contain 1 object (a submission or a comment) per
+        line in a JSON format.
+
+        You can ingest these into timesearch so that you can continue to use
+        timesearch's offline_reading or index features.
+        ''',
+    )
+    p_ingest_jsonfile.add_argument(
+        'json_file',
+        help='''
+        Path to a file containing 1 json object per line. Each object must be
+        either a submission or a comment.
+        ''',
+    )
+    p_ingest_jsonfile.add_argument(
+        '-r',
+        '--subreddit',
+        dest='subreddit',
+        default=None,
+    )
+    p_ingest_jsonfile.add_argument(
+        '-u',
+        '--user',
+        dest='username',
+        default=None,
+    )
+    p_ingest_jsonfile.set_defaults(func=ingest_jsonfile_gateway)
 
     # LIVESTREAM
     p_livestream = subparsers.add_parser(
