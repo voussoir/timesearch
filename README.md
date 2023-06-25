@@ -1,6 +1,18 @@
 timesearch
 ==========
 
+## NEWS (2023 06 25):
+
+Pushshift's API is currently offline. Without the timestamp search parameter or Pushshift access, timesearch is not able to get historical data. You can continue to use the `livestream` module to collect new posts and comments as they are made.
+
+You can still download the Pushshift archives, though. https://the-eye.eu/redarcs/ is one source.
+
+I have added a module for ingesting these json files into a timesearch database so that you can continue to use `offline_reading`, or if you just prefer the sqlite format. You need to extract the zst file with an archive tool like [7-Zip](https://www.7-zip.org/) before giving it to timesearch.
+
+`python timesearch.py ingest_jsonfile subredditname_submissions -r subredditname`
+
+`python timesearch.py ingest_jsonfile subredditname_comments -r subredditname`
+
 ## NEWS (2023 05 01):
 
 [Reddit has revoked Pushshift's API access](https://old.reddit.com/r/modnews/comments/134tjpe/reddit_data_api_update_changes_to_pushshift_access/), so [pushshift.io](https://pushshift.io) may not be able to continue ingesting reddit content.
