@@ -152,6 +152,8 @@ I want to live in a future where everyone uses UTC and agrees on daylight saving
 
 ## Mirrors
 
+https://git.voussoir.net/voussoir/timesearch
+
 https://github.com/voussoir/timesearch
 
 https://gitlab.com/voussoir/timesearch
