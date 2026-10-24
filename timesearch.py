@@ -59,7 +59,7 @@ def get_submissions_gateway(args):
     from timesearch_modules import get_submissions
     get_submissions.get_submissions_argparse(args)
 
-@vlogging.main_decorator
+@vlogging.main_decorator(log=log)
 def main(argv):
     parser = argparse.ArgumentParser(
         description='''
